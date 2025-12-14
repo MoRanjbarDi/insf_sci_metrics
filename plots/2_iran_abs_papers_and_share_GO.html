@@ -192,28 +192,43 @@
     max-height: 100% !important;
   }
 
-  .overlay-nav {
-    height: calc(var(--nav-h) + var(--safe-bottom));
-    flex: 0 0 auto;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+.overlay-nav {
+  position: relative;
+  top: auto;
+  left: auto;
 
-    border-top: 1px solid rgba(148,163,184,0.45);
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 -8px 20px rgba(15,23,42,0.08);
+  flex: 0 0 15vh;
+  height: 15vh;
+  width: 100%;
 
-    padding-bottom: var(--safe-bottom); /* ✅ keeps buttons above Android/iPhone system bars */
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 
-  .overlay-nav .nav-btn {
-    width: 48px;
-    height: 48px;
-    font-size: 22px;
-    border-radius: 14px;
-  }
+  /* 👇 move buttons upward */
+  padding-bottom: 1.5vh;
+  padding-top: 0.5vh;
+
+  border-top: 1px solid rgba(148,163,184,0.45);
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 -10px 24px rgba(15,23,42,0.12);
+}
+
+.overlay-nav .nav-btn {
+  width: 50px;          /* ⬆ bigger */
+  height: 50px;         /* ⬆ bigger */
+  font-size: 24px;      /* ⬆ clearer */
+  border-radius: 18px;  /* ⬆ more touch-friendly */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* subtle lift */
+  transform: translateY(-10px);
+}
+
 }
 
 

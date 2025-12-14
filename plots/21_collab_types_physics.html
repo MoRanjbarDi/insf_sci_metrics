@@ -112,61 +112,68 @@
 </head>
 <body>
 <div class="overlay-nav">
-<a class="nav-btn" href="11_Top_authors.html">←</a>
-<a class="nav-btn home" href="../index.html">⌂</a>
-<a class="nav-btn" href="19_iran_physics_collab_share.html">→</a>
+<a class="nav-btn" href="11_Top_authors.html" title="Previous">←</a>
+<a class="nav-btn home" href="../index.html" title="Home">⌂</a>
+<a class="nav-btn" href="19_iran_physics_collab_share.html" title="Next">→</a>
 </div>
 <style>
+/* Keep nav visible even if the plot uses full-page layouts */
 .overlay-nav {
-    position: absolute;
+    position: fixed;
     top: 10px;
     left: 10px;
     display: flex;
     gap: 8px;
-    z-index: 99999;
+    z-index: 999999;
 }
 
-.nav-btn {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
+.overlay-nav .nav-btn {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    background: rgba(255,255,255,0.85);
-    box-shadow: 0 2px 4px rgba(0,0,0,.2);
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.88);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     color: #0078d7;
-    font-size: 18px;
     text-decoration: none;
+    font-size: 18px;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
-.nav-btn.disabled {
+.overlay-nav .nav-btn.disabled {
     color: #9ca3af;
-    background: rgba(255,255,255,0.55);
-    pointer-events: none;
+    background: rgba(255,255,255,0.60);
     box-shadow: none;
+    cursor: not-allowed;
+    pointer-events: none;     /* no click */
     filter: grayscale(100%);
+    opacity: 0.9;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 700px) {
+    /* Move to bottom, make buttons ~2x bigger */
     .overlay-nav {
-        position: fixed;
-        bottom: 16px;
         top: auto;
+        bottom: 16px;
         left: 50%;
         transform: translateX(-50%);
         gap: 14px;
-        padding: 6px 14px;
-        background: rgba(255,255,255,0.65);
-        backdrop-filter: blur(8px);
+        padding: 10px 14px;
         border-radius: 999px;
-        box-shadow: 0 6px 20px rgba(0,0,0,.18);
+        background: rgba(255,255,255,0.65);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.18);
     }
 
-    .nav-btn {
-        width: 64px;
-        height: 64px;
-        font-size: 28px;
+    .overlay-nav .nav-btn {
+        width: 68px;          /* 2x */
+        height: 68px;         /* 2x */
+        font-size: 30px;      /* larger icon */
+        box-shadow: 0 4px 10px rgba(0,0,0,0.18);
     }
 }
 </style>

@@ -162,10 +162,7 @@
     opacity: 0.85;
 }
 
-
-
-
-/* ===== Portrait (phone): FIXED 400px NAV, REST CONTENT ===== */
+/* ===== Portrait (phone): fixed 400px nav, rest content ===== */
 @media (orientation: portrait) {
   html, body {
     height: 100%;
@@ -176,11 +173,10 @@
 
   body {
     position: relative;
-    height: 100dvh; /* real usable viewport */
+    height: 100dvh;
     overflow: hidden;
   }
 
-  /* ===== CONTENT: everything above nav ===== */
   .main-frame {
     position: absolute;
     top: 0;
@@ -190,7 +186,6 @@
     overflow: hidden;
   }
 
-  /* Force Plotly / iframe to obey container */
   .main-frame .plotly-graph-div,
   .main-frame .js-plotly-plot,
   .main-frame iframe {
@@ -198,7 +193,6 @@
     max-height: 100% !important;
   }
 
-  /* ===== NAV PANEL: fixed 400px ===== */
   .overlay-nav {
     position: absolute;
     left: 0;
@@ -219,12 +213,10 @@
     z-index: 99999;
   }
 
-  /* ===== BUTTONS: fill the nav nicely ===== */
   .overlay-nav .nav-btn {
     height: 70%;
     aspect-ratio: 1 / 1;
     min-height: 64px;
-    max-height: 100%;
 
     display: flex;
     align-items: center;
@@ -234,60 +226,32 @@
     border-radius: 22%;
   }
 }
-
-
-
-/* Landscape: keep overlay style */
-@media (orientation: landscape) {
-  .overlay-nav {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-  }
-}
+</style>
 <script>
 (function() {
   function fixLayout() {
-    // Let CSS/layout settle first
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        try {
-          // 1) trigger generic resize listeners
-          window.dispatchEvent(new Event('resize'));
-        } catch(e) {}
-
-        // 2) Plotly: resize all graphs if Plotly exists
+        try { window.dispatchEvent(new Event('resize')); } catch(e) {}
         try {
           if (window.Plotly && Plotly.Plots) {
-            const graphs = document.querySelectorAll('.js-plotly-plot, .plotly-graph-div');
-            graphs.forEach(g => {
-              try { Plotly.Plots.resize(g); } catch(e) {}
-            });
+            document.querySelectorAll('.js-plotly-plot, .plotly-graph-div')
+              .forEach(g => { try { Plotly.Plots.resize(g); } catch(e) {} });
           }
         } catch(e) {}
       });
     });
   }
 
-  // Run on load + small delays (some exports load libs late)
   window.addEventListener('load', () => {
     fixLayout();
     setTimeout(fixLayout, 120);
     setTimeout(fixLayout, 400);
   });
 
-  // Run when orientation changes (portrait/landscape switch)
-  window.addEventListener('orientationchange', () => {
-    setTimeout(fixLayout, 200);
-  });
-
-  // Also run on viewport resize
-  window.addEventListener('resize', () => {
-    setTimeout(fixLayout, 80);
-  });
+  window.addEventListener('orientationchange', () => setTimeout(fixLayout, 200));
+  window.addEventListener('resize', () => setTimeout(fixLayout, 80));
 })();
 </script>
-
-</style>
 </body>
 </html>

@@ -23,9 +23,7 @@
     --shadow-soft: 0 10px 20px rgba(15, 23, 42, 0.08);
 }
 
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
@@ -257,7 +255,7 @@ body {
                 <div class="app-title">داشبورد نمودارهای علم سنجی فیزیک در ایران نسخه 1.0</div>
                 <div class="badge">
                     <span>📈</span>
-                    <span>بنیاد علم ایران، مجری طرح: محمد رنجبر</span>
+                    <span>26 نمودار</span>
                 </div>
             </div>
         </div>
@@ -291,6 +289,14 @@ body {
     <div class="card-title">فراوانی مقالات و سهم ایران</div>
 </a>
 
+<a class="card" href="plots/28_all_papers_cnci.html" data-img="plots/28_all_papers_cnci.svg">
+    <div class="card-thumb">
+        <img src="plots/28_all_papers_cnci.svg" alt="روند استنادی همهٔ مقالات" loading="lazy"
+             onerror="this.parentElement.classList.add('no-thumb'); this.remove();">
+    </div>
+    <div class="card-title">روند استنادی همهٔ مقالات</div>
+</a>
+
 <a class="card" href="plots/4_main_countries_physics_share_benchmark_GO.html" data-img="plots/4_main_countries_physics_share_benchmark_GO.svg">
     <div class="card-thumb">
         <img src="plots/4_main_countries_physics_share_benchmark_GO.svg" alt="سهم از بروندادهای فیزیک در جهان" loading="lazy"
@@ -315,12 +321,44 @@ body {
     <div class="card-title">روند استنادی در طول زمان</div>
 </a>
 
-<a class="card" href="plots/8.1_subfields_cnci_doc_type.html" data-img="plots/8.1_subfields_cnci_doc_type.svg">
+<a class="card" href="plots/5_physics_PA_country_wise_GO.html" data-img="plots/5_physics_PA_country_wise_GO.svg">
     <div class="card-thumb">
-        <img src="plots/8.1_subfields_cnci_doc_type.svg" alt="روند فراوانی و استناد زیرموضوعات" loading="lazy"
+        <img src="plots/5_physics_PA_country_wise_GO.svg" alt="تحلیل جایگاهی فیزیک در کشورها" loading="lazy"
              onerror="this.parentElement.classList.add('no-thumb'); this.remove();">
     </div>
-    <div class="card-title">روند فراوانی و استناد زیرموضوعات</div>
+    <div class="card-title">تحلیل جایگاهی فیزیک در کشورها</div>
+</a>
+
+<a class="card" href="plots/topnradar_scaledtop1_ticks.html" data-img="plots/topnradar_scaledtop1_ticks.svg">
+    <div class="card-thumb">
+        <img src="plots/topnradar_scaledtop1_ticks.svg" alt="سهم کشورها از دهک و صدک اول" loading="lazy"
+             onerror="this.parentElement.classList.add('no-thumb'); this.remove();">
+    </div>
+    <div class="card-title">سهم کشورها از دهک و صدک اول</div>
+</a>
+
+<a class="card" href="plots/6_1_subfields_PA_vs_physics.html" data-img="plots/6_1_subfields_PA_vs_physics.svg">
+    <div class="card-thumb">
+        <img src="plots/6_1_subfields_PA_vs_physics.svg" alt="تحلیل جایگاهی زیرموضوعات" loading="lazy"
+             onerror="this.parentElement.classList.add('no-thumb'); this.remove();">
+    </div>
+    <div class="card-title">تحلیل جایگاهی زیرموضوعات</div>
+</a>
+
+<a class="card" href="plots/8.1_subfields_cnci_doc_type.html" data-img="plots/8.1_subfields_cnci_doc_type.svg">
+    <div class="card-thumb">
+        <img src="plots/8.1_subfields_cnci_doc_type.svg" alt="روند فراوانی و استناد نرمال زیرموضوعات" loading="lazy"
+             onerror="this.parentElement.classList.add('no-thumb'); this.remove();">
+    </div>
+    <div class="card-title">روند فراوانی و استناد نرمال زیرموضوعات</div>
+</a>
+
+<a class="card" href="plots/17_iran_phys_mmsj_cnci.html" data-img="plots/17_iran_phys_mmsj_cnci.svg">
+    <div class="card-thumb">
+        <img src="plots/17_iran_phys_mmsj_cnci.svg" alt="شاخص استنادی زیرموضوعات" loading="lazy"
+             onerror="this.parentElement.classList.add('no-thumb'); this.remove();">
+    </div>
+    <div class="card-title">شاخص استنادی زیرموضوعات</div>
 </a>
 
 <a class="card" href="plots/15_iran_physics_mmsj_top10.html" data-img="plots/15_iran_physics_mmsj_top10.svg">
@@ -339,38 +377,6 @@ body {
     <div class="card-title">زیرموضوعات در صدک اول</div>
 </a>
 
-<a class="card" href="plots/17_iran_phys_mmsj_cnci.html" data-img="plots/17_iran_phys_mmsj_cnci.svg">
-    <div class="card-thumb">
-        <img src="plots/17_iran_phys_mmsj_cnci.svg" alt="شاخص استنادی زیرموضوعات" loading="lazy"
-             onerror="this.parentElement.classList.add('no-thumb'); this.remove();">
-    </div>
-    <div class="card-title">شاخص استنادی زیرموضوعات</div>
-</a>
-
-<a class="card" href="plots/5_physics_PA_country_wise_GO.html" data-img="plots/5_physics_PA_country_wise_GO.svg">
-    <div class="card-thumb">
-        <img src="plots/5_physics_PA_country_wise_GO.svg" alt="تحلیل جایگاهی فیزیک در کشورها" loading="lazy"
-             onerror="this.parentElement.classList.add('no-thumb'); this.remove();">
-    </div>
-    <div class="card-title">تحلیل جایگاهی فیزیک در کشورها</div>
-</a>
-
-<a class="card" href="plots/6_1_subfields_PA_vs_physics.html" data-img="plots/6_1_subfields_PA_vs_physics.svg">
-    <div class="card-thumb">
-        <img src="plots/6_1_subfields_PA_vs_physics.svg" alt="تحلیل جایگاهی زیرموضوعات" loading="lazy"
-             onerror="this.parentElement.classList.add('no-thumb'); this.remove();">
-    </div>
-    <div class="card-title">تحلیل جایگاهی زیرموضوعات</div>
-</a>
-
-<a class="card" href="plots/10_university_PA_C_Topics.html" data-img="plots/10_university_PA_C_Topics.svg">
-    <div class="card-thumb">
-        <img src="plots/10_university_PA_C_Topics.svg" alt="تحلیل جایگاهی دانشگاه‌ها(خوشه ای)" loading="lazy"
-             onerror="this.parentElement.classList.add('no-thumb'); this.remove();">
-    </div>
-    <div class="card-title">تحلیل جایگاهی دانشگاه‌ها(خوشه ای)</div>
-</a>
-
 <a class="card" href="plots/13_top_by_counts_normalization_mmsj_cat_with_cnci_hover.html" data-img="plots/13_top_by_counts_normalization_mmsj_cat_with_cnci_hover.svg">
     <div class="card-thumb">
         <img src="plots/13_top_by_counts_normalization_mmsj_cat_with_cnci_hover.svg" alt="برترین دانشگاه‌ها (تعداد)" loading="lazy"
@@ -385,6 +391,22 @@ body {
              onerror="this.parentElement.classList.add('no-thumb'); this.remove();">
     </div>
     <div class="card-title">برترین دانشگاه‌ها (دهک اول)</div>
+</a>
+
+<a class="card" href="plots/12_top_unis_combo.html" data-img="plots/12_top_unis_combo.svg">
+    <div class="card-thumb">
+        <img src="plots/12_top_unis_combo.svg" alt="برترین دانشگاه‌ها (ترکیبی)" loading="lazy"
+             onerror="this.parentElement.classList.add('no-thumb'); this.remove();">
+    </div>
+    <div class="card-title">برترین دانشگاه‌ها (ترکیبی)</div>
+</a>
+
+<a class="card" href="plots/10_university_PA_C_Topics.html" data-img="plots/10_university_PA_C_Topics.svg">
+    <div class="card-thumb">
+        <img src="plots/10_university_PA_C_Topics.svg" alt="تحلیل جایگاهی دانشگاه‌ها" loading="lazy"
+             onerror="this.parentElement.classList.add('no-thumb'); this.remove();">
+    </div>
+    <div class="card-title">تحلیل جایگاهی دانشگاه‌ها</div>
 </a>
 
 <a class="card" href="plots/11_Top_authors.html" data-img="plots/11_Top_authors.svg">
@@ -413,10 +435,10 @@ body {
 
 <a class="card" href="plots/20_iran_physics_collab_cnci.html" data-img="plots/20_iran_physics_collab_cnci.svg">
     <div class="card-thumb">
-        <img src="plots/20_iran_physics_collab_cnci.svg" alt="تاثیر مقالات بین المللی" loading="lazy"
+        <img src="plots/20_iran_physics_collab_cnci.svg" alt="تاثیر مقالات بین المللی در کیفیت مقالات" loading="lazy"
              onerror="this.parentElement.classList.add('no-thumb'); this.remove();">
     </div>
-    <div class="card-title">تاثیر مقالات بین المللی</div>
+    <div class="card-title">تاثیر مقالات بین المللی در کیفیت مقالات</div>
 </a>
 
 <a class="card" href="plots/22_collab_types_physics_abs.html" data-img="plots/22_collab_types_physics_abs.svg">
@@ -451,28 +473,12 @@ body {
     <div class="card-title">برترین ژورنال‌ها</div>
 </a>
 
-<a class="card" href="plots/topnradar_scaledtop1_ticks.html" data-img="plots/topnradar_scaledtop1_ticks.svg">
-    <div class="card-thumb">
-        <img src="plots/topnradar_scaledtop1_ticks.svg" alt="سهم کشورها از دهک و صدک" loading="lazy"
-             onerror="this.parentElement.classList.add('no-thumb'); this.remove();">
-    </div>
-    <div class="card-title">سهم کشورها از دهک و صدک</div>
-</a>
-
 <a class="card" href="plots/topNvsYearANDcount.html" data-img="plots/topNvsYearANDcount.svg">
     <div class="card-thumb">
         <img src="plots/topNvsYearANDcount.svg" alt="توزیع استنادی در طول زمان" loading="lazy"
              onerror="this.parentElement.classList.add('no-thumb'); this.remove();">
     </div>
     <div class="card-title">توزیع استنادی در طول زمان</div>
-</a>
-
-<a class="card" href="plots/28_all_papers_cnci.html" data-img="plots/28_all_papers_cnci.svg">
-    <div class="card-thumb">
-        <img src="plots/28_all_papers_cnci.svg" alt="روند استنادی همهٔ مقالات" loading="lazy"
-             onerror="this.parentElement.classList.add('no-thumb'); this.remove();">
-    </div>
-    <div class="card-title">روند استنادی همهٔ مقالات</div>
 </a>
 
         </div>

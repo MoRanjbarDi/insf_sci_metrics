@@ -1,23 +1,126 @@
 <html>
 <head><meta charset="utf-8"/>
 <style>
-.hoverlayer .hovertext {
-    direction: rtl !important;
-    text-align: right !important;
+    /* RTL hovertext styling */
+    .hoverlayer .hovertext {
+        direction: rtl !important;
+        text-align: right !important;
+    }
+    .hoverlayer .hovertext text {
+        font-family: "Vazirmatn FD", "Tahoma", "Arial", sans-serif !important;
+        text-anchor: start !important;
+    }
+    </style>
+<style>
+    
+/* Normal Vazirmatn (one family per weight) */
+@font-face {
+  font-family: "Vazirmatn Thin";
+  src: url("fonts/webfonts/Vazirmatn-Thin.woff2") format("woff2");
+  font-style: normal;
 }
-.hoverlayer .hovertext text {
-    font-family: "Vazirmatn", "Tahoma", "Arial", sans-serif !important;
-    text-anchor: start !important;
+@font-face {
+  font-family: "Vazirmatn ExtraLight";
+  src: url("fonts/webfonts/Vazirmatn-ExtraLight.woff2") format("woff2");
+  font-style: normal;
 }
-</style>
+@font-face {
+  font-family: "Vazirmatn Light";
+  src: url("fonts/webfonts/Vazirmatn-Light.woff2") format("woff2");
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("fonts/webfonts/Vazirmatn-Regular.woff2") format("woff2");
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn Medium";
+  src: url("fonts/webfonts/Vazirmatn-Medium.woff2") format("woff2");
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn SemiBold";
+  src: url("fonts/webfonts/Vazirmatn-SemiBold.woff2") format("woff2");
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn Bold";
+  src: url("fonts/webfonts/Vazirmatn-Bold.woff2") format("woff2");
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn ExtraBold";
+  src: url("fonts/webfonts/Vazirmatn-ExtraBold.woff2") format("woff2");
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn Black";
+  src: url("fonts/webfonts/Vazirmatn-Black.woff2") format("woff2");
+  font-style: normal;
+}
+
+
+/* FD family (Persian Digits) — one family per weight */
+@font-face {
+  font-family: "Vazirmatn FD Thin";
+  src: url("fonts/webfonts/Vazirmatn-FD-Thin.woff2") format("woff2");
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn FD ExtraLight";
+  src: url("fonts/webfonts/Vazirmatn-FD-ExtraLight.woff2") format("woff2");
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn FD Light";
+  src: url("fonts/webfonts/Vazirmatn-FD-Light.woff2") format("woff2");
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn FD";
+  src: url("fonts/webfonts/Vazirmatn-FD-Regular.woff2") format("woff2");
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn FD Medium";
+  src: url("fonts/webfonts/Vazirmatn-FD-Medium.woff2") format("woff2");
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn FD SemiBold";
+  src: url("fonts/webfonts/Vazirmatn-FD-SemiBold.woff2") format("woff2");
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn FD Bold";
+  src: url("fonts/webfonts/Vazirmatn-FD-Bold.woff2") format("woff2");
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn FD ExtraBold";
+  src: url("fonts/webfonts/Vazirmatn-FD-ExtraBold.woff2") format("woff2");
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn FD Black";
+  src: url("fonts/webfonts/Vazirmatn-FD-Black.woff2") format("woff2");
+  font-style: normal;
+}
+
+    </style>
 </head>
-<body>
+<body><div class="main-frame">
+<div> <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+<script charset="utf-8" src="plotly.min.js"></script> <div class="plotly-graph-div" id="aae62452-6d1e-4bb2-b01c-27bcf245a40e" style="height:100%; width:100%;"></div> <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("aae62452-6d1e-4bb2-b01c-27bcf245a40e")) {                    Plotly.newPlot(                        "aae62452-6d1e-4bb2-b01c-27bcf245a40e",                        [{"customdata":[["۵۲۰","۲۰۱۵","۲۶٫۳"],["۵۸۲","۲۰۱۶","۲۵٫۲"],["۵۸۰","۲۰۱۷","۲۳٫۹"],["۵۵۸","۲۰۱۸","۲۲٫۶"],["۵۸۷","۲۰۱۹","۲۴٫۹"],["۵۱۲","۲۰۲۰","۲۱٫۲"],["۴۸۲","۲۰۲۱","۲۰٫۳"],["۴۱۴","۲۰۲۲","۱۹٫۷"],["۳۵۷","۲۰۲۳","۱۸٫۳"],["۳۲۶","۲۰۲۴","۱۶٫۶"]],"fillpattern":{"shape":""},"hovertemplate":"\u003cb\u003e%{fullData.name}\u003c\u002fb\u003e\u003cbr\u003e%{customdata[1]}\u003cbr\u003e٪سهم: %{customdata[2]}\u003cbr\u003eفراوانی: %{customdata[0]}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"داخلی چند مؤسسه‌ای","line":{"color":"#2C7BB6"},"marker":{"symbol":"circle"},"mode":"lines","name":"داخلی چند مؤسسه‌ای","orientation":"v","showlegend":true,"stackgroup":"1","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"qXRkz0BUOkCBKYEpgSk5QHqAxErG2zdAOZpT+wyjNkAPmGjpj+c4QJ9jiRXpNzVAZnoiGERJNECe8N3GE74zQHDEHqL9VTJAsFlpscmfMEA="},"yaxis":"y","type":"scatter","hoveron":"fills+points"},{"customdata":[["۹۴۳","۲۰۱۵","۴۷٫۷"],["۱۱۸۳","۲۰۱۶","۵۱٫۱"],["۱۱۷۹","۲۰۱۷","۴۸٫۵"],["۱۱۳۰","۲۰۱۸","۴۵٫۸"],["۹۸۰","۲۰۱۹","۴۱٫۶"],["۱۰۰۲","۲۰۲۰","۴۱٫۵"],["۹۴۰","۲۰۲۱","۳۹٫۶"],["۸۰۳","۲۰۲۲","۳۸٫۳"],["۷۹۹","۲۰۲۳","۴۱٫۰"],["۸۳۴","۲۰۲۴","۴۲٫۵"]],"fillpattern":{"shape":""},"hovertemplate":"\u003cb\u003e%{fullData.name}\u003c\u002fb\u003e\u003cbr\u003e%{customdata[1]}\u003cbr\u003e٪سهم: %{customdata[2]}\u003cbr\u003eفراوانی: %{customdata[0]}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"داخلی تک مؤسسه‌ای","line":{"color":"#74ADD1"},"marker":{"symbol":"circle"},"mode":"lines","name":"داخلی تک مؤسسه‌ای","orientation":"v","showlegend":true,"stackgroup":"1","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"wKvFTZjfR0D751A9ppJJQBjonNLQP0hAGNpMnL\u002frRkCowQX\u002fBMpEQPvvkpM1w0RAOXW4GvnHQ0CbnQVyeiVDQBCr8ZbMhERAgH7f0MBDRUA="},"yaxis":"y","type":"scatter","hoveron":"fills+points"},{"customdata":[["۲۷۸","۲۰۱۵","۱۴٫۱"],["۲۸۲","۲۰۱۶","۱۲٫۲"],["۳۳۵","۲۰۱۷","۱۳٫۸"],["۳۷۲","۲۰۱۸","۱۵٫۱"],["۴۰۵","۲۰۱۹","۱۷٫۲"],["۴۶۷","۲۰۲۰","۱۹٫۴"],["۴۸۶","۲۰۲۱","۲۰٫۵"],["۴۴۲","۲۰۲۲","۲۱٫۱"],["۳۸۲","۲۰۲۳","۱۹٫۶"],["۳۶۸","۲۰۲۴","۱۸٫۸"]],"fillpattern":{"shape":""},"hovertemplate":"\u003cb\u003e%{fullData.name}\u003c\u002fb\u003e\u003cbr\u003e%{customdata[1]}\u003cbr\u003e٪سهم: %{customdata[2]}\u003cbr\u003eفراوانی: %{customdata[0]}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"دو کشوره","line":{"color":"#F46D43"},"marker":{"symbol":"circle"},"mode":"lines","name":"دو کشوره","orientation":"v","showlegend":true,"stackgroup":"1","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"Tpjf1eImLEBIYkhiSGIoQBlxMl+IjytAoc3E+bsuLkCdFXXizy4xQF7QJBl\u002fWjNAddFFF110NED4EIUe5hM1QJLEi5uznjNAXn54XRTEMkA="},"yaxis":"y","type":"scatter","hoveron":"fills+points"},{"customdata":[["۹۲","۲۰۱۵","۴٫۷"],["۹۸","۲۰۱۶","۴٫۲"],["۱۲۷","۲۰۱۷","۵٫۲"],["۱۵۱","۲۰۱۸","۶٫۱"],["۱۴۵","۲۰۱۹","۶٫۲"],["۱۹۵","۲۰۲۰","۸٫۱"],["۲۰۰","۲۰۲۱","۸٫۴"],["۱۷۸","۲۰۲۲","۸٫۵"],["۱۶۲","۲۰۲۳","۸٫۳"],["۱۷۳","۲۰۲۴","۸٫۸"]],"fillpattern":{"shape":""},"hovertemplate":"\u003cb\u003e%{fullData.name}\u003c\u002fb\u003e\u003cbr\u003e%{customdata[1]}\u003cbr\u003e٪سهم: %{customdata[2]}\u003cbr\u003eفراوانی: %{customdata[0]}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"سه کشوره","line":{"color":"#FDAE61"},"marker":{"symbol":"circle"},"mode":"lines","name":"سه کشوره","orientation":"v","showlegend":true,"stackgroup":"1","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"RKUjewaiEkDxR0adm\u002fIQQPm\u002fn22R5RRAOtBLZseAGEBZ\u002f62GiJsYQOKmZ4uWKSBAugHOqcPVIEAJCZajBPogQKBTzKoXpCBAQPGID+GkIUA="},"yaxis":"y","type":"scatter","hoveron":"fills+points"},{"customdata":[["۱۴۲","۲۰۱۵","۷٫۲"],["۱۶۸","۲۰۱۶","۷٫۳"],["۲۱۰","۲۰۱۷","۸٫۶"],["۲۵۴","۲۰۱۸","۱۰٫۳"],["۲۴۰","۲۰۱۹","۱۰٫۲"],["۲۳۷","۲۰۲۰","۹٫۸"],["۲۶۸","۲۰۲۱","۱۱٫۳"],["۲۶۰","۲۰۲۲","۱۲٫۴"],["۲۴۷","۲۰۲۳","۱۲٫۷"],["۲۶۰","۲۰۲۴","۱۳٫۳"]],"fillpattern":{"shape":""},"hovertemplate":"\u003cb\u003e%{fullData.name}\u003c\u002fb\u003e\u003cbr\u003e%{customdata[1]}\u003cbr\u003e٪سهم: %{customdata[2]}\u003cbr\u003eفراوانی: %{customdata[0]}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"چهار کشور یا بیشتر","line":{"color":"#FEE090"},"marker":{"symbol":"circle"},"mode":"lines","name":"چهار کشور یا بیشتر","orientation":"v","showlegend":true,"stackgroup":"1","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"hfldLW7CHECeDZ0NnQ0dQJYNAQrfRiFAcK0668ebJEBbntYoaF0kQDox8MjCpCNArJF\u002fjBWPJkBgfY3JHcwoQB\u002fuF35TXylApmQ1j1+EKkA="},"yaxis":"y","type":"scatter","hoveron":"fills+points"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#1f77b4","#ff7f0e","#2ca02c","#bcbd22","#9467bd","#8c564b","#e377c2","#7f7f7f","#d62728","#17becf","#aec7e8","#ffbb78"],"font":{"color":"#2a3f5f","family":"Vazirmatn FD"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"#E5ECF6","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"right","font":{"family":"Vazirmatn FD"}},"hovermode":"closest","legend":{"font":{"family":"Vazirmatn FD"},"title":{"font":{"family":"Vazirmatn FD"}}},"mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"title":{"font":{"family":"Vazirmatn FD Black"},"x":0.5,"xanchor":"center"},"xaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","tickfont":{"family":"Vazirmatn FD","size":13},"ticks":"","title":{"font":{"family":"Vazirmatn FD"},"standoff":15},"zerolinecolor":"white","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","tickfont":{"family":"Vazirmatn FD","size":13},"ticks":"","title":{"font":{"family":"Vazirmatn FD"},"standoff":15},"zerolinecolor":"white","zerolinewidth":2}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"سال"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"سهم"}},"legend":{"title":{"text":"نوع همکاری"},"tracegroupgap":0,"traceorder":"reversed"},"title":{"text":"سهم انواع همکاری‌های مقالات حوزه فیزیک ایران","x":0.5},"barmode":"stack","hoverlabel":{"font":{"family":"Vazirmatn","size":13},"align":"right"}},                        {"displaylogo": false, "modeBarButtonsToRemove": ["select", "lasso2d", "toggleSpikelines", "hoverCompareCartesian", "hoverClosestCartesian"], "toImageButtonOptions": {"filename": "21_collab_types_physics", "scale": 4, "format": "png"}, "responsive": true}                    )                };            </script> </div>
+</div>
 <div class="overlay-nav">
-<a href="11_Top_authors.html">←</a>
-<a href="../index.html">⌂</a>
-<a href="19_iran_physics_collab_share.html">→</a>
+<a class="nav-btn" href="11_Top_authors.html" title="قبلی">←</a>
+<a class="nav-btn home" href="../index.html" title="خانه">⌂</a>
+<a class="nav-btn" href="19_iran_physics_collab_share.html" title="بعدی">→</a>
 </div>
 <style>
+/* ===== Desktop: overlay ===== */
 .overlay-nav {
     position: absolute;
     top: 10px;
@@ -26,7 +129,8 @@
     gap: 8px;
     z-index: 99999;
 }
-.overlay-nav a {
+
+.overlay-nav .nav-btn {
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -39,9 +143,83 @@
     text-decoration: none;
     font-size: 18px;
 }
-</style>
 
-<div> <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
-<script charset="utf-8" src="plotly.min.js"></script> <div class="plotly-graph-div" id="d69c24bd-6c0e-4a48-ab01-351ace3f28ae" style="height:100%; width:100%;"></div> <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("d69c24bd-6c0e-4a48-ab01-351ace3f28ae")) {                    Plotly.newPlot(                        "d69c24bd-6c0e-4a48-ab01-351ace3f28ae",                        [{"customdata":[["۵۲۰","۲۰۱۵","۲۶٫۳"],["۵۸۲","۲۰۱۶","۲۵٫۲"],["۵۸۰","۲۰۱۷","۲۳٫۹"],["۵۵۸","۲۰۱۸","۲۲٫۶"],["۵۸۷","۲۰۱۹","۲۴٫۹"],["۵۱۲","۲۰۲۰","۲۱٫۲"],["۴۸۲","۲۰۲۱","۲۰٫۳"],["۴۱۴","۲۰۲۲","۱۹٫۷"],["۳۵۷","۲۰۲۳","۱۸٫۳"],["۳۲۶","۲۰۲۴","۱۶٫۶"]],"fillpattern":{"shape":""},"hovertemplate":"\u003cb\u003e%{fullData.name}\u003c\u002fb\u003e\u003cbr\u003e%{customdata[1]}\u003cbr\u003e٪سهم: %{customdata[2]}\u003cbr\u003eفراوانی: %{customdata[0]}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"داخلی چند مؤسسه‌ای","line":{"color":"#2C7BB6"},"marker":{"symbol":"circle"},"mode":"lines","name":"داخلی چند مؤسسه‌ای","orientation":"v","showlegend":true,"stackgroup":"1","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"qXRkz0BUOkCBKYEpgSk5QHqAxErG2zdAOZpT+wyjNkAPmGjpj+c4QJ9jiRXpNzVAZnoiGERJNECe8N3GE74zQHDEHqL9VTJAsFlpscmfMEA="},"yaxis":"y","type":"scatter","hoveron":"fills+points"},{"customdata":[["۹۴۳","۲۰۱۵","۴۷٫۷"],["۱۱۸۳","۲۰۱۶","۵۱٫۱"],["۱۱۷۹","۲۰۱۷","۴۸٫۵"],["۱۱۳۰","۲۰۱۸","۴۵٫۸"],["۹۸۰","۲۰۱۹","۴۱٫۶"],["۱۰۰۲","۲۰۲۰","۴۱٫۵"],["۹۴۰","۲۰۲۱","۳۹٫۶"],["۸۰۳","۲۰۲۲","۳۸٫۳"],["۷۹۹","۲۰۲۳","۴۱٫۰"],["۸۳۴","۲۰۲۴","۴۲٫۵"]],"fillpattern":{"shape":""},"hovertemplate":"\u003cb\u003e%{fullData.name}\u003c\u002fb\u003e\u003cbr\u003e%{customdata[1]}\u003cbr\u003e٪سهم: %{customdata[2]}\u003cbr\u003eفراوانی: %{customdata[0]}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"داخلی تک مؤسسه‌ای","line":{"color":"#74ADD1"},"marker":{"symbol":"circle"},"mode":"lines","name":"داخلی تک مؤسسه‌ای","orientation":"v","showlegend":true,"stackgroup":"1","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"wKvFTZjfR0D751A9ppJJQBjonNLQP0hAGNpMnL\u002frRkCowQX\u002fBMpEQPvvkpM1w0RAOXW4GvnHQ0CbnQVyeiVDQBCr8ZbMhERAgH7f0MBDRUA="},"yaxis":"y","type":"scatter","hoveron":"fills+points"},{"customdata":[["۲۷۸","۲۰۱۵","۱۴٫۱"],["۲۸۲","۲۰۱۶","۱۲٫۲"],["۳۳۵","۲۰۱۷","۱۳٫۸"],["۳۷۲","۲۰۱۸","۱۵٫۱"],["۴۰۵","۲۰۱۹","۱۷٫۲"],["۴۶۷","۲۰۲۰","۱۹٫۴"],["۴۸۶","۲۰۲۱","۲۰٫۵"],["۴۴۲","۲۰۲۲","۲۱٫۱"],["۳۸۲","۲۰۲۳","۱۹٫۶"],["۳۶۸","۲۰۲۴","۱۸٫۸"]],"fillpattern":{"shape":""},"hovertemplate":"\u003cb\u003e%{fullData.name}\u003c\u002fb\u003e\u003cbr\u003e%{customdata[1]}\u003cbr\u003e٪سهم: %{customdata[2]}\u003cbr\u003eفراوانی: %{customdata[0]}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"دو کشوره","line":{"color":"#F46D43"},"marker":{"symbol":"circle"},"mode":"lines","name":"دو کشوره","orientation":"v","showlegend":true,"stackgroup":"1","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"Tpjf1eImLEBIYkhiSGIoQBlxMl+IjytAoc3E+bsuLkCdFXXizy4xQF7QJBl\u002fWjNAddFFF110NED4EIUe5hM1QJLEi5uznjNAXn54XRTEMkA="},"yaxis":"y","type":"scatter","hoveron":"fills+points"},{"customdata":[["۹۲","۲۰۱۵","۴٫۷"],["۹۸","۲۰۱۶","۴٫۲"],["۱۲۷","۲۰۱۷","۵٫۲"],["۱۵۱","۲۰۱۸","۶٫۱"],["۱۴۵","۲۰۱۹","۶٫۲"],["۱۹۵","۲۰۲۰","۸٫۱"],["۲۰۰","۲۰۲۱","۸٫۴"],["۱۷۸","۲۰۲۲","۸٫۵"],["۱۶۲","۲۰۲۳","۸٫۳"],["۱۷۳","۲۰۲۴","۸٫۸"]],"fillpattern":{"shape":""},"hovertemplate":"\u003cb\u003e%{fullData.name}\u003c\u002fb\u003e\u003cbr\u003e%{customdata[1]}\u003cbr\u003e٪سهم: %{customdata[2]}\u003cbr\u003eفراوانی: %{customdata[0]}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"سه کشوره","line":{"color":"#FDAE61"},"marker":{"symbol":"circle"},"mode":"lines","name":"سه کشوره","orientation":"v","showlegend":true,"stackgroup":"1","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"RKUjewaiEkDxR0adm\u002fIQQPm\u002fn22R5RRAOtBLZseAGEBZ\u002f62GiJsYQOKmZ4uWKSBAugHOqcPVIEAJCZajBPogQKBTzKoXpCBAQPGID+GkIUA="},"yaxis":"y","type":"scatter","hoveron":"fills+points"},{"customdata":[["۱۴۲","۲۰۱۵","۷٫۲"],["۱۶۸","۲۰۱۶","۷٫۳"],["۲۱۰","۲۰۱۷","۸٫۶"],["۲۵۴","۲۰۱۸","۱۰٫۳"],["۲۴۰","۲۰۱۹","۱۰٫۲"],["۲۳۷","۲۰۲۰","۹٫۸"],["۲۶۸","۲۰۲۱","۱۱٫۳"],["۲۶۰","۲۰۲۲","۱۲٫۴"],["۲۴۷","۲۰۲۳","۱۲٫۷"],["۲۶۰","۲۰۲۴","۱۳٫۳"]],"fillpattern":{"shape":""},"hovertemplate":"\u003cb\u003e%{fullData.name}\u003c\u002fb\u003e\u003cbr\u003e%{customdata[1]}\u003cbr\u003e٪سهم: %{customdata[2]}\u003cbr\u003eفراوانی: %{customdata[0]}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"چهار کشور یا بیشتر","line":{"color":"#FEE090"},"marker":{"symbol":"circle"},"mode":"lines","name":"چهار کشور یا بیشتر","orientation":"v","showlegend":true,"stackgroup":"1","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6Ac="},"xaxis":"x","y":{"dtype":"f8","bdata":"hfldLW7CHECeDZ0NnQ0dQJYNAQrfRiFAcK0668ebJEBbntYoaF0kQDox8MjCpCNArJF\u002fjBWPJkBgfY3JHcwoQB\u002fuF35TXylApmQ1j1+EKkA="},"yaxis":"y","type":"scatter","hoveron":"fills+points"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#1f77b4","#ff7f0e","#2ca02c","#bcbd22","#9467bd","#8c564b","#e377c2","#7f7f7f","#d62728","#17becf","#aec7e8","#ffbb78"],"font":{"color":"#2a3f5f","family":"Vazirmatn FD"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"#E5ECF6","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"right","font":{"family":"Vazirmatn FD"}},"hovermode":"closest","legend":{"font":{"family":"Vazirmatn FD"},"title":{"font":{"family":"Vazirmatn FD"}}},"mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"title":{"font":{"family":"Vazirmatn FD Black"},"x":0.5,"xanchor":"center"},"xaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","tickfont":{"family":"Vazirmatn FD","size":13},"ticks":"","title":{"font":{"family":"Vazirmatn FD"},"standoff":15},"zerolinecolor":"white","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","tickfont":{"family":"Vazirmatn FD","size":13},"ticks":"","title":{"font":{"family":"Vazirmatn FD"},"standoff":15},"zerolinecolor":"white","zerolinewidth":2}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"سال"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"سهم"}},"legend":{"title":{"text":"نوع همکاری"},"tracegroupgap":0,"traceorder":"reversed"},"title":{"text":"سهم انواع همکاری‌های مقالات حوزه فیزیک ایران","x":0.5},"barmode":"stack","hoverlabel":{"font":{"family":"Vazirmatn","size":13},"align":"right"}},                        {"toImageButtonOptions": {"scale": 4, "filename": "21_collab_types_physics"}, "responsive": true}                    )                };            </script> </div>
+.overlay-nav .nav-btn.disabled {
+    color: #9ca3af;
+    background: rgba(255,255,255,0.55);
+    box-shadow: none;
+    cursor: not-allowed;
+    pointer-events: none;
+    filter: grayscale(100%);
+    opacity: 0.85;
+}
+
+/* ===== Mobile: true 85/15 split ===== */
+@media (max-width: 768px) {
+    html, body {
+        height: 100%;
+        margin: 0;
+        overflow: hidden; /* no page scroll */
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .main-frame {
+        flex: 0 0 85vh;
+        height: 85vh;
+        min-height: 0;       /* flexbox overflow fix */
+        overflow: hidden;    /* keep plot inside */
+        position: relative;
+    }
+
+    /* Force common exported content (Plotly/iframe/etc.) to obey main-frame */
+    .main-frame .plotly-graph-div,
+    .main-frame .js-plotly-plot {
+        height: 100% !important;
+        max-height: 100% !important;
+    }
+
+    .main-frame iframe {
+        height: 100% !important;
+        max-height: 100% !important;
+    }
+
+    /* If the export used inline heights like 100vh on divs, clamp them */
+    .main-frame div, .main-frame section, .main-frame main, .main-frame figure {
+        max-height: 100% !important;
+    }
+
+    .overlay-nav {
+        position: relative; /* no overlay */
+        top: auto;
+        left: auto;
+        flex: 0 0 15vh;
+        height: 15vh;
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        border-top: 1px solid rgba(148,163,184,0.45);
+        background: rgba(255,255,255,0.92);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 -8px 20px rgba(15,23,42,0.08);
+        z-index: 99999;
+    }
+
+    .overlay-nav .nav-btn {
+        width: 46px;
+        height: 46px;
+        font-size: 22px;
+        border-radius: 14px;
+    }
+}
+</style>
 </body>
 </html>

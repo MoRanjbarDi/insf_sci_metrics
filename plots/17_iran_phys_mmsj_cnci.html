@@ -157,34 +157,31 @@
 /* ===== Mobile: true 85/15 split ===== */
 /* Portrait (vertical): use split layout */
 /* Portrait (vertical): use split layout */
+/* ===== Portrait (vertical): TRUE 85 / 15 split ===== */
 @media (orientation: portrait) {
-  :root {
-    --nav-h: 320; /* adjust: 64–84px usually perfect */
-    --safe-bottom: env(safe-area-inset-bottom, 0px);
-  }
-
   html, body {
     height: 100%;
     margin: 0;
+    padding: 0;
     overflow: hidden;
   }
 
   body {
     display: flex;
     flex-direction: column;
-    height: 100dvh; /* ✅ dynamic viewport (fixes Android URL bar/gesture bar issues) */
-    overflow: hidden;
+    height: 100dvh; /* real usable viewport */
   }
 
+  /* ===== 85% CONTENT ===== */
   .main-frame {
-    height: calc(100dvh - var(--nav-h) - var(--safe-bottom));
-    flex: 0 0 auto;
+    flex: 0 0 85%;
+    height: 85%;
     min-height: 0;
     overflow: hidden;
     position: relative;
   }
 
-  /* Clamp Plotly/iframe/etc. to main-frame */
+  /* Clamp Plotly / iframe / exports */
   .main-frame .plotly-graph-div,
   .main-frame .js-plotly-plot,
   .main-frame iframe {
@@ -192,44 +189,41 @@
     max-height: 100% !important;
   }
 
-.overlay-nav {
-  position: relative;
-  top: auto;
-  left: auto;
+  /* ===== 15% NAV BAR ===== */
+  .overlay-nav {
+    flex: 0 0 15%;
+    height: 15%;
+    width: 100%;
 
-  flex: 0 0 15vh;
-  height: 15vh;
-  width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
 
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+    border-top: 1px solid rgba(148,163,184,0.45);
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 -8px 20px rgba(15,23,42,0.12);
 
-  /* 👇 move buttons upward */
-  padding-bottom: 1.5vh;
-  padding-top: 0.5vh;
+    /* keep above Android system bar */
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
 
-  border-top: 1px solid rgba(148,163,184,0.45);
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 -10px 24px rgba(15,23,42,0.12);
+  /* ===== BUTTONS SCALE WITH NAV ===== */
+  .overlay-nav .nav-btn {
+    height: 70%;     /* 👈 fills nav vertically */
+    aspect-ratio: 1 / 1;
+    max-height: 100%;
+    min-height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: clamp(22px, 6vw, 32px);
+    border-radius: 20%;
+  }
 }
 
-.overlay-nav .nav-btn {
-  width: 90px;          /* ⬆ bigger */
-  height: 90px;         /* ⬆ bigger */
-  font-size: 24px;      /* ⬆ clearer */
-  border-radius: 18px;  /* ⬆ more touch-friendly */
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  /* subtle lift */
-  transform: translateY(-25px);
-}
-
-}
 
 
 /* Landscape: keep overlay style */

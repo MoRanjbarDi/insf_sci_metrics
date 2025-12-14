@@ -155,71 +155,69 @@
 }
 
 /* ===== Mobile: true 85/15 split ===== */
-@media (max-width: 768px) {
-    html, body {
-        height: 100%;
-        margin: 0;
-        overflow: hidden; /* no page scroll */
-    }
+/* Portrait (vertical): use split layout */
+@media (orientation: portrait) {
+  html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
 
-    body {
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        overflow: hidden;
-    }
+  body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
 
-    .main-frame {
-        flex: 0 0 85vh;
-        height: 85vh;
-        min-height: 0;       /* flexbox overflow fix */
-        overflow: hidden;    /* keep plot inside */
-        position: relative;
-    }
+  .main-frame {
+    flex: 0 0 85vh;
+    height: 85vh;
+    min-height: 0;
+    overflow: hidden;
+    position: relative;
+  }
 
-    /* Force common exported content (Plotly/iframe/etc.) to obey main-frame */
-    .main-frame .plotly-graph-div,
-    .main-frame .js-plotly-plot {
-        height: 100% !important;
-        max-height: 100% !important;
-    }
+  /* Clamp Plotly/iframe/etc. to main-frame */
+  .main-frame .plotly-graph-div,
+  .main-frame .js-plotly-plot,
+  .main-frame iframe {
+    height: 100% !important;
+    max-height: 100% !important;
+  }
 
-    .main-frame iframe {
-        height: 100% !important;
-        max-height: 100% !important;
-    }
+  .overlay-nav {
+    position: relative;
+    top: auto;
+    left: auto;
+    flex: 0 0 15vh;
+    height: 15vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-top: 1px solid rgba(148,163,184,0.45);
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 -8px 20px rgba(15,23,42,0.08);
+  }
 
-    /* If the export used inline heights like 100vh on divs, clamp them */
-    .main-frame div, .main-frame section, .main-frame main, .main-frame figure {
-        max-height: 100% !important;
-    }
-
-    .overlay-nav {
-        position: relative; /* no overlay */
-        top: auto;
-        left: auto;
-        flex: 0 0 15vh;
-        height: 15vh;
-        width: 100%;
-
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-
-        border-top: 1px solid rgba(148,163,184,0.45);
-        background: rgba(255,255,255,0.92);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 -8px 20px rgba(15,23,42,0.08);
-        z-index: 99999;
-    }
-
-    .overlay-nav .nav-btn {
-        width: 46px;
-        height: 46px;
-        font-size: 22px;
-        border-radius: 14px;
-    }
+  .overlay-nav .nav-btn {
+    width: 46px;
+    height: 46px;
+    font-size: 22px;
+    border-radius: 14px;
+  }
 }
+
+/* Landscape: keep overlay style */
+@media (orientation: landscape) {
+  .overlay-nav {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+}
+
 </style>
 </body>
 </html>

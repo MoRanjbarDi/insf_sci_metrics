@@ -120,6 +120,13 @@
 <a class="nav-btn" href="21_collab_types_physics.html" title="بعدی">→</a>
 </div>
 <style>
+:root {
+  --nav-h: 400px;
+  --nav-pad: 12px;
+  --btn-size: clamp(64px, 14vw, 96px);
+  --btn-font: clamp(28px, 8vw, 44px);
+}
+
 /* ===== Desktop: overlay ===== */
 .overlay-nav {
     position: absolute;
@@ -154,7 +161,7 @@
     opacity: 0.85;
 }
 
-/* ===== Portrait (phone): fixed 400px nav panel, content never goes under it ===== */
+/* ===== Portrait (phone): fixed 400px nav panel, content NEVER goes under it ===== */
 @media (orientation: portrait) {
   html, body {
     height: 100%;
@@ -169,34 +176,44 @@
     overflow: hidden;
   }
 
+  /* Use FIXED so it's stable even during fast navigation / caching */
   .main-frame {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    bottom: calc(400px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
     overflow: hidden;
+  }
+
+  /* Stronger clamping: some Plotly exports wrap the graph in extra DIVs */
+  .main-frame,
+  .main-frame > * {
+    max-height: 100% !important;
   }
 
   .main-frame .plotly-graph-div,
   .main-frame .js-plotly-plot,
-  .main-frame iframe {
+  .main-frame iframe,
+  .main-frame svg {
     height: 100% !important;
     max-height: 100% !important;
   }
 
   .overlay-nav {
-    position: absolute;
+    position: fixed;
     left: 0;
     right: 0;
     bottom: 0;
 
-    height: calc(400px + env(safe-area-inset-bottom, 0px));
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+    height: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
+    padding: var(--nav-pad);
+    padding-bottom: calc(var(--nav-pad) + env(safe-area-inset-bottom, 0px));
 
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* brings buttons a bit higher */
     justify-content: space-evenly;
+    gap: 10px;
 
     border-top: 1px solid rgba(148,163,184,0.45);
     background: rgba(255,255,255,0.96);
@@ -205,44 +222,74 @@
     z-index: 99999;
   }
 
+  /* Bigger buttons in phone mode */
   .overlay-nav .nav-btn {
-    height: 70%;
-    aspect-ratio: 1 / 1;
-    min-height: 64px;
+    width: var(--btn-size);
+    height: var(--btn-size);
 
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    font-size: clamp(24px, 6vw, 36px);
+    font-size: var(--btn-font);
     border-radius: 22%;
   }
 }
 </style>
 <script>
 (function() {
-  function fixLayout() {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        try { window.dispatchEvent(new Event('resize')); } catch(e) {}
-        try {
-          if (window.Plotly && Plotly.Plots) {
-            document.querySelectorAll('.js-plotly-plot, .plotly-graph-div')
-              .forEach(g => { try { Plotly.Plots.resize(g); } catch(e) {} });
-          }
-        } catch(e) {}
-      });
-    });
+  function resizePlotlyIfAny() {
+    try {
+      if (window.Plotly && Plotly.Plots) {
+        document.querySelectorAll('.js-plotly-plot, .plotly-graph-div')
+          .forEach(g => { try { Plotly.Plots.resize(g); } catch(e) {} });
+      }
+    } catch(e) {}
   }
 
-  window.addEventListener('load', () => {
-    fixLayout();
-    setTimeout(fixLayout, 120);
-    setTimeout(fixLayout, 400);
-  });
+  function pulseResize() {
+    try { window.dispatchEvent(new Event('resize')); } catch(e) {}
+    resizePlotlyIfAny();
+  }
 
-  window.addEventListener('orientationchange', () => setTimeout(fixLayout, 200));
-  window.addEventListener('resize', () => setTimeout(fixLayout, 80));
+  // "Settle" loop fixes the annoying "needs refresh" case after clicking from home.
+  function settle(durationMs = 1800, intervalMs = 120) {
+    const start = performance.now ? performance.now() : Date.now();
+    (function tick() {
+      pulseResize();
+      const now = performance.now ? performance.now() : Date.now();
+      if ((now - start) < durationMs) {
+        setTimeout(tick, intervalMs);
+      }
+    })();
+  }
+
+  function onReady() {
+    // immediate + extra pulses
+    pulseResize();
+    requestAnimationFrame(() => requestAnimationFrame(pulseResize));
+    setTimeout(pulseResize, 120);
+    setTimeout(pulseResize, 400);
+    setTimeout(pulseResize, 900);
+
+    // settle for a short time (covers slow Plotly render)
+    settle(1800, 120);
+  }
+
+  window.addEventListener('load', onReady);
+
+  // Important for mobile Safari/Chrome back-forward cache and fast nav
+  window.addEventListener('pageshow', () => setTimeout(onReady, 50));
+
+  window.addEventListener('orientationchange', () => setTimeout(() => {
+    onReady();
+    settle(1400, 120);
+  }, 120));
+
+  window.addEventListener('resize', () => setTimeout(pulseResize, 80));
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) setTimeout(onReady, 50);
+  });
 })();
 </script>
 </body>

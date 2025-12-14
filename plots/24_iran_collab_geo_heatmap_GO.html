@@ -225,6 +225,48 @@
     left: 10px;
   }
 }
+<script>
+(function() {
+  function fixLayout() {
+    // Let CSS/layout settle first
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        try {
+          // 1) trigger generic resize listeners
+          window.dispatchEvent(new Event('resize'));
+        } catch(e) {}
+
+        // 2) Plotly: resize all graphs if Plotly exists
+        try {
+          if (window.Plotly && Plotly.Plots) {
+            const graphs = document.querySelectorAll('.js-plotly-plot, .plotly-graph-div');
+            graphs.forEach(g => {
+              try { Plotly.Plots.resize(g); } catch(e) {}
+            });
+          }
+        } catch(e) {}
+      });
+    });
+  }
+
+  // Run on load + small delays (some exports load libs late)
+  window.addEventListener('load', () => {
+    fixLayout();
+    setTimeout(fixLayout, 120);
+    setTimeout(fixLayout, 400);
+  });
+
+  // Run when orientation changes (portrait/landscape switch)
+  window.addEventListener('orientationchange', () => {
+    setTimeout(fixLayout, 200);
+  });
+
+  // Also run on viewport resize
+  window.addEventListener('resize', () => {
+    setTimeout(fixLayout, 80);
+  });
+})();
+</script>
 
 </style>
 </body>

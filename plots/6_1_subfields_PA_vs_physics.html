@@ -205,10 +205,10 @@ document.addEventListener("DOMContentLoaded", function() {
     opacity: 0.85;
 }
 
-/* ===== Mobile: true 85/15 split ===== */
-/* Portrait (vertical): use split layout */
-/* Portrait (vertical): use split layout */
-/* ===== Portrait (vertical): TRUE 85 / 15 split ===== */
+
+
+
+/* ===== Portrait (phone): FIXED 400px NAV, REST CONTENT ===== */
 @media (orientation: portrait) {
   html, body {
     height: 100%;
@@ -218,21 +218,22 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   body {
-    display: flex;
-    flex-direction: column;
-    height: 100dvh; /* real usable viewport */
-  }
-
-  /* ===== 85% CONTENT ===== */
-  .main-frame {
-    flex: 0 0 85%;
-    height: 85%;
-    min-height: 0;
-    overflow: hidden;
     position: relative;
+    height: 100dvh; /* real usable viewport */
+    overflow: hidden;
   }
 
-  /* Clamp Plotly / iframe / exports */
+  /* ===== CONTENT: everything above nav ===== */
+  .main-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: calc(400px + env(safe-area-inset-bottom, 0px));
+    overflow: hidden;
+  }
+
+  /* Force Plotly / iframe to obey container */
   .main-frame .plotly-graph-div,
   .main-frame .js-plotly-plot,
   .main-frame iframe {
@@ -240,38 +241,40 @@ document.addEventListener("DOMContentLoaded", function() {
     max-height: 100% !important;
   }
 
-  /* ===== 15% NAV BAR ===== */
+  /* ===== NAV PANEL: fixed 400px ===== */
   .overlay-nav {
-    flex: 0 0 15%;
-    height: 15%;
-    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: calc(400px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
 
     display: flex;
     align-items: center;
     justify-content: space-evenly;
 
     border-top: 1px solid rgba(148,163,184,0.45);
-    background: rgba(255,255,255,0.95);
+    background: rgba(255,255,255,0.96);
     backdrop-filter: blur(10px);
-    box-shadow: 0 -8px 20px rgba(15,23,42,0.12);
-
-    /* keep above Android system bar */
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-shadow: 0 -10px 30px rgba(15,23,42,0.15);
+    z-index: 99999;
   }
 
-  /* ===== BUTTONS SCALE WITH NAV ===== */
+  /* ===== BUTTONS: fill the nav nicely ===== */
   .overlay-nav .nav-btn {
-    height: 70%;     /* 👈 fills nav vertically */
+    height: 70%;
     aspect-ratio: 1 / 1;
+    min-height: 64px;
     max-height: 100%;
-    min-height: 44px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-size: clamp(22px, 6vw, 32px);
-    border-radius: 20%;
+    font-size: clamp(24px, 6vw, 36px);
+    border-radius: 22%;
   }
 }
 

@@ -115,13 +115,34 @@
 <a aria-label="قبلی" class="nav-btn" href="28_all_papers_cnci.html" title="قبلی">←</a>
 <a aria-label="خانه" class="nav-btn home" href="../index.html" title="خانه">⌂</a>
 <a aria-label="بعدی" class="nav-btn" href="3_physics_abs_papers_and_share_GO.html" title="بعدی">→</a>
+<button aria-label="اطلاعات" class="nav-btn info-btn" title="اطلاعات" type="button">ℹ</button>
 </div>
+<div aria-hidden="true" class="info-backdrop" id="info-backdrop"></div>
+<aside aria-hidden="true" aria-modal="true" class="info-drawer" dir="rtl" id="info-drawer" lang="fa" role="dialog" tabindex="-1">
+<div class="info-head">
+<div class="info-title" dir="rtl" id="info-title"></div>
+<button aria-label="بستن" class="info-close" id="info-close" type="button">
+<span class="close-x">×</span>
+<span class="close-up">⌃</span>
+</button>
+</div>
+<div class="info-body" id="info-body"></div>
+</aside>
+<script id="info-payload" type="application/json">{"title": "سهم از بروندادهای فیزیک در جهان", "long_title": "سهم کشورهای منتخب از بروندادهای علمی جهان در حوزه فیزیک", "md": "<div dir=\"rtl\" style=\"font-family:system-ui,-apple-system,'Segoe UI',Tahoma,Arial,sans-serif;line-height:1.9;\">\n  <p>\n    این نمودار نیز مشابه نمودار اول، سهم کشورها از بروندادهای جهان را نشان می‌دهد با این تفاوت که در این مورد صرفاً\n    بروندادهای حوزه فیزیک قید شده‌اند. این دسته بندی در سطح مقالات انجام شده و به صورت یک به یک می‌باشد. لذا جمع\n    مقالات موضوعات مختلف برابر با کل است.\n  <\/p>\n\n  <!-- MathJax (renders LaTeX) -->\n  <script>\n    window.MathJax = { tex: { inlineMath: [['\\\\(','\\\\)'], ['$', '$']] } };\n  <\/script>\n  <script defer src=\"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js\"><\/script>\n\n  <div dir=\"ltr\" style=\"margin-top:8px;\">\n    \\[\n      \\text{Share of Iranian Physics Publications (%)} =\n      \\frac{\\text{Iran's Publications Count in Physics}}{\\text{Total Publications Count in Physics}}\n      \\times 100\n    \\]\n  <\/div>\n<\/div>"}</script>
+<!-- MathJax (LaTeX rendering) -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['\\[','\\]'], ['$$','$$']]
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
-/* Make sure the page has room for bottom nav on phones */
 @media (orientation: portrait) {
-    body {
-        padding-bottom: 92px !important;
-    }
+    body { padding-bottom: 92px !important; }
 }
 
 .overlay-nav {
@@ -146,6 +167,9 @@
     text-decoration: none;
     font-size: 28px;
     user-select: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
 }
 
 .overlay-nav .nav-btn.disabled {
@@ -158,7 +182,146 @@
     opacity: 0.9;
 }
 
-/* Phone layout: bottom, centered, and 2x bigger */
+.info-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s ease;
+    z-index: 99998;
+}
+
+.info-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    /* Desktop drawer width (increase 420px to your taste) */
+    width: min(800px, 92vw);
+
+    height: 100vh;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+    transform: translateX(110%);
+    transition: transform 0.22s ease;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 14px 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    position: relative;
+}
+
+.info-title {
+    font-family: Vazirmatn, system-ui, sans-serif;
+    font-weight: 900;
+    font-size: 15px;
+    color: #0f172a;
+    line-height: 1.6;
+
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.info-close {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: none;
+    background: rgba(0,0,0,0.06);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: #0f172a;
+    user-select: none;
+}
+
+.close-up { display: none; }
+
+.info-body {
+    padding: 14px 16px 18px;
+    overflow: auto;
+    font-family: Vazirmatn, system-ui, sans-serif;
+    color: #111827;
+    line-height: 1.9;
+    font-size: 14px;
+
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.info-body h1, .info-body h2, .info-body h3 {
+    margin: 10px 0 8px;
+    line-height: 1.5;
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: right;
+}
+.info-body h1 { font-size: 18px; }
+.info-body h2 { font-size: 16px; }
+.info-body h3 { font-size: 15px; }
+
+.info-body p { margin: 8px 0; }
+
+.info-body ul, .info-body ol {
+    margin: 8px 0;
+    padding-inline-start: 20px;
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: right;
+}
+
+.info-body li {
+    margin: 4px 0;
+    direction: rtl;
+    unicode-bidi: plaintext;
+}
+
+.info-body code {
+    background: rgba(0,0,0,0.06);
+    padding: 0 6px;
+    border-radius: 6px;
+}
+.info-body pre {
+    background: rgba(0,0,0,0.06);
+    padding: 10px 12px;
+    border-radius: 12px;
+    overflow: auto;
+}
+.info-body a {
+    color: #0057d9;
+    text-decoration: none;
+}
+.info-body a:hover { text-decoration: underline; }
+
+html.no-scroll, body.no-scroll {
+    overflow: hidden !important;
+}
+
+.info-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+.info-drawer.open {
+    transform: translateX(0);
+}
+
 @media (orientation: portrait) {
     .overlay-nav {
         position: fixed;
@@ -176,17 +339,255 @@
     }
 
     .overlay-nav .nav-btn {
-        width: 90px;     /* 2x */
-        height: 90px;    /* 2x */
-        font-size: 46px; /* 2x-ish */
+        width: 90px;
+        height: 90px;
+        font-size: 46px;
         box-shadow: 0 6px 14px rgba(0,0,0,0.18);
     }
 
-    .overlay-nav .nav-btn.disabled {
-        box-shadow: none;
+    .info-drawer {
+        left: 0;
+        right: 0;
+        top: 0;
+        width: 100vw;
+        height: min(70vh, 520px);
+        transform: translateY(-110%);
+        border-bottom-left-radius: 24px;
+        border-bottom-right-radius: 24px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+    .info-drawer.open {
+        transform: translateY(0);
+    }
+
+    .close-x { display: none; }
+    .close-up { display: inline; }
+
+    .info-close {
+        position: absolute;
+        left: 50%;
+        bottom: 10px;
+        top: auto;
+        transform: translateX(-50%);
+        width: 72px;
+        height: 44px;
+        font-size: 28px;
+        background: rgba(0,0,0,0.08);
+    }
+    .info-body {
+        padding-bottom: 70px;
     }
 }
 </style>
+<script>
+(function() {
+    const payloadEl = document.getElementById('info-payload');
+    const btn = document.querySelector('.info-btn');
+    const drawer = document.getElementById('info-drawer');
+    const backdrop = document.getElementById('info-backdrop');
+    const closeBtn = document.getElementById('info-close');
+    const titleEl = document.getElementById('info-title');
+    const bodyEl = document.getElementById('info-body');
+
+    if (!payloadEl || !btn || !drawer || !backdrop || !closeBtn || !titleEl || !bodyEl) return;
+
+    const isPortrait = window.matchMedia && window.matchMedia('(orientation: portrait)').matches;
+
+    let payload = {};
+    try {
+        payload = JSON.parse(payloadEl.textContent || '{}');
+    } catch (e) {
+        payload = {};
+    }
+
+    const rawInfo = (payload.md || '').trim();
+
+    function looksLikeHtml(s) {
+        return /<\/?[a-z][\s\S]*>/i.test(String(s || ''));
+    }
+
+    function sanitizeHtml(input) {
+        const template = document.createElement('template');
+        template.innerHTML = String(input || '');
+
+        const blockedTags = new Set(['SCRIPT','IFRAME','OBJECT','EMBED']);
+        const walker = document.createTreeWalker(template.content, NodeFilter.SHOW_ELEMENT, null);
+        const toRemove = [];
+
+        while (walker.nextNode()) {
+            const el = walker.currentNode;
+
+            if (blockedTags.has(el.tagName)) {
+                toRemove.push(el);
+                continue;
+            }
+
+            [...el.attributes].forEach(attr => {
+                const name = attr.name.toLowerCase();
+                const val = (attr.value || '').trim();
+
+                if (name.startsWith('on')) el.removeAttribute(attr.name);
+
+                if ((name === 'href' || name === 'src') && /^javascript:/i.test(val)) {
+                    el.setAttribute(attr.name, '#');
+                }
+            });
+        }
+
+        toRemove.forEach(el => el.remove());
+        return template.innerHTML;
+    }
+
+    // Title supports HTML too
+    const titleRaw = payload.long_title || payload.title || 'Info';
+    if (looksLikeHtml(titleRaw)) titleEl.innerHTML = sanitizeHtml(titleRaw);
+    else titleEl.textContent = titleRaw;
+
+    if (!rawInfo) {
+        btn.classList.add('disabled');
+        btn.setAttribute('aria-disabled', 'true');
+        btn.disabled = true;
+        if (!isPortrait) {
+            try { sessionStorage.setItem('infoOpen', '0'); } catch(e) {}
+        }
+        return;
+    }
+
+    function escapeHtml(s) {
+        return String(s)
+            .replace(/&/g,'&amp;')
+            .replace(/</g,'&lt;')
+            .replace(/>/g,'&gt;');
+    }
+
+    // Minimal markdown -> HTML (HTML is handled separately)
+    function mdToHtml(markdown) {
+        let text = String(markdown).replace(/\r\n?/g, '\n');
+
+        const parts = text.split(/```/g);
+        for (let i = 0; i < parts.length; i++) {
+            if (i % 2 === 1) {
+                parts[i] = '<pre><code>' + escapeHtml(parts[i].trim()) + '</code></pre>';
+            } else {
+                parts[i] = escapeHtml(parts[i]);
+            }
+        }
+        text = parts.join('');
+
+        text = text.replace(/`([^`]+?)`/g, '<code>$1</code>');
+        text = text.replace(/\[([^\]]+?)\]\(([^\)]+?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+        text = text.replace(/\*\*([^*]+?)\*\*/g, '<strong>$1</strong>');
+        text = text.replace(/(^|[^*])\*([^*]+?)\*(?!\*)/g, '$1<em>$2</em>');
+
+        text = text.replace(/^###\s+(.*)$/gm, '<h3>$1</h3>');
+        text = text.replace(/^##\s+(.*)$/gm, '<h2>$1</h2>');
+        text = text.replace(/^#\s+(.*)$/gm, '<h1>$1</h1>');
+
+        const lines = text.split(/\n/);
+        let out = [];
+        let inUl = false;
+
+        for (const line of lines) {
+            const m = line.match(/^\s*[-*]\s+(.*)$/);
+            if (m) {
+                if (!inUl) {
+                    inUl = true;
+                    out.push('<ul>');
+                }
+                out.push('<li>' + m[1] + '</li>');
+            } else {
+                if (inUl) {
+                    out.push('</ul>');
+                    inUl = false;
+                }
+                out.push(line);
+            }
+        }
+        if (inUl) out.push('</ul>');
+        text = out.join('\n');
+
+        const blocks = text.split(/\n\s*\n/g).map(b => b.trim()).filter(Boolean);
+        return blocks.map(b => {
+            if (/^<(h1|h2|h3|ul|pre)/.test(b)) return b;
+            return '<p>' + b.replace(/\n/g, '<br>') + '</p>';
+        }).join('\n');
+    }
+
+    // Render body: HTML if looks like HTML, else Markdown
+    if (looksLikeHtml(rawInfo)) bodyEl.innerHTML = sanitizeHtml(rawInfo);
+    else bodyEl.innerHTML = mdToHtml(rawInfo);
+
+    // MathJax typeset (retry until loaded)
+    let typesetTries = 0;
+    function requestTypeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+            try {
+                if (MathJax.typesetClear) MathJax.typesetClear([drawer]);
+            } catch(e) {}
+            MathJax.typesetPromise([drawer]).catch(function(){});
+            return;
+        }
+        if (typesetTries++ < 25) setTimeout(requestTypeset, 200);
+    }
+    requestTypeset();
+
+    function setDesktopInfoState(isOpen) {
+        if (isPortrait) return;
+        try {
+            sessionStorage.setItem('infoOpen', isOpen ? '1' : '0');
+        } catch (e) {}
+    }
+
+    function openDrawer() {
+        drawer.classList.add('open');
+        backdrop.classList.add('open');
+        drawer.setAttribute('aria-hidden', 'false');
+        backdrop.setAttribute('aria-hidden', 'false');
+        document.documentElement.classList.add('no-scroll');
+        document.body.classList.add('no-scroll');
+        setDesktopInfoState(true);
+        requestTypeset();
+        drawer.focus();
+    }
+
+    function closeDrawer() {
+        drawer.classList.remove('open');
+        backdrop.classList.remove('open');
+        drawer.setAttribute('aria-hidden', 'true');
+        backdrop.setAttribute('aria-hidden', 'true');
+        document.documentElement.classList.remove('no-scroll');
+        document.body.classList.remove('no-scroll');
+        setDesktopInfoState(false);
+        btn.focus();
+    }
+
+    // Info button toggles open/close
+    btn.addEventListener('click', function() {
+        if (drawer.classList.contains('open')) closeDrawer();
+        else openDrawer();
+    });
+
+    closeBtn.addEventListener('click', closeDrawer);
+    backdrop.addEventListener('click', closeDrawer);
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && drawer.classList.contains('open')) {
+            closeDrawer();
+        }
+    });
+
+    // Option A: restore open state ONLY on desktop
+    if (!isPortrait) {
+        let shouldOpen = false;
+        try {
+            shouldOpen = (sessionStorage.getItem('infoOpen') === '1');
+        } catch(e) {
+            shouldOpen = false;
+        }
+        if (shouldOpen) openDrawer();
+    }
+})();
+</script>
 
 <div> <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
 <script charset="utf-8" src="plotly.min.js"></script> <div class="plotly-graph-div" id="0b7e891c-bbf5-4b62-9c0b-4c975ca133a1" style="height:100%; width:100%;"></div> <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("0b7e891c-bbf5-4b62-9c0b-4c975ca133a1")) {                    Plotly.newPlot(                        "0b7e891c-bbf5-4b62-9c0b-4c975ca133a1",                        [{"hovertemplate":"%{text}\u003cextra\u003e\u003c\u002fextra\u003e","line":{"color":"#ff7f0e","width":1.9},"marker":{"opacity":0.5,"size":4,"symbol":"circle"},"mode":"lines+markers","name":"چین","text":["\u003cb\u003eچین\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۵\u003cbr\u003eسهم از برونداد جهانی: ۱۹٫۷۰٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۸۶\u003cbr\u003eسهم مقالات ده درصد برتر: ۷٫۹۲٪","\u003cb\u003eچین\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۶\u003cbr\u003eسهم از برونداد جهانی: ۲۰٫۲۶٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۹۰\u003cbr\u003eسهم مقالات ده درصد برتر: ۸٫۲۵٪","\u003cb\u003eچین\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۷\u003cbr\u003eسهم از برونداد جهانی: ۲۱٫۳۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۹۶\u003cbr\u003eسهم مقالات ده درصد برتر: ۸٫۹۳٪","\u003cb\u003eچین\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۸\u003cbr\u003eسهم از برونداد جهانی: ۲۳٫۳۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۹۸\u003cbr\u003eسهم مقالات ده درصد برتر: ۹٫۵۲٪","\u003cb\u003eچین\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۹\u003cbr\u003eسهم از برونداد جهانی: ۲۵٫۲۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۰۱\u003cbr\u003eسهم مقالات ده درصد برتر: ۹٫۸۱٪","\u003cb\u003eچین\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۰\u003cbr\u003eسهم از برونداد جهانی: ۲۵٫۶۷٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۰۴\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۰٫۳۴٪","\u003cb\u003eچین\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۱\u003cbr\u003eسهم از برونداد جهانی: ۲۷٫۵۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۰۸\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۰٫۸۱٪","\u003cb\u003eچین\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۲\u003cbr\u003eسهم از برونداد جهانی: ۳۰٫۹۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۰۹\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۰٫۹۹٪","\u003cb\u003eچین\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۳\u003cbr\u003eسهم از برونداد جهانی: ۳۱٫۹۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۱۰\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۱٫۱۹٪","\u003cb\u003eچین\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۴\u003cbr\u003eسهم از برونداد جهانی: ۳۳٫۵۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۰۷\u003cbr\u003eسهم مقالات ده درصد برتر: ۹٫۵۵٪","\u003cb\u003eچین\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۵\u003cbr\u003eسهم از برونداد جهانی: ۳۷٫۴۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۰۵\u003cbr\u003eسهم مقالات ده درصد برتر: ۸٫۵۵٪"],"x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpBw=="},"y":{"dtype":"f8","bdata":"2NMeu5CyM0DsWboUY0I0QBd2vEJ2UDVA5ghCYCJON0DG15e7d0k5QFaY+D58rDlAjd48LFCKO0D3UTV+o+o+QK3Z483U8z9ApP2J1jTGQEAibRLtybVCQA=="},"type":"scatter"},{"hovertemplate":"%{text}\u003cextra\u003e\u003c\u002fextra\u003e","line":{"color":"#1f77b4","width":1.9},"marker":{"opacity":0.5,"size":4,"symbol":"circle"},"mode":"lines+markers","name":"آمریکا","text":["\u003cb\u003eآمریکا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۵\u003cbr\u003eسهم از برونداد جهانی: ۲۳٫۸۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۶\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۹۲٪","\u003cb\u003eآمریکا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۶\u003cbr\u003eسهم از برونداد جهانی: ۲۳٫۹۸٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۹\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۸۸٪","\u003cb\u003eآمریکا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۷\u003cbr\u003eسهم از برونداد جهانی: ۲۳٫۵۳٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۷\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۳۸٪","\u003cb\u003eآمریکا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۸\u003cbr\u003eسهم از برونداد جهانی: ۲۳٫۴۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۶۰\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۷٫۲۷٪","\u003cb\u003eآمریکا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۹\u003cbr\u003eسهم از برونداد جهانی: ۲۲٫۷۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۸\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۷٫۲۱٪","\u003cb\u003eآمریکا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۰\u003cbr\u003eسهم از برونداد جهانی: ۲۲٫۹۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۷\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۷۴٪","\u003cb\u003eآمریکا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۱\u003cbr\u003eسهم از برونداد جهانی: ۲۲٫۱۰٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۶\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۵٫۹۴٪","\u003cb\u003eآمریکا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۲\u003cbr\u003eسهم از برونداد جهانی: ۲۱٫۰۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۵\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۰۶٪","\u003cb\u003eآمریکا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۳\u003cbr\u003eسهم از برونداد جهانی: ۲۰٫۵۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۵\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۰۷٪","\u003cb\u003eآمریکا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۴\u003cbr\u003eسهم از برونداد جهانی: ۲۰٫۴۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۰\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۳٫۵۲٪","\u003cb\u003eآمریکا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۵\u003cbr\u003eسهم از برونداد جهانی: ۱۹٫۶۶٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۵\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۲٫۸۸٪"],"x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpBw=="},"y":{"dtype":"f8","bdata":"n6qoAyXSN0Bw7qqao\u002fo3QFT0MbbpiDdA6pJy0W98N0A3XG1MRco2QPuxsaLp6jZAHDI7tkcZNkBQI8QX8xc1QPpwJnRvgzRAtRLVIpt8NECuCIiXLagzQA=="},"type":"scatter"},{"hovertemplate":"%{text}\u003cextra\u003e\u003c\u002fextra\u003e","line":{"color":"#2ca02c","width":1.9},"marker":{"opacity":0.5,"size":4,"symbol":"circle"},"mode":"lines+markers","name":"آلمان","text":["\u003cb\u003eآلمان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۵\u003cbr\u003eسهم از برونداد جهانی: ۱۱٫۳۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۳\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۸۴٪","\u003cb\u003eآلمان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۶\u003cbr\u003eسهم از برونداد جهانی: ۱۱٫۴۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۸\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۷۶٪","\u003cb\u003eآلمان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۷\u003cbr\u003eسهم از برونداد جهانی: ۱۱٫۳۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۹\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۵٫۶۱٪","\u003cb\u003eآلمان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۸\u003cbr\u003eسهم از برونداد جهانی: ۱۱٫۰۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۱\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۴۶٪","\u003cb\u003eآلمان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۹\u003cbr\u003eسهم از برونداد جهانی: ۱۰٫۹۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۴\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۵٫۹۴٪","\u003cb\u003eآلمان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۰\u003cbr\u003eسهم از برونداد جهانی: ۱۰٫۷۷٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۷\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۰۴٪","\u003cb\u003eآلمان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۱\u003cbr\u003eسهم از برونداد جهانی: ۱۰٫۸۳٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۳\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۵٫۲۹٪","\u003cb\u003eآلمان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۲\u003cbr\u003eسهم از برونداد جهانی: ۱۰٫۲۳٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۴\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۵٫۵۸٪","\u003cb\u003eآلمان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۳\u003cbr\u003eسهم از برونداد جهانی: ۱۰٫۱۸٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۵\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۰۷٪","\u003cb\u003eآلمان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۴\u003cbr\u003eسهم از برونداد جهانی: ۱۰٫۰۸٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۴\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۳٫۸۵٪","\u003cb\u003eآلمان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۵\u003cbr\u003eسهم از برونداد جهانی: ۹٫۴۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۸\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۳٫۴۸٪"],"x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpBw=="},"y":{"dtype":"f8","bdata":"2gDAuZ+jJkCgEEpdL+QmQIgqdPa2xiZAjH9t7VQGJkAV0112aP0lQFLII3Y0jCVAPJTZia+qJUBVlcsHoXckQNEQ2L56XCRAwqSOBBEqJECqmwFTEegiQA=="},"type":"scatter"},{"hovertemplate":"%{text}\u003cextra\u003e\u003c\u002fextra\u003e","line":{"color":"#9467bd","width":1.9},"marker":{"opacity":0.5,"size":4,"symbol":"circle"},"mode":"lines+markers","name":"هند","text":["\u003cb\u003eهند\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۵\u003cbr\u003eسهم از برونداد جهانی: ۵٫۴۸٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۸۶\u003cbr\u003eسهم مقالات ده درصد برتر: ۷٫۷۵٪","\u003cb\u003eهند\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۶\u003cbr\u003eسهم از برونداد جهانی: ۵٫۷۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۰۲\u003cbr\u003eسهم مقالات ده درصد برتر: ۷٫۹۴٪","\u003cb\u003eهند\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۷\u003cbr\u003eسهم از برونداد جهانی: ۵٫۸۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۰۲\u003cbr\u003eسهم مقالات ده درصد برتر: ۸٫۱۸٪","\u003cb\u003eهند\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۸\u003cbr\u003eسهم از برونداد جهانی: ۶٫۶۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۸۲\u003cbr\u003eسهم مقالات ده درصد برتر: ۷٫۳۲٪","\u003cb\u003eهند\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۹\u003cbr\u003eسهم از برونداد جهانی: ۶٫۴۸٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۹۱\u003cbr\u003eسهم مقالات ده درصد برتر: ۸٫۳۵٪","\u003cb\u003eهند\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۰\u003cbr\u003eسهم از برونداد جهانی: ۶٫۸۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۰۳\u003cbr\u003eسهم مقالات ده درصد برتر: ۸٫۶۴٪","\u003cb\u003eهند\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۱\u003cbr\u003eسهم از برونداد جهانی: ۷٫۱۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۰۰\u003cbr\u003eسهم مقالات ده درصد برتر: ۸٫۹۸٪","\u003cb\u003eهند\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۲\u003cbr\u003eسهم از برونداد جهانی: ۷٫۴۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۰۰\u003cbr\u003eسهم مقالات ده درصد برتر: ۹٫۲۷٪","\u003cb\u003eهند\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۳\u003cbr\u003eسهم از برونداد جهانی: ۷٫۶۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۹۶\u003cbr\u003eسهم مقالات ده درصد برتر: ۹٫۲۱٪","\u003cb\u003eهند\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۴\u003cbr\u003eسهم از برونداد جهانی: ۷٫۶۸٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۹۷\u003cbr\u003eسهم مقالات ده درصد برتر: ۸٫۷۹٪","\u003cb\u003eهند\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۵\u003cbr\u003eسهم از برونداد جهانی: ۷٫۷۷٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۰۷\u003cbr\u003eسهم مقالات ده درصد برتر: ۸٫۶۱٪"],"x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpBw=="},"y":{"dtype":"f8","bdata":"tf546gHwFUDiuTXjCwAXQM58upxCRBdABMrjhICRGkBJtigjnvAZQC4I2BgsXhtAO2zVTQxtHEDP5HyuDaQdQIiCD7oMeh5ABbLufhG7HkCyaWiRSRQfQA=="},"type":"scatter"},{"hovertemplate":"%{text}\u003cextra\u003e\u003c\u002fextra\u003e","line":{"color":"#bcbd22","width":1.9},"marker":{"opacity":0.5,"size":4,"symbol":"circle"},"mode":"lines+markers","name":"بریتانیا","text":["\u003cb\u003eبریتانیا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۵\u003cbr\u003eسهم از برونداد جهانی: ۷٫۸۸٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۷۱\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۹٫۵۴٪","\u003cb\u003eبریتانیا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۶\u003cbr\u003eسهم از برونداد جهانی: ۷٫۹۶٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۷۴\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۸٫۵۹٪","\u003cb\u003eبریتانیا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۷\u003cbr\u003eسهم از برونداد جهانی: ۸٫۱۰٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۶۱\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۷٫۷۲٪","\u003cb\u003eبریتانیا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۸\u003cbr\u003eسهم از برونداد جهانی: ۷٫۹۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۶۰\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۸٫۱۱٪","\u003cb\u003eبریتانیا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۹\u003cbr\u003eسهم از برونداد جهانی: ۷٫۷۷٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۹\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۸٫۴۲٪","\u003cb\u003eبریتانیا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۰\u003cbr\u003eسهم از برونداد جهانی: ۷٫۹۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۷۷\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۸٫۰۰٪","\u003cb\u003eبریتانیا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۱\u003cbr\u003eسهم از برونداد جهانی: ۷٫۸۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۷\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۷٫۱۶٪","\u003cb\u003eبریتانیا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۲\u003cbr\u003eسهم از برونداد جهانی: ۷٫۵۰٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۶۱\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۸٫۰۴٪","\u003cb\u003eبریتانیا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۳\u003cbr\u003eسهم از برونداد جهانی: ۷٫۵۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۶۸\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۸٫۶۳٪","\u003cb\u003eبریتانیا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۴\u003cbr\u003eسهم از برونداد جهانی: ۷٫۴۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۷\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۵٫۵۶٪","\u003cb\u003eبریتانیا\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۵\u003cbr\u003eسهم از برونداد جهانی: ۷٫۱۷٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۸۴\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۳۰٪"],"x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpBw=="},"y":{"dtype":"f8","bdata":"9XbbKcaCH0D0k4Pni9cfQEU6hQa5NCBA3KJG5aDLH0B9FapcnA8fQMtwEZirsR9ASHOwfxhpH0Aom+mYXfwdQCye4NgmKB5APyuTtv+oHUDPuteU7qkcQA=="},"type":"scatter"},{"hovertemplate":"%{text}\u003cextra\u003e\u003c\u002fextra\u003e","line":{"color":"#8c564b","width":1.9},"marker":{"opacity":0.5,"size":4,"symbol":"circle"},"mode":"lines+markers","name":"روسیه","text":["\u003cb\u003eروسیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۵\u003cbr\u003eسهم از برونداد جهانی: ۷٫۴۷٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۷۷\u003cbr\u003eسهم مقالات ده درصد برتر: ۶٫۸۷٪","\u003cb\u003eروسیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۶\u003cbr\u003eسهم از برونداد جهانی: ۸٫۲۰٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۸۶\u003cbr\u003eسهم مقالات ده درصد برتر: ۶٫۷۵٪","\u003cb\u003eروسیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۷\u003cbr\u003eسهم از برونداد جهانی: ۸٫۴۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۷۷\u003cbr\u003eسهم مقالات ده درصد برتر: ۵٫۷۶٪","\u003cb\u003eروسیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۸\u003cbr\u003eسهم از برونداد جهانی: ۸٫۶۶٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۶۶\u003cbr\u003eسهم مقالات ده درصد برتر: ۵٫۴۰٪","\u003cb\u003eروسیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۹\u003cbr\u003eسهم از برونداد جهانی: ۸٫۶۷٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۶۸\u003cbr\u003eسهم مقالات ده درصد برتر: ۵٫۴۴٪","\u003cb\u003eروسیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۰\u003cbr\u003eسهم از برونداد جهانی: ۷٫۹۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۸۸\u003cbr\u003eسهم مقالات ده درصد برتر: ۵٫۶۸٪","\u003cb\u003eروسیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۱\u003cbr\u003eسهم از برونداد جهانی: ۷٫۱۳٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۷۵\u003cbr\u003eسهم مقالات ده درصد برتر: ۶٫۱۶٪","\u003cb\u003eروسیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۲\u003cbr\u003eسهم از برونداد جهانی: ۶٫۱۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۶۹\u003cbr\u003eسهم مقالات ده درصد برتر: ۵٫۵۷٪","\u003cb\u003eروسیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۳\u003cbr\u003eسهم از برونداد جهانی: ۵٫۹۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۵۶\u003cbr\u003eسهم مقالات ده درصد برتر: ۳٫۸۹٪","\u003cb\u003eروسیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۴\u003cbr\u003eسهم از برونداد جهانی: ۴٫۸۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۵۷\u003cbr\u003eسهم مقالات ده درصد برتر: ۳٫۹۰٪","\u003cb\u003eروسیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۵\u003cbr\u003eسهم از برونداد جهانی: ۳٫۶۷٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۶۰\u003cbr\u003eسهم مقالات ده درصد برتر: ۴٫۳۹٪"],"x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpBw=="},"y":{"dtype":"f8","bdata":"uHXwDwLdHUBup2mNgWQgQNFpZkQf5SBAuNQ8fhtTIUC7IkoPoFUhQHF78hLa9B9Ab85IvhqJHEAABHYvs74YQAQJeqEsrRdA62oFFm1BE0AyWs1QB1INQA=="},"type":"scatter"},{"hovertemplate":"%{text}\u003cextra\u003e\u003c\u002fextra\u003e","line":{"color":"#e377c2","width":1.9},"marker":{"opacity":0.5,"size":4,"symbol":"circle"},"mode":"lines+markers","name":"کره جنوبی","text":["\u003cb\u003eکره جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۵\u003cbr\u003eسهم از برونداد جهانی: ۴٫۰۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۰۷\u003cbr\u003eسهم مقالات ده درصد برتر: ۹٫۶۴٪","\u003cb\u003eکره جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۶\u003cbr\u003eسهم از برونداد جهانی: ۳٫۹۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۰۷\u003cbr\u003eسهم مقالات ده درصد برتر: ۹٫۰۲٪","\u003cb\u003eکره جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۷\u003cbr\u003eسهم از برونداد جهانی: ۳٫۷۸٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۱۹\u003cbr\u003eسهم مقالات ده درصد برتر: ۹٫۷۹٪","\u003cb\u003eکره جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۸\u003cbr\u003eسهم از برونداد جهانی: ۳٫۹۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۰۹\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۰٫۱۹٪","\u003cb\u003eکره جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۹\u003cbr\u003eسهم از برونداد جهانی: ۳٫۸۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۱۹\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۱٫۳۸٪","\u003cb\u003eکره جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۰\u003cbr\u003eسهم از برونداد جهانی: ۳٫۹۶٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۲۱\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۱٫۵۱٪","\u003cb\u003eکره جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۱\u003cbr\u003eسهم از برونداد جهانی: ۳٫۹۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۲۴\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۲٫۲۰٪","\u003cb\u003eکره جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۲\u003cbr\u003eسهم از برونداد جهانی: ۳٫۸۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۲۸\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۲٫۵۸٪","\u003cb\u003eکره جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۳\u003cbr\u003eسهم از برونداد جهانی: ۳٫۹۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۳۳\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۲٫۱۷٪","\u003cb\u003eکره جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۴\u003cbr\u003eسهم از برونداد جهانی: ۳٫۹۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۲۲\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۰٫۸۳٪","\u003cb\u003eکره جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۵\u003cbr\u003eسهم از برونداد جهانی: ۴٫۱۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۱۳\u003cbr\u003eسهم مقالات ده درصد برتر: ۸٫۶۶٪"],"x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpBw=="},"y":{"dtype":"f8","bdata":"3qHq1eIPEEBKLP4w\u002f+QPQGy95lYlOA5AsfyZauflD0ADWPxvuRQPQEEbtISypQ9AmscAKpJiD0DgrmvBN7kOQKCjCBza7Q9AcghXdV7sD0BLjPxGUr8QQA=="},"type":"scatter"},{"hovertemplate":"%{text}\u003cextra\u003e\u003c\u002fextra\u003e","line":{"color":"#ffbb78","width":1.9},"marker":{"opacity":0.5,"size":4,"symbol":"circle"},"mode":"lines+markers","name":"عربستان","text":["\u003cb\u003eعربستان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۵\u003cbr\u003eسهم از برونداد جهانی: ۰٫۷۳٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۱۲\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۲٫۵۸٪","\u003cb\u003eعربستان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۶\u003cbr\u003eسهم از برونداد جهانی: ۰٫۷۶٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۲۳\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۳٫۲۱٪","\u003cb\u003eعربستان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۷\u003cbr\u003eسهم از برونداد جهانی: ۰٫۷۳٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۳۳\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۵٫۵۷٪","\u003cb\u003eعربستان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۸\u003cbr\u003eسهم از برونداد جهانی: ۰٫۸۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۶\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۷٫۵۰٪","\u003cb\u003eعربستان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۹\u003cbr\u003eسهم از برونداد جهانی: ۱٫۰۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۹\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۹٫۴۵٪","\u003cb\u003eعربستان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۰\u003cbr\u003eسهم از برونداد جهانی: ۱٫۳۳٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۵\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۹٫۲۶٪","\u003cb\u003eعربستان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۱\u003cbr\u003eسهم از برونداد جهانی: ۱٫۵۸٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۲\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۸٫۵۲٪","\u003cb\u003eعربستان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۲\u003cbr\u003eسهم از برونداد جهانی: ۱٫۶۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۳\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۹٫۳۸٪","\u003cb\u003eعربستان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۳\u003cbr\u003eسهم از برونداد جهانی: ۱٫۸۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۴\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۹٫۱۳٪","\u003cb\u003eعربستان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۴\u003cbr\u003eسهم از برونداد جهانی: ۲٫۱۰٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۸\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۷٫۶۱٪","\u003cb\u003eعربستان\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۵\u003cbr\u003eسهم از برونداد جهانی: ۲٫۲۷٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۹\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۴٫۹۸٪"],"x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpBw=="},"y":{"dtype":"f8","bdata":"pn5pr4B45z9U8qvoFGboPzg+0W3ROOc\u002f+9qn+Nhg7D83tU\u002fopx7wP\u002fzsw7mzQ\u002fU\u002fIvhy5u9F+T\u002fr3HAUzgD7P9VvYRZYP\u002f4\u002f4ATHe1TFAEBxHIjxGSoCQA=="},"type":"scatter"},{"hovertemplate":"%{text}\u003cextra\u003e\u003c\u002fextra\u003e","line":{"color":"#7f7f7f","width":1.9},"marker":{"opacity":0.5,"size":4,"symbol":"circle"},"mode":"lines+markers","name":"برزیل","text":["\u003cb\u003eبرزیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۵\u003cbr\u003eسهم از برونداد جهانی: ۲٫۲۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۱۷\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۱٫۹۴٪","\u003cb\u003eبرزیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۶\u003cbr\u003eسهم از برونداد جهانی: ۲٫۳۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۸\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۲٫۰۸٪","\u003cb\u003eبرزیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۷\u003cbr\u003eسهم از برونداد جهانی: ۲٫۲۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۳۱\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۰٫۵۸٪","\u003cb\u003eبرزیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۸\u003cbr\u003eسهم از برونداد جهانی: ۲٫۲۸٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۳۲\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۳٫۴۳٪","\u003cb\u003eبرزیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۹\u003cbr\u003eسهم از برونداد جهانی: ۲٫۳۶٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۱۲\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۱٫۵۸٪","\u003cb\u003eبرزیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۰\u003cbr\u003eسهم از برونداد جهانی: ۲٫۲۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۰\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۰٫۸۷٪","\u003cb\u003eبرزیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۱\u003cbr\u003eسهم از برونداد جهانی: ۲٫۲۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۱۳\u003cbr\u003eسهم مقالات ده درصد برتر: ۹٫۸۹٪","\u003cb\u003eبرزیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۲\u003cbr\u003eسهم از برونداد جهانی: ۲٫۰۳٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۱۴\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۱٫۳۵٪","\u003cb\u003eبرزیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۳\u003cbr\u003eسهم از برونداد جهانی: ۲٫۲۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۲۰\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۰٫۱۷٪","\u003cb\u003eبرزیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۴\u003cbr\u003eسهم از برونداد جهانی: ۲٫۰۸٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۹۸\u003cbr\u003eسهم مقالات ده درصد برتر: ۸٫۲۴٪","\u003cb\u003eبرزیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۵\u003cbr\u003eسهم از برونداد جهانی: ۲٫۰۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۰۸\u003cbr\u003eسهم مقالات ده درصد برتر: ۸٫۶۲٪"],"x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpBw=="},"y":{"dtype":"f8","bdata":"z+4ritf4AUCC\u002fQN0Mq8CQPDgms7pTAJA\u002fSmkmH85AkArnddwYdcCQEJ23GDoBgJAFrPv7IJYAkDkWNbO+UYAQA1\u002fv4m1pAFAWfvRIxytAEA5qcMs47UAQA=="},"type":"scatter"},{"hovertemplate":"%{text}\u003cextra\u003e\u003c\u002fextra\u003e","line":{"color":"#aec7e8","width":1.9},"marker":{"opacity":0.5,"size":4,"symbol":"circle"},"mode":"lines+markers","name":"ترکیه","text":["\u003cb\u003eترکیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۵\u003cbr\u003eسهم از برونداد جهانی: ۱٫۲۶٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۱۴\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۲٫۶۷٪","\u003cb\u003eترکیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۶\u003cbr\u003eسهم از برونداد جهانی: ۱٫۲۶٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۰۹\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۱٫۲۳٪","\u003cb\u003eترکیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۷\u003cbr\u003eسهم از برونداد جهانی: ۱٫۳۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۱۱\u003cbr\u003eسهم مقالات ده درصد برتر: ۹٫۵۳٪","\u003cb\u003eترکیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۸\u003cbr\u003eسهم از برونداد جهانی: ۱٫۴۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۱۳\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۳٫۹۴٪","\u003cb\u003eترکیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۹\u003cbr\u003eسهم از برونداد جهانی: ۱٫۵۸٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۱۴\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۳٫۸۴٪","\u003cb\u003eترکیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۰\u003cbr\u003eسهم از برونداد جهانی: ۱٫۵۷٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۲۸\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۵٫۰۹٪","\u003cb\u003eترکیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۱\u003cbr\u003eسهم از برونداد جهانی: ۱٫۶۷٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۲۱\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۵٫۱۱٪","\u003cb\u003eترکیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۲\u003cbr\u003eسهم از برونداد جهانی: ۱٫۶۶٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۲۲\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۴٫۲۱٪","\u003cb\u003eترکیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۳\u003cbr\u003eسهم از برونداد جهانی: ۱٫۸۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۳۱\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۴٫۹۱٪","\u003cb\u003eترکیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۴\u003cbr\u003eسهم از برونداد جهانی: ۱٫۶۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۲۳\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۲٫۱۳٪","\u003cb\u003eترکیه\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۵\u003cbr\u003eسهم از برونداد جهانی: ۱٫۶۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۳۳\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۱٫۲۱٪"],"x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpBw=="},"y":{"dtype":"f8","bdata":"v83YsaEv9D+KujCgPiX0P8MN7RHwJ\u002fU\u002fEM7XP0\u002fF9j\u002fgdihmjz\u002f5P2Eaa4uAEfk\u002fj8omx+61+j95MQovz4P6P+ybVzQJKf0\u002fopeqd3Xa+T+7FfwqyLP5Pw=="},"type":"scatter"},{"hovertemplate":"%{text}\u003cextra\u003e\u003c\u002fextra\u003e","line":{"color":"#1f77b4","width":2.5},"marker":{"opacity":1,"size":6,"symbol":"circle"},"mode":"lines+markers","name":"ایران","text":["\u003cb\u003eایران\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۵\u003cbr\u003eسهم از برونداد جهانی: ۱٫۳۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۷۳\u003cbr\u003eسهم مقالات ده درصد برتر: ۶٫۵۰٪","\u003cb\u003eایران\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۶\u003cbr\u003eسهم از برونداد جهانی: ۱٫۵۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۸۶\u003cbr\u003eسهم مقالات ده درصد برتر: ۷٫۱۱٪","\u003cb\u003eایران\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۷\u003cbr\u003eسهم از برونداد جهانی: ۱٫۶۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۷۹\u003cbr\u003eسهم مقالات ده درصد برتر: ۸٫۰۳٪","\u003cb\u003eایران\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۸\u003cbr\u003eسهم از برونداد جهانی: ۱٫۶۳٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۸۳\u003cbr\u003eسهم مقالات ده درصد برتر: ۹٫۲۷٪","\u003cb\u003eایران\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۹\u003cbr\u003eسهم از برونداد جهانی: ۱٫۵۷٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۸۴\u003cbr\u003eسهم مقالات ده درصد برتر: ۸٫۸۶٪","\u003cb\u003eایران\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۰\u003cbr\u003eسهم از برونداد جهانی: ۱٫۶۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۹۵\u003cbr\u003eسهم مقالات ده درصد برتر: ۸٫۰۱٪","\u003cb\u003eایران\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۱\u003cbr\u003eسهم از برونداد جهانی: ۱٫۵۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۹۰\u003cbr\u003eسهم مقالات ده درصد برتر: ۹٫۱۰٪","\u003cb\u003eایران\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۲\u003cbr\u003eسهم از برونداد جهانی: ۱٫۴۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۹۲\u003cbr\u003eسهم مقالات ده درصد برتر: ۹٫۹۱٪","\u003cb\u003eایران\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۳\u003cbr\u003eسهم از برونداد جهانی: ۱٫۴۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۹۷\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۱٫۰۳٪","\u003cb\u003eایران\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۴\u003cbr\u003eسهم از برونداد جهانی: ۱٫۲۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۹۵\u003cbr\u003eسهم مقالات ده درصد برتر: ۹٫۲۹٪","\u003cb\u003eایران\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۵\u003cbr\u003eسهم از برونداد جهانی: ۱٫۲۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۰۵\u003cbr\u003eسهم مقالات ده درصد برتر: ۹٫۰۵٪"],"x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpBw=="},"y":{"dtype":"f8","bdata":"h5Mwddg79j\u002foP9LrcZ74P6VAmtgW2Pk\u002fODzu4aEi+j+75zry4CD5P7QKgaBozvk\u002fWT14i4rd+D++8KvL\u002fSD3P6o7XEmXl\u002fY\u002fciUJgY8J9D\u002fkOaxvotjzPw=="},"type":"scatter"},{"hovertemplate":"%{text}\u003cextra\u003e\u003c\u002fextra\u003e","line":{"color":"#d62728","width":1.9},"marker":{"opacity":0.5,"size":4,"symbol":"circle"},"mode":"lines+markers","name":"اسرائیل","text":["\u003cb\u003eاسرائیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۵\u003cbr\u003eسهم از برونداد جهانی: ۱٫۲۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۰\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۷٫۸۵٪","\u003cb\u003eاسرائیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۶\u003cbr\u003eسهم از برونداد جهانی: ۱٫۱۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۷۴\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۸٫۶۴٪","\u003cb\u003eاسرائیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۷\u003cbr\u003eسهم از برونداد جهانی: ۱٫۲۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۵\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۵٫۷۵٪","\u003cb\u003eاسرائیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۸\u003cbr\u003eسهم از برونداد جهانی: ۱٫۲۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۷۲\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۷٫۶۷٪","\u003cb\u003eاسرائیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۹\u003cbr\u003eسهم از برونداد جهانی: ۱٫۲۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۶۰\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۷٫۵۸٪","\u003cb\u003eاسرائیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۰\u003cbr\u003eسهم از برونداد جهانی: ۱٫۲۶٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۵\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۷۲٪","\u003cb\u003eاسرائیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۱\u003cbr\u003eسهم از برونداد جهانی: ۱٫۱۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۷\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۰۰٪","\u003cb\u003eاسرائیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۲\u003cbr\u003eسهم از برونداد جهانی: ۱٫۱۷٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۶\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۶۴٪","\u003cb\u003eاسرائیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۳\u003cbr\u003eسهم از برونداد جهانی: ۱٫۲۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۲٫۳۰\u003cbr\u003eسهم مقالات ده درصد برتر: ۲۰٫۴۹٪","\u003cb\u003eاسرائیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۴\u003cbr\u003eسهم از برونداد جهانی: ۱٫۱۸٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۸۱\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۱۲٪","\u003cb\u003eاسرائیل\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۵\u003cbr\u003eسهم از برونداد جهانی: ۱٫۱۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۹۷\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۵٫۱۴٪"],"x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpBw=="},"y":{"dtype":"f8","bdata":"ihc\u002f6qqC8z\u002ff6x6d103yP6NAIHkFjPM\u002famEQmpwO9D8wQx24cMbzPwlagK1QNPQ\u002fnLtdbT3+8j8CNLD8dsHyP2nUau7AqvQ\u002fMHfkX5\u002fX8j+KAHZ2jVHyPw=="},"type":"scatter"},{"hovertemplate":"%{text}\u003cextra\u003e\u003c\u002fextra\u003e","line":{"color":"#17becf","width":1.9},"marker":{"opacity":0.5,"size":4,"symbol":"circle"},"mode":"lines+markers","name":"آفریقای جنوبی","text":["\u003cb\u003eآفریقای جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۵\u003cbr\u003eسهم از برونداد جهانی: ۰٫۷۶٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۶۵\u003cbr\u003eسهم مقالات ده درصد برتر: ۲۰٫۸۸٪","\u003cb\u003eآفریقای جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۶\u003cbr\u003eسهم از برونداد جهانی: ۰٫۸۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۲٫۵۱\u003cbr\u003eسهم مقالات ده درصد برتر: ۲۲٫۹۸٪","\u003cb\u003eآفریقای جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۷\u003cbr\u003eسهم از برونداد جهانی: ۰٫۸۳٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۶۸\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۷٫۲۰٪","\u003cb\u003eآفریقای جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۸\u003cbr\u003eسهم از برونداد جهانی: ۰٫۹۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۶۳\u003cbr\u003eسهم مقالات ده درصد برتر: ۲۰٫۲۷٪","\u003cb\u003eآفریقای جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۹\u003cbr\u003eسهم از برونداد جهانی: ۰٫۹۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۷۱\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۷٫۴۳٪","\u003cb\u003eآفریقای جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۰\u003cbr\u003eسهم از برونداد جهانی: ۰٫۹۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۲٫۲۸\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۸٫۱۱٪","\u003cb\u003eآفریقای جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۱\u003cbr\u003eسهم از برونداد جهانی: ۰٫۹۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۶۶\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۸٫۱۲٪","\u003cb\u003eآفریقای جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۲\u003cbr\u003eسهم از برونداد جهانی: ۰٫۹۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۲٫۰۴\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۸۷٪","\u003cb\u003eآفریقای جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۳\u003cbr\u003eسهم از برونداد جهانی: ۰٫۹۷٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۴\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۸٫۹۱٪","\u003cb\u003eآفریقای جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۴\u003cbr\u003eسهم از برونداد جهانی: ۰٫۸۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۶۴\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۱۵٪","\u003cb\u003eآفریقای جنوبی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۵\u003cbr\u003eسهم از برونداد جهانی: ۰٫۸۶٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۷۳\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۳٫۹۵٪"],"x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpBw=="},"y":{"dtype":"f8","bdata":"ucxdhsUy6D\u002fk6S+5v\u002fXpPwkqLscpj+o\u002fX0MYH0497T9dIeLjYiTuP3uauksUae4\u002fP\u002fO7Tf0I7T9Iu+57kTDtPzWGuVVeJO8\u002fzOOUwIV77D\u002f7qKYVnXjrPw=="},"type":"scatter"},{"hovertemplate":"%{text}\u003cextra\u003e\u003c\u002fextra\u003e","line":{"color":"#ff7f0e","width":1.9},"marker":{"opacity":0.5,"size":4,"symbol":"circle"},"mode":"lines+markers","name":"امارات","text":["\u003cb\u003eامارات\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۵\u003cbr\u003eسهم از برونداد جهانی: ۰٫۱۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۲۳\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۱٫۴۵٪","\u003cb\u003eامارات\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۶\u003cbr\u003eسهم از برونداد جهانی: ۰٫۱۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۲۱\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۲٫۲۹٪","\u003cb\u003eامارات\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۷\u003cbr\u003eسهم از برونداد جهانی: ۰٫۱۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۶\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۱٫۷۴٪","\u003cb\u003eامارات\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۸\u003cbr\u003eسهم از برونداد جهانی: ۰٫۱۸٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۳\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۴٫۰۹٪","\u003cb\u003eامارات\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۹\u003cbr\u003eسهم از برونداد جهانی: ۰٫۲۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۳\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۸٫۹۱٪","\u003cb\u003eامارات\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۰\u003cbr\u003eسهم از برونداد جهانی: ۰٫۳۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۹\u003cbr\u003eسهم مقالات ده درصد برتر: ۲۰٫۰۴٪","\u003cb\u003eامارات\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۱\u003cbr\u003eسهم از برونداد جهانی: ۰٫۳۶٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۳۲\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۷۹٪","\u003cb\u003eامارات\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۲\u003cbr\u003eسهم از برونداد جهانی: ۰٫۴۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۳\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۳۷٪","\u003cb\u003eامارات\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۳\u003cbr\u003eسهم از برونداد جهانی: ۰٫۵۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۷\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۶٫۴۴٪","\u003cb\u003eامارات\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۴\u003cbr\u003eسهم از برونداد جهانی: ۰٫۵۰٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۲۹\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۲٫۸۹٪","\u003cb\u003eامارات\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۵\u003cbr\u003eسهم از برونداد جهانی: ۰٫۴۸٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۵\u003cbr\u003eسهم مقالات ده درصد برتر: ۱۲٫۹۶٪"],"x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpBw=="},"y":{"dtype":"f8","bdata":"flAuD5Obuz\u002fVXu6Z\u002f+TCP1nM9+hcoMM\u002f6Wibh7xPxz96Ep9vfWDSP0MnMpCFk9U\u002fFNzY5ivW1j\u002fFUilqgXPaP7t2VViaiOA\u002f6\u002f5hHSbU3z+lOY9YXJvePw=="},"type":"scatter"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#1f77b4","#ff7f0e","#2ca02c","#bcbd22","#9467bd","#8c564b","#e377c2","#7f7f7f","#d62728","#17becf","#aec7e8","#ffbb78"],"font":{"color":"#2a3f5f","family":"Vazirmatn FD"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"#E5ECF6","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"right","font":{"family":"Vazirmatn FD"}},"hovermode":"closest","legend":{"font":{"family":"Vazirmatn FD"},"title":{"font":{"family":"Vazirmatn FD"}}},"mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"title":{"font":{"family":"Vazirmatn FD Black"},"x":0.5,"xanchor":"center"},"xaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","tickfont":{"family":"Vazirmatn FD","size":13},"ticks":"","title":{"font":{"family":"Vazirmatn FD"},"standoff":15},"zerolinecolor":"white","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","tickfont":{"family":"Vazirmatn FD","size":13},"ticks":"","title":{"font":{"family":"Vazirmatn FD"},"standoff":15},"zerolinecolor":"white","zerolinewidth":2}}},"title":{"text":"سهم کشورهای منتخب از بروندادهای علمی جهان در فیزیک","x":0.5,"xanchor":"center","yanchor":"top"},"yaxis":{"type":"log","tickvals":[1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100],"ticktext":["1","2","","","5","","","","","10","20","30","","","","","","",""],"showgrid":true,"title":{"text":"سهم از بروندادهای علمی جهان در فیزیک (٪) (لگاریتمی)"},"autorange":true},"xaxis":{"dtick":1,"title":{"text":"سال"},"range":[2015,2024],"tickvals":[2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"ticktext":["2015","2016","2017","2018","2019","2020","2021","2022","2023","2024"]},"legend":{"title":{"text":"کشور"}},"hoverlabel":{"align":"right"}},                        {"displaylogo": false, "modeBarButtonsToRemove": ["select", "lasso2d", "toggleSpikelines", "hoverCompareCartesian", "hoverClosestCartesian"], "toImageButtonOptions": {"filename": "4_main_countries_physics_share_benchmark_GO", "scale": 4, "format": "png"}, "responsive": true}                    )                };            </script> </div>

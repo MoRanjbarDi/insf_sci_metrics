@@ -115,13 +115,34 @@
 <a aria-label="قبلی" class="nav-btn" href="7_cnci_in_physics_vs_year.html" title="قبلی">←</a>
 <a aria-label="خانه" class="nav-btn home" href="../index.html" title="خانه">⌂</a>
 <a aria-label="بعدی" class="nav-btn" href="topnradar_scaledtop1_ticks.html" title="بعدی">→</a>
+<button aria-label="اطلاعات" class="nav-btn info-btn" title="اطلاعات" type="button">ℹ</button>
 </div>
+<div aria-hidden="true" class="info-backdrop" id="info-backdrop"></div>
+<aside aria-hidden="true" aria-modal="true" class="info-drawer" dir="rtl" id="info-drawer" lang="fa" role="dialog" tabindex="-1">
+<div class="info-head">
+<div class="info-title" dir="rtl" id="info-title"></div>
+<button aria-label="بستن" class="info-close" id="info-close" type="button">
+<span class="close-x">×</span>
+<span class="close-up">⌃</span>
+</button>
+</div>
+<div class="info-body" id="info-body"></div>
+</aside>
+<script id="info-payload" type="application/json">{"title": "تحلیل جایگاهی فیزیک در کشورها", "long_title": "تحلیل جایگاهی کشورهای منتخب در حوزه فیزیک", "md": "<div dir=\"rtl\" style=\"font-family:system-ui,-apple-system,'Segoe UI',Tahoma,Arial,sans-serif;line-height:1.9;\">\n  <p>\n    این نمودار وضعیت فیزیک در کشورهای مختلف از نظر سه شاخص در دو بازه زمانی بررسی شده است. شاخص تمرکز\n    (Specialization index)، تعداد مقالات (اندازه دایره) و تأثیر استنادی نرمال شده. پیشتر شرح تأثیر استنادی نرمال شده\n    در اسلاید قبل آمد. در اسلاید جاری به شاخص تمرکز می‌پردازیم.\n  <\/p>\n\n  <p>\n    شاخص تمرکز به سهم مقالات یک حوزه، از کل مقالات کشور نسبت به سهم همان حوزه از کل مقالات جهان می‌پردازد:\n  <\/p>\n\n  <!-- MathJax (renders LaTeX) -->\n  <script>\n    window.MathJax = { tex: { inlineMath: [['\\\\(','\\\\)'], ['$', '$']] } };\n  <\/script>\n  <script defer src=\"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js\"><\/script>\n\n  <div dir=\"ltr\" style=\"margin:8px 0 12px;\">\n    \\[\n      \\text{Specialization index of Physics} =\n      \\frac{\\dfrac{\\text{Physics Papers Count in Iran}}{\\text{Total Papers Count in Iran}}}\n           {\\dfrac{\\text{Physics Papers Count in World}}{\\text{Total Papers Count in World}}}\n    \\]\n  <\/div>\n\n  <p style=\"margin:0;\">\n    به عنوان مثال اگر ۳۵ درصد از مقالات روسیه ذیل حوزه فیزیک باشند و در جهان نیز ۱۰ درصد از مقالات ذیل حوزه فیزیک\n    باشند شاخص تمرکز فیزیک در روسیه ۳.۵ بوده و این بدان معناست که در این کشور ۳.۵ برابر میانگین جهانی به فیزیک\n    پرداخته می‌شود. البته بدیهی است چون این شاخص یک شاخص مبتنی بر تعداد است، تمام مقالات را هم وزن و هم ارزش\n    تلقی می‌کند و باید در کنار سایر شاخص ها مطالعه شود.\n  <\/p>\n<\/div>"}</script>
+<!-- MathJax (LaTeX rendering) -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['\\[','\\]'], ['$$','$$']]
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
-/* Make sure the page has room for bottom nav on phones */
 @media (orientation: portrait) {
-    body {
-        padding-bottom: 92px !important;
-    }
+    body { padding-bottom: 92px !important; }
 }
 
 .overlay-nav {
@@ -146,6 +167,9 @@
     text-decoration: none;
     font-size: 28px;
     user-select: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
 }
 
 .overlay-nav .nav-btn.disabled {
@@ -158,7 +182,146 @@
     opacity: 0.9;
 }
 
-/* Phone layout: bottom, centered, and 2x bigger */
+.info-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s ease;
+    z-index: 99998;
+}
+
+.info-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    /* Desktop drawer width (increase 420px to your taste) */
+    width: min(800px, 92vw);
+
+    height: 100vh;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+    transform: translateX(110%);
+    transition: transform 0.22s ease;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 14px 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    position: relative;
+}
+
+.info-title {
+    font-family: Vazirmatn, system-ui, sans-serif;
+    font-weight: 900;
+    font-size: 15px;
+    color: #0f172a;
+    line-height: 1.6;
+
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.info-close {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: none;
+    background: rgba(0,0,0,0.06);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: #0f172a;
+    user-select: none;
+}
+
+.close-up { display: none; }
+
+.info-body {
+    padding: 14px 16px 18px;
+    overflow: auto;
+    font-family: Vazirmatn, system-ui, sans-serif;
+    color: #111827;
+    line-height: 1.9;
+    font-size: 14px;
+
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.info-body h1, .info-body h2, .info-body h3 {
+    margin: 10px 0 8px;
+    line-height: 1.5;
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: right;
+}
+.info-body h1 { font-size: 18px; }
+.info-body h2 { font-size: 16px; }
+.info-body h3 { font-size: 15px; }
+
+.info-body p { margin: 8px 0; }
+
+.info-body ul, .info-body ol {
+    margin: 8px 0;
+    padding-inline-start: 20px;
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: right;
+}
+
+.info-body li {
+    margin: 4px 0;
+    direction: rtl;
+    unicode-bidi: plaintext;
+}
+
+.info-body code {
+    background: rgba(0,0,0,0.06);
+    padding: 0 6px;
+    border-radius: 6px;
+}
+.info-body pre {
+    background: rgba(0,0,0,0.06);
+    padding: 10px 12px;
+    border-radius: 12px;
+    overflow: auto;
+}
+.info-body a {
+    color: #0057d9;
+    text-decoration: none;
+}
+.info-body a:hover { text-decoration: underline; }
+
+html.no-scroll, body.no-scroll {
+    overflow: hidden !important;
+}
+
+.info-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+.info-drawer.open {
+    transform: translateX(0);
+}
+
 @media (orientation: portrait) {
     .overlay-nav {
         position: fixed;
@@ -176,17 +339,255 @@
     }
 
     .overlay-nav .nav-btn {
-        width: 90px;     /* 2x */
-        height: 90px;    /* 2x */
-        font-size: 46px; /* 2x-ish */
+        width: 90px;
+        height: 90px;
+        font-size: 46px;
         box-shadow: 0 6px 14px rgba(0,0,0,0.18);
     }
 
-    .overlay-nav .nav-btn.disabled {
-        box-shadow: none;
+    .info-drawer {
+        left: 0;
+        right: 0;
+        top: 0;
+        width: 100vw;
+        height: min(70vh, 520px);
+        transform: translateY(-110%);
+        border-bottom-left-radius: 24px;
+        border-bottom-right-radius: 24px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+    .info-drawer.open {
+        transform: translateY(0);
+    }
+
+    .close-x { display: none; }
+    .close-up { display: inline; }
+
+    .info-close {
+        position: absolute;
+        left: 50%;
+        bottom: 10px;
+        top: auto;
+        transform: translateX(-50%);
+        width: 72px;
+        height: 44px;
+        font-size: 28px;
+        background: rgba(0,0,0,0.08);
+    }
+    .info-body {
+        padding-bottom: 70px;
     }
 }
 </style>
+<script>
+(function() {
+    const payloadEl = document.getElementById('info-payload');
+    const btn = document.querySelector('.info-btn');
+    const drawer = document.getElementById('info-drawer');
+    const backdrop = document.getElementById('info-backdrop');
+    const closeBtn = document.getElementById('info-close');
+    const titleEl = document.getElementById('info-title');
+    const bodyEl = document.getElementById('info-body');
+
+    if (!payloadEl || !btn || !drawer || !backdrop || !closeBtn || !titleEl || !bodyEl) return;
+
+    const isPortrait = window.matchMedia && window.matchMedia('(orientation: portrait)').matches;
+
+    let payload = {};
+    try {
+        payload = JSON.parse(payloadEl.textContent || '{}');
+    } catch (e) {
+        payload = {};
+    }
+
+    const rawInfo = (payload.md || '').trim();
+
+    function looksLikeHtml(s) {
+        return /<\/?[a-z][\s\S]*>/i.test(String(s || ''));
+    }
+
+    function sanitizeHtml(input) {
+        const template = document.createElement('template');
+        template.innerHTML = String(input || '');
+
+        const blockedTags = new Set(['SCRIPT','IFRAME','OBJECT','EMBED']);
+        const walker = document.createTreeWalker(template.content, NodeFilter.SHOW_ELEMENT, null);
+        const toRemove = [];
+
+        while (walker.nextNode()) {
+            const el = walker.currentNode;
+
+            if (blockedTags.has(el.tagName)) {
+                toRemove.push(el);
+                continue;
+            }
+
+            [...el.attributes].forEach(attr => {
+                const name = attr.name.toLowerCase();
+                const val = (attr.value || '').trim();
+
+                if (name.startsWith('on')) el.removeAttribute(attr.name);
+
+                if ((name === 'href' || name === 'src') && /^javascript:/i.test(val)) {
+                    el.setAttribute(attr.name, '#');
+                }
+            });
+        }
+
+        toRemove.forEach(el => el.remove());
+        return template.innerHTML;
+    }
+
+    // Title supports HTML too
+    const titleRaw = payload.long_title || payload.title || 'Info';
+    if (looksLikeHtml(titleRaw)) titleEl.innerHTML = sanitizeHtml(titleRaw);
+    else titleEl.textContent = titleRaw;
+
+    if (!rawInfo) {
+        btn.classList.add('disabled');
+        btn.setAttribute('aria-disabled', 'true');
+        btn.disabled = true;
+        if (!isPortrait) {
+            try { sessionStorage.setItem('infoOpen', '0'); } catch(e) {}
+        }
+        return;
+    }
+
+    function escapeHtml(s) {
+        return String(s)
+            .replace(/&/g,'&amp;')
+            .replace(/</g,'&lt;')
+            .replace(/>/g,'&gt;');
+    }
+
+    // Minimal markdown -> HTML (HTML is handled separately)
+    function mdToHtml(markdown) {
+        let text = String(markdown).replace(/\r\n?/g, '\n');
+
+        const parts = text.split(/```/g);
+        for (let i = 0; i < parts.length; i++) {
+            if (i % 2 === 1) {
+                parts[i] = '<pre><code>' + escapeHtml(parts[i].trim()) + '</code></pre>';
+            } else {
+                parts[i] = escapeHtml(parts[i]);
+            }
+        }
+        text = parts.join('');
+
+        text = text.replace(/`([^`]+?)`/g, '<code>$1</code>');
+        text = text.replace(/\[([^\]]+?)\]\(([^\)]+?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+        text = text.replace(/\*\*([^*]+?)\*\*/g, '<strong>$1</strong>');
+        text = text.replace(/(^|[^*])\*([^*]+?)\*(?!\*)/g, '$1<em>$2</em>');
+
+        text = text.replace(/^###\s+(.*)$/gm, '<h3>$1</h3>');
+        text = text.replace(/^##\s+(.*)$/gm, '<h2>$1</h2>');
+        text = text.replace(/^#\s+(.*)$/gm, '<h1>$1</h1>');
+
+        const lines = text.split(/\n/);
+        let out = [];
+        let inUl = false;
+
+        for (const line of lines) {
+            const m = line.match(/^\s*[-*]\s+(.*)$/);
+            if (m) {
+                if (!inUl) {
+                    inUl = true;
+                    out.push('<ul>');
+                }
+                out.push('<li>' + m[1] + '</li>');
+            } else {
+                if (inUl) {
+                    out.push('</ul>');
+                    inUl = false;
+                }
+                out.push(line);
+            }
+        }
+        if (inUl) out.push('</ul>');
+        text = out.join('\n');
+
+        const blocks = text.split(/\n\s*\n/g).map(b => b.trim()).filter(Boolean);
+        return blocks.map(b => {
+            if (/^<(h1|h2|h3|ul|pre)/.test(b)) return b;
+            return '<p>' + b.replace(/\n/g, '<br>') + '</p>';
+        }).join('\n');
+    }
+
+    // Render body: HTML if looks like HTML, else Markdown
+    if (looksLikeHtml(rawInfo)) bodyEl.innerHTML = sanitizeHtml(rawInfo);
+    else bodyEl.innerHTML = mdToHtml(rawInfo);
+
+    // MathJax typeset (retry until loaded)
+    let typesetTries = 0;
+    function requestTypeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+            try {
+                if (MathJax.typesetClear) MathJax.typesetClear([drawer]);
+            } catch(e) {}
+            MathJax.typesetPromise([drawer]).catch(function(){});
+            return;
+        }
+        if (typesetTries++ < 25) setTimeout(requestTypeset, 200);
+    }
+    requestTypeset();
+
+    function setDesktopInfoState(isOpen) {
+        if (isPortrait) return;
+        try {
+            sessionStorage.setItem('infoOpen', isOpen ? '1' : '0');
+        } catch (e) {}
+    }
+
+    function openDrawer() {
+        drawer.classList.add('open');
+        backdrop.classList.add('open');
+        drawer.setAttribute('aria-hidden', 'false');
+        backdrop.setAttribute('aria-hidden', 'false');
+        document.documentElement.classList.add('no-scroll');
+        document.body.classList.add('no-scroll');
+        setDesktopInfoState(true);
+        requestTypeset();
+        drawer.focus();
+    }
+
+    function closeDrawer() {
+        drawer.classList.remove('open');
+        backdrop.classList.remove('open');
+        drawer.setAttribute('aria-hidden', 'true');
+        backdrop.setAttribute('aria-hidden', 'true');
+        document.documentElement.classList.remove('no-scroll');
+        document.body.classList.remove('no-scroll');
+        setDesktopInfoState(false);
+        btn.focus();
+    }
+
+    // Info button toggles open/close
+    btn.addEventListener('click', function() {
+        if (drawer.classList.contains('open')) closeDrawer();
+        else openDrawer();
+    });
+
+    closeBtn.addEventListener('click', closeDrawer);
+    backdrop.addEventListener('click', closeDrawer);
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && drawer.classList.contains('open')) {
+            closeDrawer();
+        }
+    });
+
+    // Option A: restore open state ONLY on desktop
+    if (!isPortrait) {
+        let shouldOpen = false;
+        try {
+            shouldOpen = (sessionStorage.getItem('infoOpen') === '1');
+        } catch(e) {
+            shouldOpen = false;
+        }
+        if (shouldOpen) openDrawer();
+    }
+})();
+</script>
 
 <div> <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
 <script charset="utf-8" src="plotly.min.js"></script> <div class="plotly-graph-div" id="fbb6dbb4-a311-4cd6-b20a-5a87e39a40aa" style="height:100%; width:100%;"></div> <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("fbb6dbb4-a311-4cd6-b20a-5a87e39a40aa")) {                    Plotly.newPlot(                        "fbb6dbb4-a311-4cd6-b20a-5a87e39a40aa",                        [{"hovertemplate":"%{hovertext}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["\u003cb\u003eبرزیل\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۱۵-۲۰۱۷\u003cbr\u003eشاخص تمرکز: ۰٫۹۰\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۴\u003cbr\u003eتعداد مقالات: ۹,۱۷۵","\u003cb\u003eبرزیل\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۲۲-۲۰۲۴\u003cbr\u003eشاخص تمرکز: ۰٫۸۹\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۱۳\u003cbr\u003eتعداد مقالات: ۸,۹۳۱"],"legendgroup":"برزیل","marker":{"color":"rgb(102, 140, 200)","line":{"color":"black","width":0.3},"opacity":[0.5,0.9],"size":{"dtype":"f8","bdata":"JUmSJElicEBYfMVXfOVvQA=="},"sizemode":"area"},"mode":"markers+text","name":"برزیل","showlegend":true,"text":["","برزیل"],"textfont":{"color":"black","size":10},"textposition":"middle center","x":{"dtype":"f8","bdata":"C4sdVX7s7D+XWUyL4nbsPw=="},"y":{"dtype":"f8","bdata":"jV9qTnQS9z\u002fuadfRxSTyPw=="},"type":"scatter"},{"hoverinfo":"skip","legendgroup":"برزیل","line":{"color":"black","width":1},"marker":{"angleref":"previous","size":[0,13,0],"symbol":"arrow-wide"},"mode":"lines+markers","opacity":0.6,"showlegend":false,"x":[0.9038688337717259,0.8966905776538373,0.8895123215359487],"y":[1.4420054495912809,1.2879915838259843,1.1339777180606876],"type":"scatter"},{"hovertemplate":"%{hovertext}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["\u003cb\u003eچین\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۱۵-۲۰۱۷\u003cbr\u003eشاخص تمرکز: ۱٫۲۱\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۹۷\u003cbr\u003eتعداد مقالات: ۷۹,۰۵۷","\u003cb\u003eچین\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۲۲-۲۰۲۴\u003cbr\u003eشاخص تمرکز: ۱٫۰۴\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۱۰\u003cbr\u003eتعداد مقالات: ۱۳۸,۰۳۱"],"legendgroup":"چین","marker":{"color":"rgb(255, 180, 102)","line":{"color":"black","width":0.3},"opacity":[0.5,0.9],"size":{"dtype":"f8","bdata":"+Yqv+IqloUBYfMVXfM+uQA=="},"sizemode":"area"},"mode":"markers+text","name":"چین","showlegend":true,"text":["","چین"],"textfont":{"color":"black","size":10},"textposition":"middle center","x":{"dtype":"f8","bdata":"+BFuHWxS8z8Ywz68jajwPw=="},"y":{"dtype":"f8","bdata":"02dJ6ZMX7z8wnMCvv6zxPw=="},"type":"scatter"},{"hoverinfo":"skip","legendgroup":"چین","line":{"color":"black","width":1},"marker":{"angleref":"previous","size":[0,13,0],"symbol":"arrow-wide"},"mode":"lines+markers","opacity":0.6,"showlegend":false,"x":[1.2076226377113226,1.1243867160289103,1.041150794346498],"y":[0.9716281467801714,1.0381515704016266,1.1046749940230818],"type":"scatter"},{"hovertemplate":"%{hovertext}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["\u003cb\u003eآلمان\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۱۵-۲۰۱۷\u003cbr\u003eشاخص تمرکز: ۱٫۷۲\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۶۱\u003cbr\u003eتعداد مقالات: ۴۲,۹۳۴","\u003cb\u003eآلمان\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۲۲-۲۰۲۴\u003cbr\u003eشاخص تمرکز: ۱٫۷۷\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۸\u003cbr\u003eتعداد مقالات: ۴۱,۲۰۸"],"legendgroup":"آلمان","marker":{"color":"rgb(179, 179, 179)","line":{"color":"black","width":0.3},"opacity":[0.5,0.9],"size":{"dtype":"f8","bdata":"LL7iK74qk0BYfMVXfGWSQA=="},"sizemode":"area"},"mode":"markers+text","name":"آلمان","showlegend":true,"text":["","آلمان"],"textfont":{"color":"black","size":10},"textposition":"middle center","x":{"dtype":"f8","bdata":"T6s+eqZ++z+HPix78kf8Pw=="},"y":{"dtype":"f8","bdata":"BBTnX+rI+T+VaOv3XqX3Pw=="},"type":"scatter"},{"hoverinfo":"skip","legendgroup":"آلمان","line":{"color":"black","width":1},"marker":{"angleref":"previous","size":[0,13,0],"symbol":"arrow-wide"},"mode":"lines+markers","opacity":0.6,"showlegend":false,"x":[1.7184204840838964,1.742992858249006,1.7675652324141156],"y":[1.6115516420552476,1.544712707069169,1.4778737720830908],"type":"scatter"},{"hovertemplate":"%{hovertext}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["\u003cb\u003eهند\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۱۵-۲۰۱۷\u003cbr\u003eشاخص تمرکز: ۱٫۴۴\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۹۹\u003cbr\u003eتعداد مقالات: ۲۰,۶۹۰","\u003cb\u003eهند\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۲۲-۲۰۲۴\u003cbr\u003eشاخص تمرکز: ۱٫۴۲\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۹۸\u003cbr\u003eتعداد مقالات: ۳۱,۶۷۴"],"legendgroup":"هند","marker":{"color":"rgb(180, 151, 231)","line":{"color":"black","width":0.3},"opacity":[0.5,0.9],"size":{"dtype":"f8","bdata":"kiRJkiR5gkB8xVd8xUeMQA=="},"sizemode":"area"},"mode":"markers+text","name":"هند","showlegend":true,"text":["","هند"],"textfont":{"color":"black","size":10},"textposition":"middle center","x":{"dtype":"f8","bdata":"wGFGWC\u002f+9j+Qo8UrVab2Pw=="},"y":{"dtype":"f8","bdata":"XrEbhPa57z8YwUTLSFzvPw=="},"type":"scatter"},{"hoverinfo":"skip","legendgroup":"هند","line":{"color":"black","width":1},"marker":{"angleref":"previous","size":[0,13,0],"symbol":"arrow-wide"},"mode":"lines+markers","opacity":0.6,"showlegend":false,"x":[1.4370568702926079,1.426332719711505,1.4156085691304021],"y":[0.9914505558240696,0.9857328677333393,0.9800151796426091],"type":"scatter"},{"hovertemplate":"%{hovertext}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["\u003cb\u003eایران\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۱۵-۲۰۱۷\u003cbr\u003eشاخص تمرکز: ۰٫۹۴\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۷۸\u003cbr\u003eتعداد مقالات: ۶,۷۱۹","\u003cb\u003eایران\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۲۲-۲۰۲۴\u003cbr\u003eشاخص تمرکز: ۰٫۷۵\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۹۵\u003cbr\u003eتعداد مقالات: ۶,۰۰۵"],"legendgroup":"ایران","marker":{"color":"rgb(139, 224, 164)","line":{"color":"red","width":1},"opacity":[0.5,0.9],"size":{"dtype":"f8","bdata":"8RVf8RX\u002fZ0AlSZIkSXJlQA=="},"sizemode":"area"},"mode":"markers+text","name":"ایران","showlegend":true,"text":["","ایران"],"textfont":{"color":"black","size":10},"textposition":"middle center","x":{"dtype":"f8","bdata":"WmZw6+c27j8sEMQCCQvoPw=="},"y":{"dtype":"f8","bdata":"7RhQzo0d6T8wSWOxxEfuPw=="},"type":"scatter"},{"hoverinfo":"skip","legendgroup":"ایران","line":{"color":"black","width":1},"marker":{"angleref":"previous","size":[0,13,0],"symbol":"arrow-wide"},"mode":"lines+markers","opacity":0.6,"showlegend":false,"x":[0.9442023847979713,0.8477747274608664,0.7513470701237615],"y":[0.7848576573894924,0.8655592200352957,0.9462607826810991],"type":"scatter"},{"hovertemplate":"%{hovertext}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["\u003cb\u003eاسرائیل\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۱۵-۲۰۱۷\u003cbr\u003eشاخص تمرکز: ۱٫۴۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۷۵\u003cbr\u003eتعداد مقالات: ۴,۶۹۹","\u003cb\u003eاسرائیل\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۲۲-۲۰۲۴\u003cbr\u003eشاخص تمرکز: ۱٫۵۸\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۸۵\u003cbr\u003eتعداد مقالات: ۵,۱۳۳"],"legendgroup":"اسرائیل","marker":{"color":"rgb(201, 219, 116)","line":{"color":"black","width":0.3},"opacity":[0.5,0.9],"size":{"dtype":"f8","bdata":"hDqogzrIYEBQB3VQB1ViQA=="},"sizemode":"area"},"mode":"markers+text","name":"اسرائیل","showlegend":true,"text":["","اسرائیل"],"textfont":{"color":"black","size":10},"textposition":"middle center","x":{"dtype":"f8","bdata":"H126crzi9j+fxGkDOTz5Pw=="},"y":{"dtype":"f8","bdata":"QmTToKz0+z94LCmurqj9Pw=="},"type":"scatter"},{"hoverinfo":"skip","legendgroup":"اسرائیل","line":{"color":"black","width":1},"marker":{"angleref":"previous","size":[0,13,0],"symbol":"arrow-wide"},"mode":"lines+markers","opacity":0.6,"showlegend":false,"x":[1.430355499416528,1.5037791545337809,1.5772028096510338],"y":[1.7472349436050227,1.8004585783678728,1.853682213130723],"type":"scatter"},{"hovertemplate":"%{hovertext}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["\u003cb\u003eروسیه\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۱۵-۲۰۱۷\u003cbr\u003eشاخص تمرکز: ۳٫۷۰\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۸۲\u003cbr\u003eتعداد مقالات: ۲۸,۴۹۲","\u003cb\u003eروسیه\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۲۲-۲۰۲۴\u003cbr\u003eشاخص تمرکز: ۳٫۳۸\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰٫۶۲\u003cbr\u003eتعداد مقالات: ۲۴,۶۴۸"],"legendgroup":"روسیه","marker":{"color":"rgb(254, 136, 177)","line":{"color":"black","width":0.3},"opacity":[0.5,0.9],"size":{"dtype":"f8","bdata":"B3VQB3VwiUAd1EEd1AGGQA=="},"sizemode":"area"},"mode":"markers+text","name":"روسیه","showlegend":true,"text":["","روسیه"],"textfont":{"color":"black","size":10},"textposition":"middle center","x":{"dtype":"f8","bdata":"S+1E91GVDUBXm79jiAQLQA=="},"y":{"dtype":"f8","bdata":"gHAWBdct6j+3e5jp9MfjPw=="},"type":"scatter"},{"hoverinfo":"skip","legendgroup":"روسیه","line":{"color":"black","width":1},"marker":{"angleref":"previous","size":[0,13,0],"symbol":"arrow-wide"},"mode":"lines+markers","opacity":0.6,"showlegend":false,"x":[3.697910243788703,3.537561755693368,3.3772132675980333],"y":[0.8180956935280079,0.7181272345439456,0.6181587755598831],"type":"scatter"},{"hovertemplate":"%{hovertext}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["\u003cb\u003eعربستان\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۱۵-۲۰۱۷\u003cbr\u003eشاخص تمرکز: ۱٫۰۰\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۲۵\u003cbr\u003eتعداد مقالات: ۳,۱۰۰","\u003cb\u003eعربستان\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۲۲-۲۰۲۴\u003cbr\u003eشاخص تمرکز: ۱٫۰۴\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۶\u003cbr\u003eتعداد مقالات: ۸,۳۵۵"],"legendgroup":"عربستان","marker":{"color":"rgb(158, 185, 243)","line":{"color":"black","width":0.3},"opacity":[0.5,0.9],"size":{"dtype":"f8","bdata":"SZIkSZIkVkBu27Zt29ZtQA=="},"sizemode":"area"},"mode":"markers+text","name":"عربستان","showlegend":true,"text":["","عربستان"],"textfont":{"color":"black","size":10},"textposition":"middle center","x":{"dtype":"f8","bdata":"ioaF8rz+7z\u002fSe4yedJHwPw=="},"y":{"dtype":"f8","bdata":"IYftEBX78z8Sa8YRy1j3Pw=="},"type":"scatter"},{"hoverinfo":"skip","legendgroup":"عربستان","line":{"color":"black","width":1},"marker":{"angleref":"previous","size":[0,13,0],"symbol":"arrow-wide"},"mode":"lines+markers","opacity":0.6,"showlegend":false,"x":[0.9998459564923945,1.0176787819891358,1.0355116074858768],"y":[1.2487993870967744,1.3539887121001528,1.459178037103531],"type":"scatter"},{"hovertemplate":"%{hovertext}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["\u003cb\u003eآفریقای جنوبی\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۱۵-۲۰۱۷\u003cbr\u003eشاخص تمرکز: ۱٫۰۷\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۲٫۱۱\u003cbr\u003eتعداد مقالات: ۳,۲۵۱","\u003cb\u003eآفریقای جنوبی\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۲۲-۲۰۲۴\u003cbr\u003eشاخص تمرکز: ۱٫۱۸\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۷۹\u003cbr\u003eتعداد مقالات: ۳,۹۵۵"],"legendgroup":"آفریقای جنوبی","marker":{"color":"rgb(135, 197, 95)","line":{"color":"black","width":0.3},"opacity":[0.5,0.9],"size":{"dtype":"f8","bdata":"i6\u002f4iq84V0AAAAAAAEBcQA=="},"sizemode":"area"},"mode":"markers+text","name":"آفریقای جنوبی","showlegend":true,"text":["","آفریقای جنوبی"],"textfont":{"color":"black","size":10},"textposition":"middle center","x":{"dtype":"f8","bdata":"Ce953Tsr8T+NT9gun9PyPw=="},"y":{"dtype":"f8","bdata":"69ySOf\u002fXAEDSKBxhU5\u002f8Pw=="},"type":"scatter"},{"hoverinfo":"skip","legendgroup":"آفریقای جنوبی","line":{"color":"black","width":1},"marker":{"angleref":"previous","size":[0,13,0],"symbol":"arrow-wide"},"mode":"lines+markers","opacity":0.6,"showlegend":false,"x":[1.0730551387231932,1.1248603096627956,1.176665480602398],"y":[2.105467271608736,1.9471825738574653,1.7888978761061947],"type":"scatter"},{"hovertemplate":"%{hovertext}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["\u003cb\u003eکره جنوبی\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۱۵-۲۰۱۷\u003cbr\u003eشاخص تمرکز: ۱٫۲۷\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۱۱\u003cbr\u003eتعداد مقالات: ۱۶,۲۶۴","\u003cb\u003eکره جنوبی\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۲۲-۲۰۲۴\u003cbr\u003eشاخص تمرکز: ۱٫۲۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۲۷\u003cbr\u003eتعداد مقالات: ۱۶,۶۵۴"],"legendgroup":"کره جنوبی","marker":{"color":"rgb(0, 112, 122)","line":{"color":"black","width":0.3},"opacity":[0.5,0.9],"size":{"dtype":"f8","bdata":"sPiKr\u002fgKfUDUQR3UQb19QA=="},"sizemode":"area"},"mode":"markers+text","name":"کره جنوبی","showlegend":true,"text":["","کره جنوبی"],"textfont":{"color":"black","size":10},"textposition":"middle center","x":{"dtype":"f8","bdata":"8Dqcnodf9D9ARQARQLvzPw=="},"y":{"dtype":"f8","bdata":"iDTf9GCw8T+t3fq5IET0Pw=="},"type":"scatter"},{"hoverinfo":"skip","legendgroup":"کره جنوبی","line":{"color":"black","width":1},"marker":{"angleref":"previous","size":[0,13,0],"symbol":"arrow-wide"},"mode":"lines+markers","opacity":0.6,"showlegend":false,"x":[1.273322696277031,1.2532690458210762,1.2332153953651215],"y":[1.105561214953271,1.1860969939303403,1.2666327729074098],"type":"scatter"},{"hovertemplate":"%{hovertext}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["\u003cb\u003eترکیه\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۱۵-۲۰۱۷\u003cbr\u003eشاخص تمرکز: ۰٫۷۵\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۱۴\u003cbr\u003eتعداد مقالات: ۵,۰۰۷","\u003cb\u003eترکیه\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۲۲-۲۰۲۴\u003cbr\u003eشاخص تمرکز: ۰٫۸۴\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۲۷\u003cbr\u003eتعداد مقالات: ۷,۲۷۹"],"legendgroup":"ترکیه","marker":{"color":"rgb(220, 176, 242)","line":{"color":"black","width":0.3},"opacity":[0.5,0.9],"size":{"dtype":"f8","bdata":"HdRBHdThYUDxFV\u002fxFf9pQA=="},"sizemode":"area"},"mode":"markers+text","name":"ترکیه","showlegend":true,"text":["","ترکیه"],"textfont":{"color":"black","size":10},"textposition":"middle center","x":{"dtype":"f8","bdata":"1oDj1m3o5z+FPHUVP9DqPw=="},"y":{"dtype":"f8","bdata":"mcUvQdFC8j\u002f0zhe7nVr0Pw=="},"type":"scatter"},{"hoverinfo":"skip","legendgroup":"ترکیه","line":{"color":"black","width":1},"marker":{"angleref":"previous","size":[0,13,0],"symbol":"arrow-wide"},"mode":"lines+markers","opacity":0.6,"showlegend":false,"x":[0.7471226880116102,0.7925216968605662,0.837920705709522],"y":[1.1413128420211704,1.206717961057295,1.2721230800934196],"type":"scatter"},{"hovertemplate":"%{hovertext}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["\u003cb\u003eامارات\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۱۵-۲۰۱۷\u003cbr\u003eشاخص تمرکز: ۰٫۸۴\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۵۳\u003cbr\u003eتعداد مقالات: ۴۷۶","\u003cb\u003eامارات\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۲۲-۲۰۲۴\u003cbr\u003eشاخص تمرکز: ۱٫۱۱\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۸\u003cbr\u003eتعداد مقالات: ۱,۹۹۷"],"legendgroup":"امارات","marker":{"color":"rgb(248, 156, 116)","line":{"color":"black","width":0.3},"opacity":[0.5,0.9],"size":{"dtype":"f8","bdata":"MzMzMzMzK0B1UAd1UIdMQA=="},"sizemode":"area"},"mode":"markers+text","name":"امارات","showlegend":true,"text":["","امارات"],"textfont":{"color":"black","size":10},"textposition":"middle center","x":{"dtype":"f8","bdata":"DmbUl0266j9p3U\u002fY+8DxPw=="},"y":{"dtype":"f8","bdata":"cH2qXPpp+D+g88Oglrv3Pw=="},"type":"scatter"},{"hoverinfo":"skip","legendgroup":"امارات","line":{"color":"black","width":1},"marker":{"angleref":"previous","size":[0,13,0],"symbol":"arrow-wide"},"mode":"lines+markers","opacity":0.6,"showlegend":false,"x":[0.8352420773910028,0.9724286277346561,1.1096151780783094],"y":[1.525873529411765,1.5045857381660728,1.4832979469203806],"type":"scatter"},{"hovertemplate":"%{hovertext}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["\u003cb\u003eبریتانیا\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۱۵-۲۰۱۷\u003cbr\u003eشاخص تمرکز: ۱٫۰۷\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۸۱\u003cbr\u003eتعداد مقالات: ۳۰,۹۰۵","\u003cb\u003eبریتانیا\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۲۲-۲۰۲۴\u003cbr\u003eشاخص تمرکز: ۱٫۱۴\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۶۶\u003cbr\u003eتعداد مقالات: ۳۱,۳۶۵"],"legendgroup":"بریتانیا","marker":{"color":"rgb(246, 207, 113)","line":{"color":"black","width":0.3},"opacity":[0.5,0.9],"size":{"dtype":"f8","bdata":"AAAAAACYi0CSJEmSJAGMQA=="},"sizemode":"area"},"mode":"markers+text","name":"بریتانیا","showlegend":true,"text":["","بریتانیا"],"textfont":{"color":"black","size":10},"textposition":"middle center","x":{"dtype":"f8","bdata":"Pe8isGEa8T\u002f9Gqf070byPw=="},"y":{"dtype":"f8","bdata":"RI0z0Yn4\u002fD\u002f4hYjr\u002f4H6Pw=="},"type":"scatter"},{"hoverinfo":"skip","legendgroup":"بریتانیا","line":{"color":"black","width":1},"marker":{"angleref":"previous","size":[0,13,0],"symbol":"arrow-wide"},"mode":"lines+markers","opacity":0.6,"showlegend":false,"x":[1.0689408188181482,1.105629751066153,1.1423186833141579],"y":[1.8106783077171977,1.7337082563613886,1.6567382050055794],"type":"scatter"},{"hovertemplate":"%{hovertext}\u003cextra\u003e\u003c\u002fextra\u003e","hovertext":["\u003cb\u003eآمریکا\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۱۵-۲۰۱۷\u003cbr\u003eشاخص تمرکز: ۰٫۹۱\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۶۰\u003cbr\u003eتعداد مقالات: ۸۷,۶۴۶","\u003cb\u003eآمریکا\u003c\u002fb\u003e\u003cbr\u003eدوره: ۲۰۲۲-۲۰۲۴\u003cbr\u003eشاخص تمرکز: ۱٫۰۰\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱٫۴۳\u003cbr\u003eتعداد مقالات: ۸۲,۹۶۷"],"legendgroup":"آمریکا","marker":{"color":"rgb(102, 197, 204)","line":{"color":"black","width":0.3},"opacity":[0.5,0.9],"size":{"dtype":"f8","bdata":"xVd8xVeQo0Cw+Iqv+ISiQA=="},"sizemode":"area"},"mode":"markers+text","name":"آمریکا","showlegend":true,"text":["","آمریکا"],"textfont":{"color":"black","size":10},"textposition":"middle center","x":{"dtype":"f8","bdata":"9n8dUk8A7T+LyWrJLwLwPw=="},"y":{"dtype":"f8","bdata":"ysO4w\u002fug+T8kTeC+KOr2Pw=="},"type":"scatter"},{"hoverinfo":"skip","legendgroup":"آمریکا","line":{"color":"black","width":1},"marker":{"angleref":"previous","size":[0,13,0],"symbol":"arrow-wide"},"mode":"lines+markers","opacity":0.6,"showlegend":false,"x":[0.9062878230870399,0.9534108386836102,1.0005338542801805],"y":[1.601802601373708,1.5169851828327674,1.432167764291827],"type":"scatter"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#1f77b4","#ff7f0e","#2ca02c","#bcbd22","#9467bd","#8c564b","#e377c2","#7f7f7f","#d62728","#17becf","#aec7e8","#ffbb78"],"font":{"color":"#2a3f5f","family":"Vazirmatn FD"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"#E5ECF6","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"right","font":{"family":"Vazirmatn FD"}},"hovermode":"closest","legend":{"font":{"family":"Vazirmatn FD"},"title":{"font":{"family":"Vazirmatn FD"}}},"mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"title":{"font":{"family":"Vazirmatn FD Black"},"x":0.5,"xanchor":"center"},"xaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","tickfont":{"family":"Vazirmatn FD","size":13},"ticks":"","title":{"font":{"family":"Vazirmatn FD"},"standoff":15},"zerolinecolor":"white","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","tickfont":{"family":"Vazirmatn FD","size":13},"ticks":"","title":{"font":{"family":"Vazirmatn FD"},"standoff":15},"zerolinecolor":"white","zerolinewidth":2}}},"shapes":[{"line":{"color":"gray","dash":"dash"},"opacity":0.6,"type":"line","x0":0,"x1":1,"xref":"x domain","y0":1.0,"y1":1.0,"yref":"y"},{"line":{"color":"gray","dash":"dash"},"opacity":0.6,"type":"line","x0":1.0,"x1":1.0,"xref":"x","y0":0,"y1":1,"yref":"y domain"}],"title":{"text":"تحلیل جایگاهی حوزه فیزیک در کشورهای منتخب در دو بازه ۲۰۱۵-۲۰۱۷ و ۲۰۲۲-۲۰۲۴","xanchor":"center","yanchor":"top"},"xaxis":{"title":{"text":"شاخص تمرکز"},"showgrid":true,"zeroline":false},"yaxis":{"title":{"text":"تأثیر استنادی نرمال‌شده"},"showgrid":true,"zeroline":false},"legend":{"title":{"text":"کشور"}}},                        {"displaylogo": false, "modeBarButtonsToRemove": ["select", "lasso2d", "toggleSpikelines", "hoverCompareCartesian", "hoverClosestCartesian"], "toImageButtonOptions": {"filename": "5_physics_PA_country_wise_GO", "scale": 4, "format": "png"}, "responsive": true}                    )                };            </script> </div>

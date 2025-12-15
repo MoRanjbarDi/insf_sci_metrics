@@ -115,13 +115,34 @@
 <a aria-label="قبلی" class="nav-btn" href="24_iran_collab_geo_heatmap_GO.html" title="قبلی">←</a>
 <a aria-label="خانه" class="nav-btn home" href="../index.html" title="خانه">⌂</a>
 <a aria-label="بعدی" class="nav-btn" href="25_iran_journals_treemap.html" title="بعدی">→</a>
+<button aria-label="اطلاعات" class="nav-btn info-btn" title="اطلاعات" type="button">ℹ</button>
 </div>
+<div aria-hidden="true" class="info-backdrop" id="info-backdrop"></div>
+<aside aria-hidden="true" aria-modal="true" class="info-drawer" dir="rtl" id="info-drawer" lang="fa" role="dialog" tabindex="-1">
+<div class="info-head">
+<div class="info-title" dir="rtl" id="info-title"></div>
+<button aria-label="بستن" class="info-close" id="info-close" type="button">
+<span class="close-x">×</span>
+<span class="close-up">⌃</span>
+</button>
+</div>
+<div class="info-body" id="info-body"></div>
+</aside>
+<script id="info-payload" type="application/json">{"title": "تریمپ همکاری های ایران", "long_title": "تأثیر همکاری‌های بین‌المللی روی تأثیر استنادی نرمال شده در ۵۰ کشور اول از نظر میزان همکاری", "md": "در این نمودار درختی، پنجاه کشور نخستِ همکار ایران در حوزه فیزیک در بازه‌ی ۲۰۲۰ تا ۲۰۲۴ نمایش داده شده‌اند. مساحت هر مستطیل نشان‌دهنده‌ی سهم آن کشور از کل همکاری‌های بین‌المللی ایران در فیزیک است؛ هرچه مستطیل بزرگ‌تر باشد، آن کشور شریک پرکار‌تری برای ایران بوده است. رنگ مستطیل‌ها نیز بیانگر تغییرات تأثیر استنادی نرمال‌شده (CNCI) مقالات مشترک با آن کشور نسبت به مقالات داخلی ایران است؛ رنگ‌های متمایل به سبز نشان‌دهنده بهبود تأثیر استنادی و رنگ‌های متمایل به قرمز نشان‌دهنده اثر کمتر یا منفی این همکاری‌ها هستند. درون هر خانه، سهم درصدی، میانگین سالانه تعداد مقالات مشترک و تغییر CNCI به‌صورت خلاصه درج شده است. مقالات با بیش از ۱۰۰ نویسنده برای جلوگیری از برهم‌زدن تعادل تحلیل کنار گذاشته شده‌اند."}</script>
+<!-- MathJax (LaTeX rendering) -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['\\[','\\]'], ['$$','$$']]
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
-/* Make sure the page has room for bottom nav on phones */
 @media (orientation: portrait) {
-    body {
-        padding-bottom: 92px !important;
-    }
+    body { padding-bottom: 92px !important; }
 }
 
 .overlay-nav {
@@ -146,6 +167,9 @@
     text-decoration: none;
     font-size: 28px;
     user-select: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
 }
 
 .overlay-nav .nav-btn.disabled {
@@ -158,7 +182,146 @@
     opacity: 0.9;
 }
 
-/* Phone layout: bottom, centered, and 2x bigger */
+.info-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s ease;
+    z-index: 99998;
+}
+
+.info-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    /* Desktop drawer width (increase 420px to your taste) */
+    width: min(800px, 92vw);
+
+    height: 100vh;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+    transform: translateX(110%);
+    transition: transform 0.22s ease;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 14px 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    position: relative;
+}
+
+.info-title {
+    font-family: Vazirmatn, system-ui, sans-serif;
+    font-weight: 900;
+    font-size: 15px;
+    color: #0f172a;
+    line-height: 1.6;
+
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.info-close {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: none;
+    background: rgba(0,0,0,0.06);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: #0f172a;
+    user-select: none;
+}
+
+.close-up { display: none; }
+
+.info-body {
+    padding: 14px 16px 18px;
+    overflow: auto;
+    font-family: Vazirmatn, system-ui, sans-serif;
+    color: #111827;
+    line-height: 1.9;
+    font-size: 14px;
+
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.info-body h1, .info-body h2, .info-body h3 {
+    margin: 10px 0 8px;
+    line-height: 1.5;
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: right;
+}
+.info-body h1 { font-size: 18px; }
+.info-body h2 { font-size: 16px; }
+.info-body h3 { font-size: 15px; }
+
+.info-body p { margin: 8px 0; }
+
+.info-body ul, .info-body ol {
+    margin: 8px 0;
+    padding-inline-start: 20px;
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: right;
+}
+
+.info-body li {
+    margin: 4px 0;
+    direction: rtl;
+    unicode-bidi: plaintext;
+}
+
+.info-body code {
+    background: rgba(0,0,0,0.06);
+    padding: 0 6px;
+    border-radius: 6px;
+}
+.info-body pre {
+    background: rgba(0,0,0,0.06);
+    padding: 10px 12px;
+    border-radius: 12px;
+    overflow: auto;
+}
+.info-body a {
+    color: #0057d9;
+    text-decoration: none;
+}
+.info-body a:hover { text-decoration: underline; }
+
+html.no-scroll, body.no-scroll {
+    overflow: hidden !important;
+}
+
+.info-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+.info-drawer.open {
+    transform: translateX(0);
+}
+
 @media (orientation: portrait) {
     .overlay-nav {
         position: fixed;
@@ -176,17 +339,255 @@
     }
 
     .overlay-nav .nav-btn {
-        width: 90px;     /* 2x */
-        height: 90px;    /* 2x */
-        font-size: 46px; /* 2x-ish */
+        width: 90px;
+        height: 90px;
+        font-size: 46px;
         box-shadow: 0 6px 14px rgba(0,0,0,0.18);
     }
 
-    .overlay-nav .nav-btn.disabled {
-        box-shadow: none;
+    .info-drawer {
+        left: 0;
+        right: 0;
+        top: 0;
+        width: 100vw;
+        height: min(70vh, 520px);
+        transform: translateY(-110%);
+        border-bottom-left-radius: 24px;
+        border-bottom-right-radius: 24px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+    .info-drawer.open {
+        transform: translateY(0);
+    }
+
+    .close-x { display: none; }
+    .close-up { display: inline; }
+
+    .info-close {
+        position: absolute;
+        left: 50%;
+        bottom: 10px;
+        top: auto;
+        transform: translateX(-50%);
+        width: 72px;
+        height: 44px;
+        font-size: 28px;
+        background: rgba(0,0,0,0.08);
+    }
+    .info-body {
+        padding-bottom: 70px;
     }
 }
 </style>
+<script>
+(function() {
+    const payloadEl = document.getElementById('info-payload');
+    const btn = document.querySelector('.info-btn');
+    const drawer = document.getElementById('info-drawer');
+    const backdrop = document.getElementById('info-backdrop');
+    const closeBtn = document.getElementById('info-close');
+    const titleEl = document.getElementById('info-title');
+    const bodyEl = document.getElementById('info-body');
+
+    if (!payloadEl || !btn || !drawer || !backdrop || !closeBtn || !titleEl || !bodyEl) return;
+
+    const isPortrait = window.matchMedia && window.matchMedia('(orientation: portrait)').matches;
+
+    let payload = {};
+    try {
+        payload = JSON.parse(payloadEl.textContent || '{}');
+    } catch (e) {
+        payload = {};
+    }
+
+    const rawInfo = (payload.md || '').trim();
+
+    function looksLikeHtml(s) {
+        return /<\/?[a-z][\s\S]*>/i.test(String(s || ''));
+    }
+
+    function sanitizeHtml(input) {
+        const template = document.createElement('template');
+        template.innerHTML = String(input || '');
+
+        const blockedTags = new Set(['SCRIPT','IFRAME','OBJECT','EMBED']);
+        const walker = document.createTreeWalker(template.content, NodeFilter.SHOW_ELEMENT, null);
+        const toRemove = [];
+
+        while (walker.nextNode()) {
+            const el = walker.currentNode;
+
+            if (blockedTags.has(el.tagName)) {
+                toRemove.push(el);
+                continue;
+            }
+
+            [...el.attributes].forEach(attr => {
+                const name = attr.name.toLowerCase();
+                const val = (attr.value || '').trim();
+
+                if (name.startsWith('on')) el.removeAttribute(attr.name);
+
+                if ((name === 'href' || name === 'src') && /^javascript:/i.test(val)) {
+                    el.setAttribute(attr.name, '#');
+                }
+            });
+        }
+
+        toRemove.forEach(el => el.remove());
+        return template.innerHTML;
+    }
+
+    // Title supports HTML too
+    const titleRaw = payload.long_title || payload.title || 'Info';
+    if (looksLikeHtml(titleRaw)) titleEl.innerHTML = sanitizeHtml(titleRaw);
+    else titleEl.textContent = titleRaw;
+
+    if (!rawInfo) {
+        btn.classList.add('disabled');
+        btn.setAttribute('aria-disabled', 'true');
+        btn.disabled = true;
+        if (!isPortrait) {
+            try { sessionStorage.setItem('infoOpen', '0'); } catch(e) {}
+        }
+        return;
+    }
+
+    function escapeHtml(s) {
+        return String(s)
+            .replace(/&/g,'&amp;')
+            .replace(/</g,'&lt;')
+            .replace(/>/g,'&gt;');
+    }
+
+    // Minimal markdown -> HTML (HTML is handled separately)
+    function mdToHtml(markdown) {
+        let text = String(markdown).replace(/\r\n?/g, '\n');
+
+        const parts = text.split(/```/g);
+        for (let i = 0; i < parts.length; i++) {
+            if (i % 2 === 1) {
+                parts[i] = '<pre><code>' + escapeHtml(parts[i].trim()) + '</code></pre>';
+            } else {
+                parts[i] = escapeHtml(parts[i]);
+            }
+        }
+        text = parts.join('');
+
+        text = text.replace(/`([^`]+?)`/g, '<code>$1</code>');
+        text = text.replace(/\[([^\]]+?)\]\(([^\)]+?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+        text = text.replace(/\*\*([^*]+?)\*\*/g, '<strong>$1</strong>');
+        text = text.replace(/(^|[^*])\*([^*]+?)\*(?!\*)/g, '$1<em>$2</em>');
+
+        text = text.replace(/^###\s+(.*)$/gm, '<h3>$1</h3>');
+        text = text.replace(/^##\s+(.*)$/gm, '<h2>$1</h2>');
+        text = text.replace(/^#\s+(.*)$/gm, '<h1>$1</h1>');
+
+        const lines = text.split(/\n/);
+        let out = [];
+        let inUl = false;
+
+        for (const line of lines) {
+            const m = line.match(/^\s*[-*]\s+(.*)$/);
+            if (m) {
+                if (!inUl) {
+                    inUl = true;
+                    out.push('<ul>');
+                }
+                out.push('<li>' + m[1] + '</li>');
+            } else {
+                if (inUl) {
+                    out.push('</ul>');
+                    inUl = false;
+                }
+                out.push(line);
+            }
+        }
+        if (inUl) out.push('</ul>');
+        text = out.join('\n');
+
+        const blocks = text.split(/\n\s*\n/g).map(b => b.trim()).filter(Boolean);
+        return blocks.map(b => {
+            if (/^<(h1|h2|h3|ul|pre)/.test(b)) return b;
+            return '<p>' + b.replace(/\n/g, '<br>') + '</p>';
+        }).join('\n');
+    }
+
+    // Render body: HTML if looks like HTML, else Markdown
+    if (looksLikeHtml(rawInfo)) bodyEl.innerHTML = sanitizeHtml(rawInfo);
+    else bodyEl.innerHTML = mdToHtml(rawInfo);
+
+    // MathJax typeset (retry until loaded)
+    let typesetTries = 0;
+    function requestTypeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+            try {
+                if (MathJax.typesetClear) MathJax.typesetClear([drawer]);
+            } catch(e) {}
+            MathJax.typesetPromise([drawer]).catch(function(){});
+            return;
+        }
+        if (typesetTries++ < 25) setTimeout(requestTypeset, 200);
+    }
+    requestTypeset();
+
+    function setDesktopInfoState(isOpen) {
+        if (isPortrait) return;
+        try {
+            sessionStorage.setItem('infoOpen', isOpen ? '1' : '0');
+        } catch (e) {}
+    }
+
+    function openDrawer() {
+        drawer.classList.add('open');
+        backdrop.classList.add('open');
+        drawer.setAttribute('aria-hidden', 'false');
+        backdrop.setAttribute('aria-hidden', 'false');
+        document.documentElement.classList.add('no-scroll');
+        document.body.classList.add('no-scroll');
+        setDesktopInfoState(true);
+        requestTypeset();
+        drawer.focus();
+    }
+
+    function closeDrawer() {
+        drawer.classList.remove('open');
+        backdrop.classList.remove('open');
+        drawer.setAttribute('aria-hidden', 'true');
+        backdrop.setAttribute('aria-hidden', 'true');
+        document.documentElement.classList.remove('no-scroll');
+        document.body.classList.remove('no-scroll');
+        setDesktopInfoState(false);
+        btn.focus();
+    }
+
+    // Info button toggles open/close
+    btn.addEventListener('click', function() {
+        if (drawer.classList.contains('open')) closeDrawer();
+        else openDrawer();
+    });
+
+    closeBtn.addEventListener('click', closeDrawer);
+    backdrop.addEventListener('click', closeDrawer);
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && drawer.classList.contains('open')) {
+            closeDrawer();
+        }
+    });
+
+    // Option A: restore open state ONLY on desktop
+    if (!isPortrait) {
+        let shouldOpen = false;
+        try {
+            shouldOpen = (sessionStorage.getItem('infoOpen') === '1');
+        } catch(e) {
+            shouldOpen = false;
+        }
+        if (shouldOpen) openDrawer();
+    }
+})();
+</script>
 
 <div> <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
 <script charset="utf-8" src="plotly.min.js"></script> <div class="plotly-graph-div" id="c273920c-6972-499d-9549-6ddf618082b5" style="height:100%; width:100%;"></div> <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("c273920c-6972-499d-9549-6ddf618082b5")) {                    Plotly.newPlot(                        "c273920c-6972-499d-9549-6ddf618082b5",                        [{"branchvalues":"total","customdata":[["\u003cb\u003eترکیه\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۱۷٫۱۳٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۱۳۵٫۵۸+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۱۳۳٫۲"],["\u003cb\u003eبریتانیا\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۱۶٫۰۵٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۱۱۲٫۸۸+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۱۲۴٫۸"],["\u003cb\u003eچین\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۱۵٫۱۸٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۱۳۴٫۳۶+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۱۱۸٫۰"],["\u003cb\u003eآمریکا\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۱۳٫۸۷٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۸۸٫۲۹+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۱۰۷٫۸"],["\u003cb\u003eکانادا\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۱۰٫۶۰٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۴۸٫۹۹+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۸۲٫۴"],["\u003cb\u003eآلمان\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۱۰٫۰۸٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۴۱٫۰۹+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۷۸٫۴"],["\u003cb\u003eهند\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۹٫۲۴٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۱۱۸٫۵۸+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۷۱٫۸"],["\u003cb\u003eایتالیا\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۹٫۰۸٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۱۲۰٫۰۰+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۷۰٫۶"],["\u003cb\u003eکره جنوبی\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۴٫۸۹٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۱۱۴٫۱۳+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۳۸٫۰"],["\u003cb\u003eاسپانیا\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۴٫۵۵٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۵۷٫۱۲+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۳۵٫۴"],["\u003cb\u003eروسیه\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۴٫۳۰٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۳۸٫۴۶+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۳۳٫۴"],["\u003cb\u003eپاکستان\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۴٫۲۲٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۱۷۰٫۲۴+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۳۲٫۸"],["\u003cb\u003eفرانسه\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۴٫۰۶٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۹۰٫۷۱+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۳۱٫۶"],["\u003cb\u003eتایوان\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۳٫۸۳٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۱۷۷٫۸۴+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۲۹٫۸"],["\u003cb\u003eلهستان\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۳٫۷۳٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۳۵٫۷۵+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۲۹٫۰"],["\u003cb\u003eعراق\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۳٫۷۰٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۴۵٫۵۷+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۲۸٫۸"],["\u003cb\u003eبرزیل\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۳٫۳۴٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۶۶٫۸۳+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۲۶٫۰"],["\u003cb\u003eآذربایجان\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۳٫۲۴٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۹۴٫۱۶+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۲۵٫۲"],["\u003cb\u003eعربستان\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۳٫۱۶٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۲۴۴٫۹۰+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۲۴٫۶"],["\u003cb\u003eمصر\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۲٫۹۱٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۲۵۷٫۱۱+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۲۲٫۶"],["\u003cb\u003eسوئد\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۲٫۸۸٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۴۳٫۳۷+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۲۲٫۴"],["\u003cb\u003eرومانی\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۲٫۸۳٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۱۲۵٫۳۸+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۲۲٫۰"],["\u003cb\u003eاسترالیا\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۲٫۶۸٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۳۲٫۵۱+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۲۰٫۸"],["\u003cb\u003eجمهوری چک\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۲٫۶۵٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۸۸٫۲۴+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۲۰٫۶"],["\u003cb\u003eهلند\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۲٫۵۰٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۶۷٫۳۴+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۱۹٫۴"],["\u003cb\u003eسوئیس\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۲٫۵۰٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۴۷٫۹۵+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۱۹٫۴"],["\u003cb\u003eدانمارک\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۲٫۳۹٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۷۱٫۸۵+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۱۸٫۶"],["\u003cb\u003eمالزی\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۲٫۳۲٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۶۶٫۱۶+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۱۸٫۰"],["\u003cb\u003eپرتغال\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۲٫۲۹٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۸۷٫۳۵+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۱۷٫۸"],["\u003cb\u003eآفریقای جنوبی\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۲٫۱۶٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۲۲۲٫۷۲+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۱۶٫۸"],["\u003cb\u003eژاپن\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۲٫۱۱٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۱۱۹٫۸۱+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۱۶٫۴"],["\u003cb\u003eاتریش\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۱٫۸۵٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۵۲٫۲۴+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۱۴٫۴"],["\u003cb\u003eبلژیک\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۱٫۸۰٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۱۱۰٫۵۷+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۱۴٫۰"],["\u003cb\u003eشیلی\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۱٫۸۰٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۸۶٫۰۰+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۱۴٫۰"],["\u003cb\u003eویتنام\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۱٫۷۸٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۱۲۲٫۴۸+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۱۳٫۸"],["\u003cb\u003eمکزیک\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۱٫۷۵٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۹۴٫۵۷+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۱۳٫۶"],["\u003cb\u003eنروژ\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۱٫۳۶٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۷۸٫۸۶+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۱۰٫۶"],["\u003cb\u003eفنلاند\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۱٫۱۱٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۳۲٫۰۷+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۸٫۶"],["\u003cb\u003eیونان\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۰٫۹۸٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۱۳۰٫۹۵+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۷٫۶"],["\u003cb\u003eایرلند\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۰٫۹۵٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۱۸۵٫۴۱+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۷٫۴"],["\u003cb\u003eکامرون\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۰٫۹۵٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۸۲٫۸۳+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۷٫۴"],["\u003cb\u003eنیجریه\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۰٫۹۳٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۸۴٫۱۷+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۷٫۲"],["\u003cb\u003eبنگلادش\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۰٫۸۷٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۲۴۴٫۸۱+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۶٫۸"],["\u003cb\u003eلیتوانی\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۰٫۸۷٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۹۱٫۶۶+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۶٫۸"],["\u003cb\u003eاسلواکی\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۰٫۸۵٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۳۰٫۱۵+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۶٫۶"],["\u003cb\u003eلبنان\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۰٫۸۲٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۸۴٫۷۹+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۶٫۴"],["\u003cb\u003eقزاقستان\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۰٫۷۵٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۱۰۵٫۱۷+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۵٫۸"],["\u003cb\u003eامارات\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۰٫۷۲٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۷۶٫۹۷+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۵٫۶"],["\u003cb\u003eتایلند\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۰٫۶۷٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۲۷٫۰۲+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۵٫۲"],["\u003cb\u003eآرژانتین\u003c\u002fb\u003e\u003cbr\u003eسهم همکاری: ۰٫۶۴٪\u003cbr\u003eتغییرات تأثیر استنادی نرمال‌شده: ۳۹٫۰۳+٪\u003cbr\u003eمیانگین سالانه مقالات مشترک: ۵٫۰"],["\u003cb\u003eهمکاری‌های بین‌المللی ایران\u003c\u002fb\u003e\u003cbr\u003e"]],"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"hovertemplate":"%{customdata[0]}\u003cextra\u003e\u003c\u002fextra\u003e","ids":["همکاری‌های بین‌المللی ایران\u002fترکیه","همکاری‌های بین‌المللی ایران\u002fبریتانیا","همکاری‌های بین‌المللی ایران\u002fچین","همکاری‌های بین‌المللی ایران\u002fآمریکا","همکاری‌های بین‌المللی ایران\u002fکانادا","همکاری‌های بین‌المللی ایران\u002fآلمان","همکاری‌های بین‌المللی ایران\u002fهند","همکاری‌های بین‌المللی ایران\u002fایتالیا","همکاری‌های بین‌المللی ایران\u002fکره جنوبی","همکاری‌های بین‌المللی ایران\u002fاسپانیا","همکاری‌های بین‌المللی ایران\u002fروسیه","همکاری‌های بین‌المللی ایران\u002fپاکستان","همکاری‌های بین‌المللی ایران\u002fفرانسه","همکاری‌های بین‌المللی ایران\u002fتایوان","همکاری‌های بین‌المللی ایران\u002fلهستان","همکاری‌های بین‌المللی ایران\u002fعراق","همکاری‌های بین‌المللی ایران\u002fبرزیل","همکاری‌های بین‌المللی ایران\u002fآذربایجان","همکاری‌های بین‌المللی ایران\u002fعربستان","همکاری‌های بین‌المللی ایران\u002fمصر","همکاری‌های بین‌المللی ایران\u002fسوئد","همکاری‌های بین‌المللی ایران\u002fرومانی","همکاری‌های بین‌المللی ایران\u002fاسترالیا","همکاری‌های بین‌المللی ایران\u002fجمهوری چک","همکاری‌های بین‌المللی ایران\u002fهلند","همکاری‌های بین‌المللی ایران\u002fسوئیس","همکاری‌های بین‌المللی ایران\u002fدانمارک","همکاری‌های بین‌المللی ایران\u002fمالزی","همکاری‌های بین‌المللی ایران\u002fپرتغال","همکاری‌های بین‌المللی ایران\u002fآفریقای جنوبی","همکاری‌های بین‌المللی ایران\u002fژاپن","همکاری‌های بین‌المللی ایران\u002fاتریش","همکاری‌های بین‌المللی ایران\u002fبلژیک","همکاری‌های بین‌المللی ایران\u002fشیلی","همکاری‌های بین‌المللی ایران\u002fویتنام","همکاری‌های بین‌المللی ایران\u002fمکزیک","همکاری‌های بین‌المللی ایران\u002fنروژ","همکاری‌های بین‌المللی ایران\u002fفنلاند","همکاری‌های بین‌المللی ایران\u002fیونان","همکاری‌های بین‌المللی ایران\u002fایرلند","همکاری‌های بین‌المللی ایران\u002fکامرون","همکاری‌های بین‌المللی ایران\u002fنیجریه","همکاری‌های بین‌المللی ایران\u002fبنگلادش","همکاری‌های بین‌المللی ایران\u002fلیتوانی","همکاری‌های بین‌المللی ایران\u002fاسلواکی","همکاری‌های بین‌المللی ایران\u002fلبنان","همکاری‌های بین‌المللی ایران\u002fقزاقستان","همکاری‌های بین‌المللی ایران\u002fامارات","همکاری‌های بین‌المللی ایران\u002fتایلند","همکاری‌های بین‌المللی ایران\u002fآرژانتین","همکاری‌های بین‌المللی ایران"],"labels":["ترکیه","بریتانیا","چین","آمریکا","کانادا","آلمان","هند","ایتالیا","کره جنوبی","اسپانیا","روسیه","پاکستان","فرانسه","تایوان","لهستان","عراق","برزیل","آذربایجان","عربستان","مصر","سوئد","رومانی","استرالیا","جمهوری چک","هلند","سوئیس","دانمارک","مالزی","پرتغال","آفریقای جنوبی","ژاپن","اتریش","بلژیک","شیلی","ویتنام","مکزیک","نروژ","فنلاند","یونان","ایرلند","کامرون","نیجریه","بنگلادش","لیتوانی","اسلواکی","لبنان","قزاقستان","امارات","تایلند","آرژانتین","همکاری‌های بین‌المللی ایران"],"marker":{"coloraxis":"coloraxis","colors":{"dtype":"f8","bdata":"w\u002fUoXI\u002fyYEC4HoXrUThcQOxRuB6Fy2BAw\u002fUoXI8SVkAfhetRuH5IQOxRuB6Fi0RAhetRuB6lXUD\u002f\u002f\u002f\u002f\u002f\u002f\u002f9dQLgehetRiFxAjsL1KFyPTEB7FK5H4TpDQEjhehSuR2VAPQrXo3CtVkB7FK5H4TpmQAAAAAAA4EFAKVyPwvXIRkCF61G4HrVQQArXo3A9ildAzczMzMycbkD2KFyPwhFwQI\u002fC9Shcr0VAuB6F61FYX0DhehSuR0FAQI\u002fC9ShcD1ZA9ihcj8LVUECamZmZmflHQGZmZmZm9lFACtejcD2KUEBmZmZmZtZVQNejcD0K12tApHA9CtfzXUAfhetRuB5KQBSuR+F6pFtAAAAAAACAVUAghetRuJ5eQBWuR+F6pFdA16NwPQq3U0ApXI\u002fC9QhAQGZmZmZmXmBAhetRuB4tZ0CF61G4HrVUQHsUrkfhClVAUrgeheuZbkAK16NwPepWQGZmZmZmJj5Aw\u002fUoXI8yVUB7FK5H4UpaQK5H4XoUPlNAhetRuB4FO0CkcD0K14NDQMIIgv0zfFlA"}},"name":"","parents":["همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران","همکاری‌های بین‌المللی ایران",""],"values":{"dtype":"f8","bdata":"4XoUrkchMUDNzMzMzAwwQFyPwvUoXC5APQrXo3C9K0AzMzMzMzMlQClcj8L1KCRAexSuR+F6IkApXI\u002fC9SgiQI\u002fC9ShcjxNAMzMzMzMzEkAzMzMzMzMRQOF6FK5H4RBAPQrXo3A9EECkcD0K16MOQNejcD0K1w1AmpmZmZmZDUC4HoXrUbgKQOxRuB6F6wlASOF6FK5HCUBI4XoUrkcHQArXo3A9CgdApHA9CtejBkBxPQrXo3AFQDMzMzMzMwVAAAAAAAAABEAAAAAAAAAEQB+F61G4HgNAj8L1KFyPAkBSuB6F61ECQEjhehSuRwFA4XoUrkfhAECamZmZmZn9P83MzMzMzPw\u002fzczMzMzM\u002fD97FK5H4Xr8PwAAAAAAAPw\u002fw\u002fUoXI\u002fC9T\u002fD9Shcj8LxP1yPwvUoXO8\u002fZmZmZmZm7j9mZmZmZmbuP8P1KFyPwu0\u002f16NwPQrX6z\u002fXo3A9CtfrPzMzMzMzM+s\u002fPQrXo3A96j8AAAAAAADoPwrXo3A9Cuc\u002fcT0K16Nw5T97FK5H4XrkPz0K16NwfWhA"},"type":"treemap","root":{"color":"rgba(255,200,255,0)"},"text":["۱۷٫۱٪ (۱۳۳٫۲) \u003cbr\u003e+۱۳۵٫۶","۱۶٫۱٪ (۱۲۴٫۸) \u003cbr\u003e+۱۱۲٫۹","۱۵٫۲٪ (۱۱۸٫۰) \u003cbr\u003e+۱۳۴٫۴","۱۳٫۹٪ (۱۰۷٫۸) \u003cbr\u003e+۸۸٫۳","۱۰٫۶٪ (۸۲٫۴) \u003cbr\u003e+۴۹٫۰","۱۰٫۱٪ (۷۸٫۴) \u003cbr\u003e+۴۱٫۱","۹٫۲٪ (۷۱٫۸) \u003cbr\u003e+۱۱۸٫۶","۹٫۱٪ (۷۰٫۶) \u003cbr\u003e+۱۲۰٫۰","۴٫۹٪ (۳۸٫۰) \u003cbr\u003e+۱۱۴٫۱","۴٫۵٪ (۳۵٫۴) \u003cbr\u003e+۵۷٫۱","۴٫۳٪ (۳۳٫۴) \u003cbr\u003e+۳۸٫۵","۴٫۲٪ (۳۲٫۸) \u003cbr\u003e+۱۷۰٫۲","۴٫۱٪ (۳۱٫۶) \u003cbr\u003e+۹۰٫۷","۳٫۸٪ (۲۹٫۸) \u003cbr\u003e+۱۷۷٫۸","۳٫۷٪ (۲۹٫۰) \u003cbr\u003e+۳۵٫۸","۳٫۷٪ (۲۸٫۸) \u003cbr\u003e+۴۵٫۶","۳٫۳٪ (۲۶٫۰) \u003cbr\u003e+۶۶٫۸","۳٫۲٪ (۲۵٫۲) \u003cbr\u003e+۹۴٫۲","۳٫۲٪ (۲۴٫۶) \u003cbr\u003e+۲۴۴٫۹","۲٫۹٪ (۲۲٫۶) \u003cbr\u003e+۲۵۷٫۱","۲٫۹٪ (۲۲٫۴) \u003cbr\u003e+۴۳٫۴","۲٫۸٪ (۲۲٫۰) \u003cbr\u003e+۱۲۵٫۴","۲٫۷٪ (۲۰٫۸) \u003cbr\u003e+۳۲٫۵","۲٫۶٪ (۲۰٫۶) \u003cbr\u003e+۸۸٫۲","۲٫۵٪ (۱۹٫۴) \u003cbr\u003e+۶۷٫۳","۲٫۵٪ (۱۹٫۴) \u003cbr\u003e+۴۸٫۰","۲٫۴٪ (۱۸٫۶) \u003cbr\u003e+۷۱٫۸","۲٫۳٪ (۱۸٫۰) \u003cbr\u003e+۶۶٫۲","۲٫۳٪ (۱۷٫۸) \u003cbr\u003e+۸۷٫۳","۲٫۲٪ (۱۶٫۸) \u003cbr\u003e+۲۲۲٫۷","۲٫۱٪ (۱۶٫۴) \u003cbr\u003e+۱۱۹٫۸","۱٫۹٪ (۱۴٫۴) \u003cbr\u003e+۵۲٫۲","۱٫۸٪ (۱۴٫۰) \u003cbr\u003e+۱۱۰٫۶","۱٫۸٪ (۱۴٫۰) \u003cbr\u003e+۸۶٫۰","۱٫۸٪ (۱۳٫۸) \u003cbr\u003e+۱۲۲٫۵","۱٫۸٪ (۱۳٫۶) \u003cbr\u003e+۹۴٫۶","۱٫۴٪ (۱۰٫۶) \u003cbr\u003e+۷۸٫۹","۱٫۱٪ (۸٫۶) \u003cbr\u003e+۳۲٫۱","۱٫۰٪ (۷٫۶) \u003cbr\u003e+۱۳۰٫۹","۰٫۹٪ (۷٫۴) \u003cbr\u003e+۱۸۵٫۴","۰٫۹٪ (۷٫۴) \u003cbr\u003e+۸۲٫۸","۰٫۹٪ (۷٫۲) \u003cbr\u003e+۸۴٫۲","۰٫۹٪ (۶٫۸) \u003cbr\u003e+۲۴۴٫۸","۰٫۹٪ (۶٫۸) \u003cbr\u003e+۹۱٫۷","۰٫۸٪ (۶٫۶) \u003cbr\u003e+۳۰٫۱","۰٫۸٪ (۶٫۴) \u003cbr\u003e+۸۴٫۸","۰٫۸٪ (۵٫۸) \u003cbr\u003e+۱۰۵٫۲","۰٫۷٪ (۵٫۶) \u003cbr\u003e+۷۷٫۰","۰٫۷٪ (۵٫۲) \u003cbr\u003e+۲۷٫۰","۰٫۶٪ (۵٫۰) \u003cbr\u003e+۳۹٫۰","همکاری‌های بین‌المللی ایران"],"textinfo":"label+text"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#1f77b4","#ff7f0e","#2ca02c","#bcbd22","#9467bd","#8c564b","#e377c2","#7f7f7f","#d62728","#17becf","#aec7e8","#ffbb78"],"font":{"color":"#2a3f5f","family":"Vazirmatn FD"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"#E5ECF6","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"right","font":{"family":"Vazirmatn FD"}},"hovermode":"closest","legend":{"font":{"family":"Vazirmatn FD"},"title":{"font":{"family":"Vazirmatn FD"}}},"mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"title":{"font":{"family":"Vazirmatn FD Black"},"x":0.5,"xanchor":"center"},"xaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","tickfont":{"family":"Vazirmatn FD","size":13},"ticks":"","title":{"font":{"family":"Vazirmatn FD"},"standoff":15},"zerolinecolor":"white","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","tickfont":{"family":"Vazirmatn FD","size":13},"ticks":"","title":{"font":{"family":"Vazirmatn FD"},"standoff":15},"zerolinecolor":"white","zerolinewidth":2}}},"coloraxis":{"colorbar":{"title":{"text":"ΔCNCI%"}},"colorscale":[[0.0,"rgb(165,0,38)"],[0.1,"rgb(215,48,39)"],[0.2,"rgb(244,109,67)"],[0.3,"rgb(253,174,97)"],[0.4,"rgb(254,224,139)"],[0.5,"rgb(255,255,191)"],[0.6,"rgb(217,239,139)"],[0.7,"rgb(166,217,106)"],[0.8,"rgb(102,189,99)"],[0.9,"rgb(26,152,80)"],[1.0,"rgb(0,104,55)"]],"cmid":0},"legend":{"tracegroupgap":0},"margin":{"t":60},"title":{"text":"\u003cspan\u003eهمکاری‌های بین‌المللی ایران در حوزه فیزیک\u003cbr\u003e\u003c\u002fspan\u003e\u003cspan style='font-size:11px; font-family:Vazirmatn; color:gray;'\u003eپنجاه کشور اول از نظر میزان همکاری (مساحت مستطیل) و تغییرات تأثیر استنادی به نسبت مقالات داخلی (رنگ) -بازه ۲۰۲۰ تا ۲۰۲۴\u003c\u002fspan\u003e\u003cbr\u003e\u003cspan style='font-size:10px; font-family:Vazirmatn; color:gray;'\u003eمقالات با بیش از ۱۰۰ نویسنده استثنا شده اند\u003c\u002fspan\u003e","x":0.5,"xanchor":"center"},"hoverlabel":{"align":"right"}},                        {"displaylogo": false, "modeBarButtonsToRemove": ["select", "lasso2d", "toggleSpikelines", "hoverCompareCartesian", "hoverClosestCartesian"], "toImageButtonOptions": {"filename": "23_iran_international_collab_treemap", "scale": 4, "format": "png"}, "responsive": true}                    )                };            </script> </div>

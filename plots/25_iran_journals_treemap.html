@@ -115,13 +115,34 @@
 <a aria-label="قبلی" class="nav-btn" href="23_iran_international_collab_treemap.html" title="قبلی">←</a>
 <a aria-label="خانه" class="nav-btn home" href="../index.html" title="خانه">⌂</a>
 <a aria-label="بعدی" class="nav-btn" href="topNvsYearANDcount.html" title="بعدی">→</a>
+<button aria-label="اطلاعات" class="nav-btn info-btn" title="اطلاعات" type="button">ℹ</button>
 </div>
+<div aria-hidden="true" class="info-backdrop" id="info-backdrop"></div>
+<aside aria-hidden="true" aria-modal="true" class="info-drawer" dir="rtl" id="info-drawer" lang="fa" role="dialog" tabindex="-1">
+<div class="info-head">
+<div class="info-title" dir="rtl" id="info-title"></div>
+<button aria-label="بستن" class="info-close" id="info-close" type="button">
+<span class="close-x">×</span>
+<span class="close-up">⌃</span>
+</button>
+</div>
+<div class="info-body" id="info-body"></div>
+</aside>
+<script id="info-payload" type="application/json">{"title": "برترین ژورنال‌ها", "long_title": "پانزده مجله برتر از نظر فراوانی مقالات ایرانی در بازه ۲۰۲۰ تا ۲۰۲۴", "md": "در این نمودار درختی، پانزده مجله‌ با بیشترین تعداد مقالات ایرانی در فیزیک طی سال‌های ۲۰۲۰ تا ۲۰۲۴ نمایش داده شده‌اند.\n\nمساحت هر مستطیل نشان‌دهنده‌ی حجم کل مقالات ایران در آن مجله است و هر مجله به دو بخش «داخلی» و «بین‌المللی» تفکیک شده تا سهم همکاری‌های بین‌المللی در همان مجله هم قابل مشاهده باشد.\n\nرنگ هر خانه بر اساس تأثیر استنادی نرمال‌شده (CNCI) تنظیم شده است؛ رنگ‌های متمایل به آبی بیانگر عملکرد استنادی بهتر مجله در مقالات ایرانی‌اند."}</script>
+<!-- MathJax (LaTeX rendering) -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['\\[','\\]'], ['$$','$$']]
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
-/* Make sure the page has room for bottom nav on phones */
 @media (orientation: portrait) {
-    body {
-        padding-bottom: 92px !important;
-    }
+    body { padding-bottom: 92px !important; }
 }
 
 .overlay-nav {
@@ -146,6 +167,9 @@
     text-decoration: none;
     font-size: 28px;
     user-select: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
 }
 
 .overlay-nav .nav-btn.disabled {
@@ -158,7 +182,146 @@
     opacity: 0.9;
 }
 
-/* Phone layout: bottom, centered, and 2x bigger */
+.info-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s ease;
+    z-index: 99998;
+}
+
+.info-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    /* Desktop drawer width (increase 420px to your taste) */
+    width: min(800px, 92vw);
+
+    height: 100vh;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+    transform: translateX(110%);
+    transition: transform 0.22s ease;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 14px 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    position: relative;
+}
+
+.info-title {
+    font-family: Vazirmatn, system-ui, sans-serif;
+    font-weight: 900;
+    font-size: 15px;
+    color: #0f172a;
+    line-height: 1.6;
+
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.info-close {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: none;
+    background: rgba(0,0,0,0.06);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: #0f172a;
+    user-select: none;
+}
+
+.close-up { display: none; }
+
+.info-body {
+    padding: 14px 16px 18px;
+    overflow: auto;
+    font-family: Vazirmatn, system-ui, sans-serif;
+    color: #111827;
+    line-height: 1.9;
+    font-size: 14px;
+
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.info-body h1, .info-body h2, .info-body h3 {
+    margin: 10px 0 8px;
+    line-height: 1.5;
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: right;
+}
+.info-body h1 { font-size: 18px; }
+.info-body h2 { font-size: 16px; }
+.info-body h3 { font-size: 15px; }
+
+.info-body p { margin: 8px 0; }
+
+.info-body ul, .info-body ol {
+    margin: 8px 0;
+    padding-inline-start: 20px;
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: right;
+}
+
+.info-body li {
+    margin: 4px 0;
+    direction: rtl;
+    unicode-bidi: plaintext;
+}
+
+.info-body code {
+    background: rgba(0,0,0,0.06);
+    padding: 0 6px;
+    border-radius: 6px;
+}
+.info-body pre {
+    background: rgba(0,0,0,0.06);
+    padding: 10px 12px;
+    border-radius: 12px;
+    overflow: auto;
+}
+.info-body a {
+    color: #0057d9;
+    text-decoration: none;
+}
+.info-body a:hover { text-decoration: underline; }
+
+html.no-scroll, body.no-scroll {
+    overflow: hidden !important;
+}
+
+.info-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+.info-drawer.open {
+    transform: translateX(0);
+}
+
 @media (orientation: portrait) {
     .overlay-nav {
         position: fixed;
@@ -176,17 +339,255 @@
     }
 
     .overlay-nav .nav-btn {
-        width: 90px;     /* 2x */
-        height: 90px;    /* 2x */
-        font-size: 46px; /* 2x-ish */
+        width: 90px;
+        height: 90px;
+        font-size: 46px;
         box-shadow: 0 6px 14px rgba(0,0,0,0.18);
     }
 
-    .overlay-nav .nav-btn.disabled {
-        box-shadow: none;
+    .info-drawer {
+        left: 0;
+        right: 0;
+        top: 0;
+        width: 100vw;
+        height: min(70vh, 520px);
+        transform: translateY(-110%);
+        border-bottom-left-radius: 24px;
+        border-bottom-right-radius: 24px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+    .info-drawer.open {
+        transform: translateY(0);
+    }
+
+    .close-x { display: none; }
+    .close-up { display: inline; }
+
+    .info-close {
+        position: absolute;
+        left: 50%;
+        bottom: 10px;
+        top: auto;
+        transform: translateX(-50%);
+        width: 72px;
+        height: 44px;
+        font-size: 28px;
+        background: rgba(0,0,0,0.08);
+    }
+    .info-body {
+        padding-bottom: 70px;
     }
 }
 </style>
+<script>
+(function() {
+    const payloadEl = document.getElementById('info-payload');
+    const btn = document.querySelector('.info-btn');
+    const drawer = document.getElementById('info-drawer');
+    const backdrop = document.getElementById('info-backdrop');
+    const closeBtn = document.getElementById('info-close');
+    const titleEl = document.getElementById('info-title');
+    const bodyEl = document.getElementById('info-body');
+
+    if (!payloadEl || !btn || !drawer || !backdrop || !closeBtn || !titleEl || !bodyEl) return;
+
+    const isPortrait = window.matchMedia && window.matchMedia('(orientation: portrait)').matches;
+
+    let payload = {};
+    try {
+        payload = JSON.parse(payloadEl.textContent || '{}');
+    } catch (e) {
+        payload = {};
+    }
+
+    const rawInfo = (payload.md || '').trim();
+
+    function looksLikeHtml(s) {
+        return /<\/?[a-z][\s\S]*>/i.test(String(s || ''));
+    }
+
+    function sanitizeHtml(input) {
+        const template = document.createElement('template');
+        template.innerHTML = String(input || '');
+
+        const blockedTags = new Set(['SCRIPT','IFRAME','OBJECT','EMBED']);
+        const walker = document.createTreeWalker(template.content, NodeFilter.SHOW_ELEMENT, null);
+        const toRemove = [];
+
+        while (walker.nextNode()) {
+            const el = walker.currentNode;
+
+            if (blockedTags.has(el.tagName)) {
+                toRemove.push(el);
+                continue;
+            }
+
+            [...el.attributes].forEach(attr => {
+                const name = attr.name.toLowerCase();
+                const val = (attr.value || '').trim();
+
+                if (name.startsWith('on')) el.removeAttribute(attr.name);
+
+                if ((name === 'href' || name === 'src') && /^javascript:/i.test(val)) {
+                    el.setAttribute(attr.name, '#');
+                }
+            });
+        }
+
+        toRemove.forEach(el => el.remove());
+        return template.innerHTML;
+    }
+
+    // Title supports HTML too
+    const titleRaw = payload.long_title || payload.title || 'Info';
+    if (looksLikeHtml(titleRaw)) titleEl.innerHTML = sanitizeHtml(titleRaw);
+    else titleEl.textContent = titleRaw;
+
+    if (!rawInfo) {
+        btn.classList.add('disabled');
+        btn.setAttribute('aria-disabled', 'true');
+        btn.disabled = true;
+        if (!isPortrait) {
+            try { sessionStorage.setItem('infoOpen', '0'); } catch(e) {}
+        }
+        return;
+    }
+
+    function escapeHtml(s) {
+        return String(s)
+            .replace(/&/g,'&amp;')
+            .replace(/</g,'&lt;')
+            .replace(/>/g,'&gt;');
+    }
+
+    // Minimal markdown -> HTML (HTML is handled separately)
+    function mdToHtml(markdown) {
+        let text = String(markdown).replace(/\r\n?/g, '\n');
+
+        const parts = text.split(/```/g);
+        for (let i = 0; i < parts.length; i++) {
+            if (i % 2 === 1) {
+                parts[i] = '<pre><code>' + escapeHtml(parts[i].trim()) + '</code></pre>';
+            } else {
+                parts[i] = escapeHtml(parts[i]);
+            }
+        }
+        text = parts.join('');
+
+        text = text.replace(/`([^`]+?)`/g, '<code>$1</code>');
+        text = text.replace(/\[([^\]]+?)\]\(([^\)]+?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+        text = text.replace(/\*\*([^*]+?)\*\*/g, '<strong>$1</strong>');
+        text = text.replace(/(^|[^*])\*([^*]+?)\*(?!\*)/g, '$1<em>$2</em>');
+
+        text = text.replace(/^###\s+(.*)$/gm, '<h3>$1</h3>');
+        text = text.replace(/^##\s+(.*)$/gm, '<h2>$1</h2>');
+        text = text.replace(/^#\s+(.*)$/gm, '<h1>$1</h1>');
+
+        const lines = text.split(/\n/);
+        let out = [];
+        let inUl = false;
+
+        for (const line of lines) {
+            const m = line.match(/^\s*[-*]\s+(.*)$/);
+            if (m) {
+                if (!inUl) {
+                    inUl = true;
+                    out.push('<ul>');
+                }
+                out.push('<li>' + m[1] + '</li>');
+            } else {
+                if (inUl) {
+                    out.push('</ul>');
+                    inUl = false;
+                }
+                out.push(line);
+            }
+        }
+        if (inUl) out.push('</ul>');
+        text = out.join('\n');
+
+        const blocks = text.split(/\n\s*\n/g).map(b => b.trim()).filter(Boolean);
+        return blocks.map(b => {
+            if (/^<(h1|h2|h3|ul|pre)/.test(b)) return b;
+            return '<p>' + b.replace(/\n/g, '<br>') + '</p>';
+        }).join('\n');
+    }
+
+    // Render body: HTML if looks like HTML, else Markdown
+    if (looksLikeHtml(rawInfo)) bodyEl.innerHTML = sanitizeHtml(rawInfo);
+    else bodyEl.innerHTML = mdToHtml(rawInfo);
+
+    // MathJax typeset (retry until loaded)
+    let typesetTries = 0;
+    function requestTypeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+            try {
+                if (MathJax.typesetClear) MathJax.typesetClear([drawer]);
+            } catch(e) {}
+            MathJax.typesetPromise([drawer]).catch(function(){});
+            return;
+        }
+        if (typesetTries++ < 25) setTimeout(requestTypeset, 200);
+    }
+    requestTypeset();
+
+    function setDesktopInfoState(isOpen) {
+        if (isPortrait) return;
+        try {
+            sessionStorage.setItem('infoOpen', isOpen ? '1' : '0');
+        } catch (e) {}
+    }
+
+    function openDrawer() {
+        drawer.classList.add('open');
+        backdrop.classList.add('open');
+        drawer.setAttribute('aria-hidden', 'false');
+        backdrop.setAttribute('aria-hidden', 'false');
+        document.documentElement.classList.add('no-scroll');
+        document.body.classList.add('no-scroll');
+        setDesktopInfoState(true);
+        requestTypeset();
+        drawer.focus();
+    }
+
+    function closeDrawer() {
+        drawer.classList.remove('open');
+        backdrop.classList.remove('open');
+        drawer.setAttribute('aria-hidden', 'true');
+        backdrop.setAttribute('aria-hidden', 'true');
+        document.documentElement.classList.remove('no-scroll');
+        document.body.classList.remove('no-scroll');
+        setDesktopInfoState(false);
+        btn.focus();
+    }
+
+    // Info button toggles open/close
+    btn.addEventListener('click', function() {
+        if (drawer.classList.contains('open')) closeDrawer();
+        else openDrawer();
+    });
+
+    closeBtn.addEventListener('click', closeDrawer);
+    backdrop.addEventListener('click', closeDrawer);
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && drawer.classList.contains('open')) {
+            closeDrawer();
+        }
+    });
+
+    // Option A: restore open state ONLY on desktop
+    if (!isPortrait) {
+        let shouldOpen = false;
+        try {
+            shouldOpen = (sessionStorage.getItem('infoOpen') === '1');
+        } catch(e) {
+            shouldOpen = false;
+        }
+        if (shouldOpen) openDrawer();
+    }
+})();
+</script>
 
 <div> <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
 <script charset="utf-8" src="plotly.min.js"></script> <div class="plotly-graph-div" id="b6f29d8c-346f-4885-9371-7f8f42bf5399" style="height:100%; width:100%;"></div> <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("b6f29d8c-346f-4885-9371-7f8f42bf5399")) {                    Plotly.newPlot(                        "b6f29d8c-346f-4885-9371-7f8f42bf5399",                        [{"branchvalues":"total","customdata":[["\u003cb\u003ePHYSICAL REVIEW D\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۳۸۳\u003cbr\u003eسهم بین‌المللی: ۵۷.۹۶٪\u003cbr\u003eسهم داخلی: ۴۲.۰۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۲۴","۲۲۲","بین‌المللی","۱.۲۴","PHYSICAL REVIEW D","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۳۸۳",1.2399999999999998],["\u003cb\u003eOPTICAL AND QUANTUM ELECTRONICS\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۳۶۷\u003cbr\u003eسهم بین‌المللی: ۳۷.۶٪\u003cbr\u003eسهم داخلی: ۶۲.۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۲۲","۱۳۸","بین‌المللی","۱.۲۲","OPTICAL AND QUANTUM ELECTRONICS","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۳۶۷",1.22],["\u003cb\u003eEUROPEAN PHYSICAL JOURNAL C\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۳۵۳\u003cbr\u003eسهم بین‌المللی: ۵۲.۶۹٪\u003cbr\u003eسهم داخلی: ۴۷.۳۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۳","۱۸۶","بین‌المللی","۱.۳","EUROPEAN PHYSICAL JOURNAL C","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۳۵۳",1.3],["\u003cb\u003eEUROPEAN PHYSICAL JOURNAL PLUS\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۲۹۶\u003cbr\u003eسهم بین‌المللی: ۳۳.۴۵٪\u003cbr\u003eسهم داخلی: ۶۶.۵۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰.۶۹","۹۹","بین‌المللی","۰.۶۹","EUROPEAN PHYSICAL JOURNAL PLUS","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۲۹۶",0.6899999999999998],["\u003cb\u003eSCIENTIFIC REPORTS\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۲۸۴\u003cbr\u003eسهم بین‌المللی: ۳۴.۱۵٪\u003cbr\u003eسهم داخلی: ۶۵.۸۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۰۱","۹۷","بین‌المللی","۱.۰۱","SCIENTIFIC REPORTS","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۲۸۴",1.01],["\u003cb\u003ePHYSICA SCRIPTA\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۲۷۶\u003cbr\u003eسهم بین‌المللی: ۳۲.۹۷٪\u003cbr\u003eسهم داخلی: ۶۷.۰۳٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰.۶۹","۹۱","بین‌المللی","۰.۶۹","PHYSICA SCRIPTA","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۲۷۶",0.69],["\u003cb\u003eJOURNAL OF HIGH ENERGY PHYSICS\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۲۶۲\u003cbr\u003eسهم بین‌المللی: ۸۱.۳٪\u003cbr\u003eسهم داخلی: ۱۸.۷٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۵۳","۲۱۳","بین‌المللی","۱.۵۳","JOURNAL OF HIGH ENERGY PHYSICS","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۲۶۲",1.53],["\u003cb\u003ePHYSICS LETTERS B\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۷۲\u003cbr\u003eسهم بین‌المللی: ۶۰.۴۷٪\u003cbr\u003eسهم داخلی: ۳۹.۵۳٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۸","۱۰۴","بین‌المللی","۱.۱۸","PHYSICS LETTERS B","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۷۲",1.18],["\u003cb\u003ePHYSICAL REVIEW B\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۶۸\u003cbr\u003eسهم بین‌المللی: ۶۲.۵٪\u003cbr\u003eسهم داخلی: ۳۷.۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰.۷۳","۱۰۵","بین‌المللی","۰.۷۳","PHYSICAL REVIEW B","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۶۸",0.7299999999999999],["\u003cb\u003eMONTHLY NOTICES OF THE ROYAL ASTRONOMICAL SOCIETY\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۵۲\u003cbr\u003eسهم بین‌المللی: ۵۶.۵۸٪\u003cbr\u003eسهم داخلی: ۴۳.۴۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰.۸۴","۸۶","بین‌المللی","۰.۸۴","MONTHLY NOTICES OF THE ROYAL ASTRONOMICAL SOCIETY","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۵۲",0.84],["\u003cb\u003eINDIAN JOURNAL OF PHYSICS\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۱۹\u003cbr\u003eسهم بین‌المللی: ۱۱.۷۶٪\u003cbr\u003eسهم داخلی: ۸۸.۲۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰.۱۹","۱۴","بین‌المللی","۰.۱۹","INDIAN JOURNAL OF PHYSICS","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۱۹",0.19],["\u003cb\u003eCERAMICS INTERNATIONAL\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۱۵\u003cbr\u003eسهم بین‌المللی: ۴۰٪\u003cbr\u003eسهم داخلی: ۶۰٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۴۳","۴۶","بین‌المللی","۱.۴۳","CERAMICS INTERNATIONAL","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۱۵",1.43],["\u003cb\u003ePHYSICAL REVIEW A\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۱۵\u003cbr\u003eسهم بین‌المللی: ۵۷.۳۹٪\u003cbr\u003eسهم داخلی: ۴۲.۶۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰.۸۷","۶۶","بین‌المللی","۰.۸۷","PHYSICAL REVIEW A","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۱۵",0.87],["\u003cb\u003ePHYSICS OF THE DARK UNIVERSE\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۱۱\u003cbr\u003eسهم بین‌المللی: ۵۷.۶۶٪\u003cbr\u003eسهم داخلی: ۴۲.۳۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۵۵","۶۴","بین‌المللی","۱.۵۵","PHYSICS OF THE DARK UNIVERSE","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۱۱",1.55],["\u003cb\u003eRESULTS IN PHYSICS\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۱۰\u003cbr\u003eسهم بین‌المللی: ۷۰.۹۱٪\u003cbr\u003eسهم داخلی: ۲۹.۰۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۲.۷۲","۷۸","بین‌المللی","۲.۷۲","RESULTS IN PHYSICS","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۱۰",2.72],["\u003cb\u003ePHYSICAL REVIEW D\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۳۸۳\u003cbr\u003eسهم بین‌المللی: ۵۷.۹۶٪\u003cbr\u003eسهم داخلی: ۴۲.۰۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۲۴","۱۶۱","داخلی","۱.۲۴","PHYSICAL REVIEW D","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۳۸۳",1.24],["\u003cb\u003eOPTICAL AND QUANTUM ELECTRONICS\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۳۶۷\u003cbr\u003eسهم بین‌المللی: ۳۷.۶٪\u003cbr\u003eسهم داخلی: ۶۲.۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۲۲","۲۲۹","داخلی","۱.۲۲","OPTICAL AND QUANTUM ELECTRONICS","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۳۶۷",1.22],["\u003cb\u003eEUROPEAN PHYSICAL JOURNAL C\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۳۵۳\u003cbr\u003eسهم بین‌المللی: ۵۲.۶۹٪\u003cbr\u003eسهم داخلی: ۴۷.۳۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۳","۱۶۷","داخلی","۱.۳","EUROPEAN PHYSICAL JOURNAL C","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۳۵۳",1.3],["\u003cb\u003eEUROPEAN PHYSICAL JOURNAL PLUS\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۲۹۶\u003cbr\u003eسهم بین‌المللی: ۳۳.۴۵٪\u003cbr\u003eسهم داخلی: ۶۶.۵۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰.۶۹","۱۹۷","داخلی","۰.۶۹","EUROPEAN PHYSICAL JOURNAL PLUS","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۲۹۶",0.6899999999999998],["\u003cb\u003eSCIENTIFIC REPORTS\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۲۸۴\u003cbr\u003eسهم بین‌المللی: ۳۴.۱۵٪\u003cbr\u003eسهم داخلی: ۶۵.۸۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۰۱","۱۸۷","داخلی","۱.۰۱","SCIENTIFIC REPORTS","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۲۸۴",1.01],["\u003cb\u003ePHYSICA SCRIPTA\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۲۷۶\u003cbr\u003eسهم بین‌المللی: ۳۲.۹۷٪\u003cbr\u003eسهم داخلی: ۶۷.۰۳٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰.۶۹","۱۸۵","داخلی","۰.۶۹","PHYSICA SCRIPTA","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۲۷۶",0.69],["\u003cb\u003eJOURNAL OF HIGH ENERGY PHYSICS\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۲۶۲\u003cbr\u003eسهم بین‌المللی: ۸۱.۳٪\u003cbr\u003eسهم داخلی: ۱۸.۷٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۵۳","۴۹","داخلی","۱.۵۳","JOURNAL OF HIGH ENERGY PHYSICS","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۲۶۲",1.53],["\u003cb\u003ePHYSICS LETTERS B\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۷۲\u003cbr\u003eسهم بین‌المللی: ۶۰.۴۷٪\u003cbr\u003eسهم داخلی: ۳۹.۵۳٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۸","۶۸","داخلی","۱.۱۸","PHYSICS LETTERS B","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۷۲",1.18],["\u003cb\u003ePHYSICAL REVIEW B\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۶۸\u003cbr\u003eسهم بین‌المللی: ۶۲.۵٪\u003cbr\u003eسهم داخلی: ۳۷.۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰.۷۳","۶۳","داخلی","۰.۷۳","PHYSICAL REVIEW B","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۶۸",0.73],["\u003cb\u003eMONTHLY NOTICES OF THE ROYAL ASTRONOMICAL SOCIETY\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۵۲\u003cbr\u003eسهم بین‌المللی: ۵۶.۵۸٪\u003cbr\u003eسهم داخلی: ۴۳.۴۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰.۸۴","۶۶","داخلی","۰.۸۴","MONTHLY NOTICES OF THE ROYAL ASTRONOMICAL SOCIETY","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۵۲",0.84],["\u003cb\u003eINDIAN JOURNAL OF PHYSICS\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۱۹\u003cbr\u003eسهم بین‌المللی: ۱۱.۷۶٪\u003cbr\u003eسهم داخلی: ۸۸.۲۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰.۱۹","۱۰۵","داخلی","۰.۱۹","INDIAN JOURNAL OF PHYSICS","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۱۹",0.19],["\u003cb\u003eCERAMICS INTERNATIONAL\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۱۵\u003cbr\u003eسهم بین‌المللی: ۴۰٪\u003cbr\u003eسهم داخلی: ۶۰٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۴۳","۶۹","داخلی","۱.۴۳","CERAMICS INTERNATIONAL","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۱۵",1.43],["\u003cb\u003ePHYSICAL REVIEW A\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۱۵\u003cbr\u003eسهم بین‌المللی: ۵۷.۳۹٪\u003cbr\u003eسهم داخلی: ۴۲.۶۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰.۸۷","۴۹","داخلی","۰.۸۷","PHYSICAL REVIEW A","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۱۵",0.8700000000000001],["\u003cb\u003ePHYSICS OF THE DARK UNIVERSE\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۱۱\u003cbr\u003eسهم بین‌المللی: ۵۷.۶۶٪\u003cbr\u003eسهم داخلی: ۴۲.۳۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۵۵","۴۷","داخلی","۱.۵۵","PHYSICS OF THE DARK UNIVERSE","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۱۱",1.5500000000000003],["\u003cb\u003eRESULTS IN PHYSICS\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۱۰\u003cbr\u003eسهم بین‌المللی: ۷۰.۹۱٪\u003cbr\u003eسهم داخلی: ۲۹.۰۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۲.۷۲","۳۲","داخلی","۲.۷۲","RESULTS IN PHYSICS","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۱۰",2.72],["\u003cb\u003ePHYSICAL REVIEW D\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۳۸۳\u003cbr\u003eسهم بین‌المللی: ۵۷.۹۶٪\u003cbr\u003eسهم داخلی: ۴۲.۰۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۲۴","(?)","(?)","۱.۲۴","PHYSICAL REVIEW D","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۳۸۳",1.24],["\u003cb\u003eOPTICAL AND QUANTUM ELECTRONICS\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۳۶۷\u003cbr\u003eسهم بین‌المللی: ۳۷.۶٪\u003cbr\u003eسهم داخلی: ۶۲.۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۲۲","(?)","(?)","۱.۲۲","OPTICAL AND QUANTUM ELECTRONICS","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۳۶۷",1.22],["\u003cb\u003eEUROPEAN PHYSICAL JOURNAL C\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۳۵۳\u003cbr\u003eسهم بین‌المللی: ۵۲.۶۹٪\u003cbr\u003eسهم داخلی: ۴۷.۳۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۳","(?)","(?)","۱.۳","EUROPEAN PHYSICAL JOURNAL C","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۳۵۳",1.3],["\u003cb\u003eEUROPEAN PHYSICAL JOURNAL PLUS\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۲۹۶\u003cbr\u003eسهم بین‌المللی: ۳۳.۴۵٪\u003cbr\u003eسهم داخلی: ۶۶.۵۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰.۶۹","(?)","(?)","۰.۶۹","EUROPEAN PHYSICAL JOURNAL PLUS","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۲۹۶",0.6899999999999998],["\u003cb\u003eSCIENTIFIC REPORTS\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۲۸۴\u003cbr\u003eسهم بین‌المللی: ۳۴.۱۵٪\u003cbr\u003eسهم داخلی: ۶۵.۸۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۰۱","(?)","(?)","۱.۰۱","SCIENTIFIC REPORTS","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۲۸۴",1.01],["\u003cb\u003ePHYSICA SCRIPTA\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۲۷۶\u003cbr\u003eسهم بین‌المللی: ۳۲.۹۷٪\u003cbr\u003eسهم داخلی: ۶۷.۰۳٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰.۶۹","(?)","(?)","۰.۶۹","PHYSICA SCRIPTA","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۲۷۶",0.69],["\u003cb\u003eJOURNAL OF HIGH ENERGY PHYSICS\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۲۶۲\u003cbr\u003eسهم بین‌المللی: ۸۱.۳٪\u003cbr\u003eسهم داخلی: ۱۸.۷٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۵۳","(?)","(?)","۱.۵۳","JOURNAL OF HIGH ENERGY PHYSICS","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۲۶۲",1.53],["\u003cb\u003ePHYSICS LETTERS B\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۷۲\u003cbr\u003eسهم بین‌المللی: ۶۰.۴۷٪\u003cbr\u003eسهم داخلی: ۳۹.۵۳٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۸","(?)","(?)","۱.۱۸","PHYSICS LETTERS B","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۷۲",1.18],["\u003cb\u003ePHYSICAL REVIEW B\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۶۸\u003cbr\u003eسهم بین‌المللی: ۶۲.۵٪\u003cbr\u003eسهم داخلی: ۳۷.۵٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰.۷۳","(?)","(?)","۰.۷۳","PHYSICAL REVIEW B","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۶۸",0.7299999999999999],["\u003cb\u003eMONTHLY NOTICES OF THE ROYAL ASTRONOMICAL SOCIETY\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۵۲\u003cbr\u003eسهم بین‌المللی: ۵۶.۵۸٪\u003cbr\u003eسهم داخلی: ۴۳.۴۲٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰.۸۴","(?)","(?)","۰.۸۴","MONTHLY NOTICES OF THE ROYAL ASTRONOMICAL SOCIETY","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۵۲",0.84],["\u003cb\u003eINDIAN JOURNAL OF PHYSICS\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۱۹\u003cbr\u003eسهم بین‌المللی: ۱۱.۷۶٪\u003cbr\u003eسهم داخلی: ۸۸.۲۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰.۱۹","(?)","(?)","۰.۱۹","INDIAN JOURNAL OF PHYSICS","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۱۹",0.19],["\u003cb\u003eCERAMICS INTERNATIONAL\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۱۵\u003cbr\u003eسهم بین‌المللی: ۴۰٪\u003cbr\u003eسهم داخلی: ۶۰٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۴۳","(?)","(?)","۱.۴۳","CERAMICS INTERNATIONAL","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۱۵",1.43],["\u003cb\u003ePHYSICAL REVIEW A\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۱۵\u003cbr\u003eسهم بین‌المللی: ۵۷.۳۹٪\u003cbr\u003eسهم داخلی: ۴۲.۶۱٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۰.۸۷","(?)","(?)","۰.۸۷","PHYSICAL REVIEW A","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۱۵",0.8700000000000001],["\u003cb\u003ePHYSICS OF THE DARK UNIVERSE\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۱۱\u003cbr\u003eسهم بین‌المللی: ۵۷.۶۶٪\u003cbr\u003eسهم داخلی: ۴۲.۳۴٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۵۵","(?)","(?)","۱.۵۵","PHYSICS OF THE DARK UNIVERSE","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۱۱",1.55],["\u003cb\u003eRESULTS IN PHYSICS\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: ۱۱۰\u003cbr\u003eسهم بین‌المللی: ۷۰.۹۱٪\u003cbr\u003eسهم داخلی: ۲۹.۰۹٪\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۲.۷۲","(?)","(?)","۲.۷۲","RESULTS IN PHYSICS","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","۱۱۰",2.72],["(?)","(?)","(?)","(?)","(?)","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪","(?)",1.119579652756625]],"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"hovertemplate":["\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eنوع همکاری: %{customdata[2]}\u003cbr\u003eفراوانی مقالات: %{customdata[1]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: %{customdata[6]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: %{customdata[6]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: %{customdata[6]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: %{customdata[6]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: %{customdata[6]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: %{customdata[6]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: %{customdata[6]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: %{customdata[6]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: %{customdata[6]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: %{customdata[6]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: %{customdata[6]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: %{customdata[6]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: %{customdata[6]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: %{customdata[6]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003e%{customdata[4]}\u003c\u002fb\u003e\u003cbr\u003eتعداد کل مقالات: %{customdata[6]}\u003cbr\u003eتأثیر استنادی نرمال‌شده: %{customdata[3]}\u003cextra\u003e\u003c\u002fextra\u003e","\u003cb\u003eپانزده مجله اول\u003c\u002fb\u003e\u003cbr\u003eفراوانی کل مقالات: ۳۲۸۳\u003cbr\u003eتأثیر استنادی نرمال‌شده: ۱.۱۲\u003cbr\u003eدرصد مقالات بین‌المللی: ۴۹.۰۱٪\u003cbr\u003eدرصد مقالات داخلی: ۵۰.۹۹٪\u003cextra\u003e\u003c\u002fextra\u003e"],"ids":["پانزده مجله اول\u002fPhys. Rev. D\u002fبین‌المللی","پانزده مجله اول\u002fOpt. Quantum Electron.\u002fبین‌المللی","پانزده مجله اول\u002fEur. Phys. J. C\u002fبین‌المللی","پانزده مجله اول\u002fEur. Phys. J. Plus\u002fبین‌المللی","پانزده مجله اول\u002fSCIENTIFIC REPORTS\u002fبین‌المللی","پانزده مجله اول\u002fPhys. Scr.\u002fبین‌المللی","پانزده مجله اول\u002fJOURNAL OF HIGH ENERGY PHYSICS\u002fبین‌المللی","پانزده مجله اول\u002fPHYSICS LETTERS B\u002fبین‌المللی","پانزده مجله اول\u002fPHYSICAL REVIEW B\u002fبین‌المللی","پانزده مجله اول\u002fMONTHLY NOTICES OF THE ROYAL ASTRONOMICAL SOCIETY\u002fبین‌المللی","پانزده مجله اول\u002fINDIAN JOURNAL OF PHYSICS\u002fبین‌المللی","پانزده مجله اول\u002fCERAMICS INTERNATIONAL\u002fبین‌المللی","پانزده مجله اول\u002fPHYSICAL REVIEW A\u002fبین‌المللی","پانزده مجله اول\u002fPHYSICS OF THE DARK UNIVERSE\u002fبین‌المللی","پانزده مجله اول\u002fResults Phys.\u002fبین‌المللی","پانزده مجله اول\u002fPhys. Rev. D\u002fداخلی","پانزده مجله اول\u002fOpt. Quantum Electron.\u002fداخلی","پانزده مجله اول\u002fEur. Phys. J. C\u002fداخلی","پانزده مجله اول\u002fEur. Phys. J. Plus\u002fداخلی","پانزده مجله اول\u002fSCIENTIFIC REPORTS\u002fداخلی","پانزده مجله اول\u002fPhys. Scr.\u002fداخلی","پانزده مجله اول\u002fJOURNAL OF HIGH ENERGY PHYSICS\u002fداخلی","پانزده مجله اول\u002fPHYSICS LETTERS B\u002fداخلی","پانزده مجله اول\u002fPHYSICAL REVIEW B\u002fداخلی","پانزده مجله اول\u002fMONTHLY NOTICES OF THE ROYAL ASTRONOMICAL SOCIETY\u002fداخلی","پانزده مجله اول\u002fINDIAN JOURNAL OF PHYSICS\u002fداخلی","پانزده مجله اول\u002fCERAMICS INTERNATIONAL\u002fداخلی","پانزده مجله اول\u002fPHYSICAL REVIEW A\u002fداخلی","پانزده مجله اول\u002fPHYSICS OF THE DARK UNIVERSE\u002fداخلی","پانزده مجله اول\u002fResults Phys.\u002fداخلی","پانزده مجله اول\u002fPhys. Rev. D","پانزده مجله اول\u002fOpt. Quantum Electron.","پانزده مجله اول\u002fEur. Phys. J. C","پانزده مجله اول\u002fEur. Phys. J. Plus","پانزده مجله اول\u002fSCIENTIFIC REPORTS","پانزده مجله اول\u002fPhys. Scr.","پانزده مجله اول\u002fJOURNAL OF HIGH ENERGY PHYSICS","پانزده مجله اول\u002fPHYSICS LETTERS B","پانزده مجله اول\u002fPHYSICAL REVIEW B","پانزده مجله اول\u002fMONTHLY NOTICES OF THE ROYAL ASTRONOMICAL SOCIETY","پانزده مجله اول\u002fINDIAN JOURNAL OF PHYSICS","پانزده مجله اول\u002fCERAMICS INTERNATIONAL","پانزده مجله اول\u002fPHYSICAL REVIEW A","پانزده مجله اول\u002fPHYSICS OF THE DARK UNIVERSE","پانزده مجله اول\u002fResults Phys.","پانزده مجله اول"],"labels":["بین‌المللی","بین‌المللی","بین‌المللی","بین‌المللی","بین‌المللی","بین‌المللی","بین‌المللی","بین‌المللی","بین‌المللی","بین‌المللی","بین‌المللی","بین‌المللی","بین‌المللی","بین‌المللی","بین‌المللی","داخلی","داخلی","داخلی","داخلی","داخلی","داخلی","داخلی","داخلی","داخلی","داخلی","داخلی","داخلی","داخلی","داخلی","داخلی","Phys. Rev. D","Opt. Quantum Electron.","Eur. Phys. J. C","Eur. Phys. J. Plus","SCIENTIFIC REPORTS","Phys. Scr.","JOURNAL OF HIGH ENERGY PHYSICS","PHYSICS LETTERS B","PHYSICAL REVIEW B","MONTHLY NOTICES OF THE ROYAL ASTRONOMICAL SOCIETY","INDIAN JOURNAL OF PHYSICS","CERAMICS INTERNATIONAL","PHYSICAL REVIEW A","PHYSICS OF THE DARK UNIVERSE","Results Phys.","پانزده مجله اول"],"marker":{"coloraxis":"coloraxis","colors":{"dtype":"f8","bdata":"1qNwPQrX8z+F61G4HoXzP83MzMzMzPQ\u002fE65H4XoU5j8pXI\u002fC9SjwPxSuR+F6FOY\u002fexSuR+F6+D\u002fhehSuR+HyP1uPwvUoXOc\u002f4XoUrkfh6j9SuB6F61HIP+F6FK5H4fY\u002f16NwPQrX6z\u002fNzMzMzMz4P8P1KFyPwgVA16NwPQrX8z+F61G4HoXzP83MzMzMzPQ\u002fE65H4XoU5j8pXI\u002fC9SjwPxSuR+F6FOY\u002fexSuR+F6+D\u002fhehSuR+HyP1yPwvUoXOc\u002f4XoUrkfh6j9SuB6F61HIP+F6FK5H4fY\u002f2KNwPQrX6z\u002fOzMzMzMz4P8P1KFyPwgVA16NwPQrX8z+F61G4HoXzP83MzMzMzPQ\u002fE65H4XoU5j8pXI\u002fC9SjwPxSuR+F6FOY\u002fexSuR+F6+D\u002fhehSuR+HyP1uPwvUoXOc\u002f4XoUrkfh6j9SuB6F61HIP+F6FK5H4fY\u002f2KNwPQrX6z\u002fNzMzMzMz4P8P1KFyPwgVANrWdWszp8T8="},"line":{"color":"black","width":0.5}},"name":"","parents":["پانزده مجله اول\u002fPhys. Rev. D","پانزده مجله اول\u002fOpt. Quantum Electron.","پانزده مجله اول\u002fEur. Phys. J. C","پانزده مجله اول\u002fEur. Phys. J. Plus","پانزده مجله اول\u002fSCIENTIFIC REPORTS","پانزده مجله اول\u002fPhys. Scr.","پانزده مجله اول\u002fJOURNAL OF HIGH ENERGY PHYSICS","پانزده مجله اول\u002fPHYSICS LETTERS B","پانزده مجله اول\u002fPHYSICAL REVIEW B","پانزده مجله اول\u002fMONTHLY NOTICES OF THE ROYAL ASTRONOMICAL SOCIETY","پانزده مجله اول\u002fINDIAN JOURNAL OF PHYSICS","پانزده مجله اول\u002fCERAMICS INTERNATIONAL","پانزده مجله اول\u002fPHYSICAL REVIEW A","پانزده مجله اول\u002fPHYSICS OF THE DARK UNIVERSE","پانزده مجله اول\u002fResults Phys.","پانزده مجله اول\u002fPhys. Rev. D","پانزده مجله اول\u002fOpt. Quantum Electron.","پانزده مجله اول\u002fEur. Phys. J. C","پانزده مجله اول\u002fEur. Phys. J. Plus","پانزده مجله اول\u002fSCIENTIFIC REPORTS","پانزده مجله اول\u002fPhys. Scr.","پانزده مجله اول\u002fJOURNAL OF HIGH ENERGY PHYSICS","پانزده مجله اول\u002fPHYSICS LETTERS B","پانزده مجله اول\u002fPHYSICAL REVIEW B","پانزده مجله اول\u002fMONTHLY NOTICES OF THE ROYAL ASTRONOMICAL SOCIETY","پانزده مجله اول\u002fINDIAN JOURNAL OF PHYSICS","پانزده مجله اول\u002fCERAMICS INTERNATIONAL","پانزده مجله اول\u002fPHYSICAL REVIEW A","پانزده مجله اول\u002fPHYSICS OF THE DARK UNIVERSE","پانزده مجله اول\u002fResults Phys.","پانزده مجله اول","پانزده مجله اول","پانزده مجله اول","پانزده مجله اول","پانزده مجله اول","پانزده مجله اول","پانزده مجله اول","پانزده مجله اول","پانزده مجله اول","پانزده مجله اول","پانزده مجله اول","پانزده مجله اول","پانزده مجله اول","پانزده مجله اول","پانزده مجله اول",""],"values":{"dtype":"f8","bdata":"AAAAAADAa0AAAAAAAEBhQAAAAAAAQGdAAAAAAADAWEAAAAAAAEBYQAAAAAAAwFZAAAAAAACgakAAAAAAAABaQAAAAAAAQFpAAAAAAACAVUAAAAAAAAAsQAAAAAAAAEdAAAAAAACAUEAAAAAAAABQQAAAAAAAgFNAAAAAAAAgZEAAAAAAAKBsQAAAAAAA4GRAAAAAAACgaEAAAAAAAGBnQAAAAAAAIGdAAAAAAACASEAAAAAAAABRQAAAAAAAgE9AAAAAAACAUEAAAAAAAEBaQAAAAAAAQFFAAAAAAACASEAAAAAAAIBHQAAAAAAAAEBAAAAAAADwd0AAAAAAAPB2QAAAAAAAEHZAAAAAAACAckAAAAAAAMBxQAAAAAAAQHFAAAAAAABgcEAAAAAAAIBlQAAAAAAAAGVAAAAAAAAAY0AAAAAAAMBdQAAAAAAAwFxAAAAAAADAXEAAAAAAAMBbQAAAAAAAgFtAAAAAAACmqUA="},"type":"treemap","text":["۲۲۲","۱۳۸","۱۸۶","۹۹","۹۷","۹۱","۲۱۳","۱۰۴","۱۰۵","۸۶","۱۴","۴۶","۶۶","۶۴","۷۸","۱۶۱","۲۲۹","۱۶۷","۱۹۷","۱۸۷","۱۸۵","۴۹","۶۸","۶۳","۶۶","۱۰۵","۶۹","۴۹","۴۷","۳۲"],"textfont":{"weight":"bold"},"textinfo":"label+text"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#1f77b4","#ff7f0e","#2ca02c","#bcbd22","#9467bd","#8c564b","#e377c2","#7f7f7f","#d62728","#17becf","#aec7e8","#ffbb78"],"font":{"color":"#2a3f5f","family":"Vazirmatn FD"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"#E5ECF6","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"right","font":{"family":"Vazirmatn FD"}},"hovermode":"closest","legend":{"font":{"family":"Vazirmatn FD"},"title":{"font":{"family":"Vazirmatn FD"}}},"mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"title":{"font":{"family":"Vazirmatn FD Black"},"x":0.5,"xanchor":"center"},"xaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","tickfont":{"family":"Vazirmatn FD","size":13},"ticks":"","title":{"font":{"family":"Vazirmatn FD"},"standoff":15},"zerolinecolor":"white","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","tickfont":{"family":"Vazirmatn FD","size":13},"ticks":"","title":{"font":{"family":"Vazirmatn FD"},"standoff":15},"zerolinecolor":"white","zerolinewidth":2}}},"coloraxis":{"colorbar":{"title":{"text":"CNCI"},"tickvals":{"dtype":"f8","bdata":"UrgehetRyD9SuB6F61HqP0jhehSuR\u002fc\u002fNDMzMzOzAEDD9Shcj8IFQA=="},"ticktext":["۰.۲","۰.۸","۱.۵","۲.۱","۲.۷"]},"colorscale":[[0.0,"rgb(103,0,31)"],[0.1,"rgb(178,24,43)"],[0.2,"rgb(214,96,77)"],[0.3,"rgb(244,165,130)"],[0.4,"rgb(253,219,199)"],[0.5,"rgb(247,247,247)"],[0.6,"rgb(209,229,240)"],[0.7,"rgb(146,197,222)"],[0.8,"rgb(67,147,195)"],[0.9,"rgb(33,102,172)"],[1.0,"rgb(5,48,97)"]]},"legend":{"tracegroupgap":0},"title":{"text":"پانزده مجله اول از نظر فراوانی مقالات ایرانی در بازه ۲۰۲۰ تا ۲۰۲۴"}},                        {"displaylogo": false, "modeBarButtonsToRemove": ["select", "lasso2d", "toggleSpikelines", "hoverCompareCartesian", "hoverClosestCartesian"], "toImageButtonOptions": {"filename": "25_iran_journals_treemap", "scale": 4, "format": "png"}, "responsive": true}                    )                };            </script> </div>

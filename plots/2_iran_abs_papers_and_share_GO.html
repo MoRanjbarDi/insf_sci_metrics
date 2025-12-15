@@ -115,13 +115,34 @@
 <a aria-label="قبلی" class="nav-btn" href="1_iran_share_from_world_GO.html" title="قبلی">←</a>
 <a aria-label="خانه" class="nav-btn home" href="../index.html" title="خانه">⌂</a>
 <a aria-label="بعدی" class="nav-btn" href="28_all_papers_cnci.html" title="بعدی">→</a>
+<button aria-label="اطلاعات" class="nav-btn info-btn" title="اطلاعات" type="button">ℹ</button>
 </div>
+<div aria-hidden="true" class="info-backdrop" id="info-backdrop"></div>
+<aside aria-hidden="true" aria-modal="true" class="info-drawer" dir="rtl" id="info-drawer" lang="fa" role="dialog" tabindex="-1">
+<div class="info-head">
+<div class="info-title" dir="rtl" id="info-title"></div>
+<button aria-label="بستن" class="info-close" id="info-close" type="button">
+<span class="close-x">×</span>
+<span class="close-up">⌃</span>
+</button>
+</div>
+<div class="info-body" id="info-body"></div>
+</aside>
+<script id="info-payload" type="application/json">{"title": "فراوانی مقالات و سهم ایران", "long_title": "فراوانی و سهم مقالات ایران در طول زمان", "md": "<div dir=\"rtl\" style=\"line-height:1.9;\">\n  <p style=\"margin:0; text-align:right;\">\n    تعداد مطلق (نمودار ستونی، محور سمت چپ) بروندادهای ایرانی به تفکیک نوع و درصد بروندادهای ایران (نمودار خطی، محور سمت راست) از جهان در طول زمان.\n  <\/p>\n\n  <div dir=\"ltr\" style=\"margin-top:18px; text-align:center;\">\n    \\[\n      \\textit{Share of Iran (\\%)} =\n      \\left(\n        \\frac{\\textit{Iran's Publications Count}}{\\textit{Total Publications Count}}\n      \\right)\\times 100\n    \\]\n  <\/div>\n<\/div>"}</script>
+<!-- MathJax (LaTeX rendering) -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['\\[','\\]'], ['$$','$$']]
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <style>
-/* Make sure the page has room for bottom nav on phones */
 @media (orientation: portrait) {
-    body {
-        padding-bottom: 92px !important;
-    }
+    body { padding-bottom: 92px !important; }
 }
 
 .overlay-nav {
@@ -146,6 +167,9 @@
     text-decoration: none;
     font-size: 28px;
     user-select: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
 }
 
 .overlay-nav .nav-btn.disabled {
@@ -158,7 +182,146 @@
     opacity: 0.9;
 }
 
-/* Phone layout: bottom, centered, and 2x bigger */
+.info-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s ease;
+    z-index: 99998;
+}
+
+.info-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    /* Desktop drawer width (increase 420px to your taste) */
+    width: min(800px, 92vw);
+
+    height: 100vh;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+    transform: translateX(110%);
+    transition: transform 0.22s ease;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 14px 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    position: relative;
+}
+
+.info-title {
+    font-family: Vazirmatn, system-ui, sans-serif;
+    font-weight: 900;
+    font-size: 15px;
+    color: #0f172a;
+    line-height: 1.6;
+
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.info-close {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: none;
+    background: rgba(0,0,0,0.06);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: #0f172a;
+    user-select: none;
+}
+
+.close-up { display: none; }
+
+.info-body {
+    padding: 14px 16px 18px;
+    overflow: auto;
+    font-family: Vazirmatn, system-ui, sans-serif;
+    color: #111827;
+    line-height: 1.9;
+    font-size: 14px;
+
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.info-body h1, .info-body h2, .info-body h3 {
+    margin: 10px 0 8px;
+    line-height: 1.5;
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: right;
+}
+.info-body h1 { font-size: 18px; }
+.info-body h2 { font-size: 16px; }
+.info-body h3 { font-size: 15px; }
+
+.info-body p { margin: 8px 0; }
+
+.info-body ul, .info-body ol {
+    margin: 8px 0;
+    padding-inline-start: 20px;
+    direction: rtl;
+    unicode-bidi: plaintext;
+    text-align: right;
+}
+
+.info-body li {
+    margin: 4px 0;
+    direction: rtl;
+    unicode-bidi: plaintext;
+}
+
+.info-body code {
+    background: rgba(0,0,0,0.06);
+    padding: 0 6px;
+    border-radius: 6px;
+}
+.info-body pre {
+    background: rgba(0,0,0,0.06);
+    padding: 10px 12px;
+    border-radius: 12px;
+    overflow: auto;
+}
+.info-body a {
+    color: #0057d9;
+    text-decoration: none;
+}
+.info-body a:hover { text-decoration: underline; }
+
+html.no-scroll, body.no-scroll {
+    overflow: hidden !important;
+}
+
+.info-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+.info-drawer.open {
+    transform: translateX(0);
+}
+
 @media (orientation: portrait) {
     .overlay-nav {
         position: fixed;
@@ -176,17 +339,255 @@
     }
 
     .overlay-nav .nav-btn {
-        width: 90px;     /* 2x */
-        height: 90px;    /* 2x */
-        font-size: 46px; /* 2x-ish */
+        width: 90px;
+        height: 90px;
+        font-size: 46px;
         box-shadow: 0 6px 14px rgba(0,0,0,0.18);
     }
 
-    .overlay-nav .nav-btn.disabled {
-        box-shadow: none;
+    .info-drawer {
+        left: 0;
+        right: 0;
+        top: 0;
+        width: 100vw;
+        height: min(70vh, 520px);
+        transform: translateY(-110%);
+        border-bottom-left-radius: 24px;
+        border-bottom-right-radius: 24px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+    .info-drawer.open {
+        transform: translateY(0);
+    }
+
+    .close-x { display: none; }
+    .close-up { display: inline; }
+
+    .info-close {
+        position: absolute;
+        left: 50%;
+        bottom: 10px;
+        top: auto;
+        transform: translateX(-50%);
+        width: 72px;
+        height: 44px;
+        font-size: 28px;
+        background: rgba(0,0,0,0.08);
+    }
+    .info-body {
+        padding-bottom: 70px;
     }
 }
 </style>
+<script>
+(function() {
+    const payloadEl = document.getElementById('info-payload');
+    const btn = document.querySelector('.info-btn');
+    const drawer = document.getElementById('info-drawer');
+    const backdrop = document.getElementById('info-backdrop');
+    const closeBtn = document.getElementById('info-close');
+    const titleEl = document.getElementById('info-title');
+    const bodyEl = document.getElementById('info-body');
+
+    if (!payloadEl || !btn || !drawer || !backdrop || !closeBtn || !titleEl || !bodyEl) return;
+
+    const isPortrait = window.matchMedia && window.matchMedia('(orientation: portrait)').matches;
+
+    let payload = {};
+    try {
+        payload = JSON.parse(payloadEl.textContent || '{}');
+    } catch (e) {
+        payload = {};
+    }
+
+    const rawInfo = (payload.md || '').trim();
+
+    function looksLikeHtml(s) {
+        return /<\/?[a-z][\s\S]*>/i.test(String(s || ''));
+    }
+
+    function sanitizeHtml(input) {
+        const template = document.createElement('template');
+        template.innerHTML = String(input || '');
+
+        const blockedTags = new Set(['SCRIPT','IFRAME','OBJECT','EMBED']);
+        const walker = document.createTreeWalker(template.content, NodeFilter.SHOW_ELEMENT, null);
+        const toRemove = [];
+
+        while (walker.nextNode()) {
+            const el = walker.currentNode;
+
+            if (blockedTags.has(el.tagName)) {
+                toRemove.push(el);
+                continue;
+            }
+
+            [...el.attributes].forEach(attr => {
+                const name = attr.name.toLowerCase();
+                const val = (attr.value || '').trim();
+
+                if (name.startsWith('on')) el.removeAttribute(attr.name);
+
+                if ((name === 'href' || name === 'src') && /^javascript:/i.test(val)) {
+                    el.setAttribute(attr.name, '#');
+                }
+            });
+        }
+
+        toRemove.forEach(el => el.remove());
+        return template.innerHTML;
+    }
+
+    // Title supports HTML too
+    const titleRaw = payload.long_title || payload.title || 'Info';
+    if (looksLikeHtml(titleRaw)) titleEl.innerHTML = sanitizeHtml(titleRaw);
+    else titleEl.textContent = titleRaw;
+
+    if (!rawInfo) {
+        btn.classList.add('disabled');
+        btn.setAttribute('aria-disabled', 'true');
+        btn.disabled = true;
+        if (!isPortrait) {
+            try { sessionStorage.setItem('infoOpen', '0'); } catch(e) {}
+        }
+        return;
+    }
+
+    function escapeHtml(s) {
+        return String(s)
+            .replace(/&/g,'&amp;')
+            .replace(/</g,'&lt;')
+            .replace(/>/g,'&gt;');
+    }
+
+    // Minimal markdown -> HTML (HTML is handled separately)
+    function mdToHtml(markdown) {
+        let text = String(markdown).replace(/\r\n?/g, '\n');
+
+        const parts = text.split(/```/g);
+        for (let i = 0; i < parts.length; i++) {
+            if (i % 2 === 1) {
+                parts[i] = '<pre><code>' + escapeHtml(parts[i].trim()) + '</code></pre>';
+            } else {
+                parts[i] = escapeHtml(parts[i]);
+            }
+        }
+        text = parts.join('');
+
+        text = text.replace(/`([^`]+?)`/g, '<code>$1</code>');
+        text = text.replace(/\[([^\]]+?)\]\(([^\)]+?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+        text = text.replace(/\*\*([^*]+?)\*\*/g, '<strong>$1</strong>');
+        text = text.replace(/(^|[^*])\*([^*]+?)\*(?!\*)/g, '$1<em>$2</em>');
+
+        text = text.replace(/^###\s+(.*)$/gm, '<h3>$1</h3>');
+        text = text.replace(/^##\s+(.*)$/gm, '<h2>$1</h2>');
+        text = text.replace(/^#\s+(.*)$/gm, '<h1>$1</h1>');
+
+        const lines = text.split(/\n/);
+        let out = [];
+        let inUl = false;
+
+        for (const line of lines) {
+            const m = line.match(/^\s*[-*]\s+(.*)$/);
+            if (m) {
+                if (!inUl) {
+                    inUl = true;
+                    out.push('<ul>');
+                }
+                out.push('<li>' + m[1] + '</li>');
+            } else {
+                if (inUl) {
+                    out.push('</ul>');
+                    inUl = false;
+                }
+                out.push(line);
+            }
+        }
+        if (inUl) out.push('</ul>');
+        text = out.join('\n');
+
+        const blocks = text.split(/\n\s*\n/g).map(b => b.trim()).filter(Boolean);
+        return blocks.map(b => {
+            if (/^<(h1|h2|h3|ul|pre)/.test(b)) return b;
+            return '<p>' + b.replace(/\n/g, '<br>') + '</p>';
+        }).join('\n');
+    }
+
+    // Render body: HTML if looks like HTML, else Markdown
+    if (looksLikeHtml(rawInfo)) bodyEl.innerHTML = sanitizeHtml(rawInfo);
+    else bodyEl.innerHTML = mdToHtml(rawInfo);
+
+    // MathJax typeset (retry until loaded)
+    let typesetTries = 0;
+    function requestTypeset() {
+        if (window.MathJax && MathJax.typesetPromise) {
+            try {
+                if (MathJax.typesetClear) MathJax.typesetClear([drawer]);
+            } catch(e) {}
+            MathJax.typesetPromise([drawer]).catch(function(){});
+            return;
+        }
+        if (typesetTries++ < 25) setTimeout(requestTypeset, 200);
+    }
+    requestTypeset();
+
+    function setDesktopInfoState(isOpen) {
+        if (isPortrait) return;
+        try {
+            sessionStorage.setItem('infoOpen', isOpen ? '1' : '0');
+        } catch (e) {}
+    }
+
+    function openDrawer() {
+        drawer.classList.add('open');
+        backdrop.classList.add('open');
+        drawer.setAttribute('aria-hidden', 'false');
+        backdrop.setAttribute('aria-hidden', 'false');
+        document.documentElement.classList.add('no-scroll');
+        document.body.classList.add('no-scroll');
+        setDesktopInfoState(true);
+        requestTypeset();
+        drawer.focus();
+    }
+
+    function closeDrawer() {
+        drawer.classList.remove('open');
+        backdrop.classList.remove('open');
+        drawer.setAttribute('aria-hidden', 'true');
+        backdrop.setAttribute('aria-hidden', 'true');
+        document.documentElement.classList.remove('no-scroll');
+        document.body.classList.remove('no-scroll');
+        setDesktopInfoState(false);
+        btn.focus();
+    }
+
+    // Info button toggles open/close
+    btn.addEventListener('click', function() {
+        if (drawer.classList.contains('open')) closeDrawer();
+        else openDrawer();
+    });
+
+    closeBtn.addEventListener('click', closeDrawer);
+    backdrop.addEventListener('click', closeDrawer);
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && drawer.classList.contains('open')) {
+            closeDrawer();
+        }
+    });
+
+    // Option A: restore open state ONLY on desktop
+    if (!isPortrait) {
+        let shouldOpen = false;
+        try {
+            shouldOpen = (sessionStorage.getItem('infoOpen') === '1');
+        } catch(e) {
+            shouldOpen = false;
+        }
+        if (shouldOpen) openDrawer();
+    }
+})();
+</script>
 
 <div> <script type="text/javascript">window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
 <script charset="utf-8" src="plotly.min.js"></script> <div class="plotly-graph-div" id="6d50d726-15f7-4c1f-892c-6c6adafe569c" style="height:100%; width:100%;"></div> <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("6d50d726-15f7-4c1f-892c-6c6adafe569c")) {                    Plotly.newPlot(                        "6d50d726-15f7-4c1f-892c-6c6adafe569c",                        [{"customdata":["\u003cb\u003eمقالات پژوهشی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۵\u003cbr\u003eفراوانی: ۲۹,۱۹۰\u003cbr\u003eفراوانی کل مقالات: ۳۴,۶۲۱","\u003cb\u003eمقالات پژوهشی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۶\u003cbr\u003eفراوانی: ۳۲,۸۴۰\u003cbr\u003eفراوانی کل مقالات: ۳۸,۱۳۹","\u003cb\u003eمقالات پژوهشی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۷\u003cbr\u003eفراوانی: ۳۶,۱۸۴\u003cbr\u003eفراوانی کل مقالات: ۴۲,۲۶۳","\u003cb\u003eمقالات پژوهشی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۸\u003cbr\u003eفراوانی: ۳۸,۴۷۴\u003cbr\u003eفراوانی کل مقالات: ۴۴,۳۵۱","\u003cb\u003eمقالات پژوهشی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۹\u003cbr\u003eفراوانی: ۴۴,۳۸۳\u003cbr\u003eفراوانی کل مقالات: ۵۱,۲۸۲","\u003cb\u003eمقالات پژوهشی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۰\u003cbr\u003eفراوانی: ۴۸,۲۷۴\u003cbr\u003eفراوانی کل مقالات: ۵۶,۰۵۲","\u003cb\u003eمقالات پژوهشی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۱\u003cbr\u003eفراوانی: ۴۸,۸۶۵\u003cbr\u003eفراوانی کل مقالات: ۵۷,۰۶۹","\u003cb\u003eمقالات پژوهشی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۲\u003cbr\u003eفراوانی: ۴۴,۸۸۴\u003cbr\u003eفراوانی کل مقالات: ۵۲,۴۲۹","\u003cb\u003eمقالات پژوهشی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۳\u003cbr\u003eفراوانی: ۴۰,۵۱۵\u003cbr\u003eفراوانی کل مقالات: ۴۷,۱۴۷","\u003cb\u003eمقالات پژوهشی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۴\u003cbr\u003eفراوانی: ۳۹,۲۹۹\u003cbr\u003eفراوانی کل مقالات: ۴۶,۲۴۸"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#636EFA"},"name":"مقالات پژوهشی","opacity":1.0,"x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6Ac="},"y":{"dtype":"f8","bdata":"AAAAAICB3EAAAAAAAAngQAAAAAAAq+FAAAAAAEDJ4kAAAAAA4KvlQAAAAABAkudAAAAAACDc50AAAAAAgOrlQAAAAABgyONAAAAAAGAw40A="},"type":"bar"},{"customdata":["\u003cb\u003eمقالات پژوهشی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۵\u003cbr\u003eفراوانی: ۲۹,۱۷۳\u003cbr\u003eفراوانی کل مقالات: ۳۴,۳۴۴"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#636EFA"},"name":"مقالات پژوهشی (ناقص)","opacity":0.6,"showlegend":false,"x":{"dtype":"i2","bdata":"6Qc="},"y":{"dtype":"f8","bdata":"AAAAAEB93EA="},"type":"bar"},{"customdata":["\u003cb\u003eمقالات مروری\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۵\u003cbr\u003eفراوانی: ۷۷۹\u003cbr\u003eفراوانی کل مقالات: ۳۴,۶۲۱","\u003cb\u003eمقالات مروری\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۶\u003cbr\u003eفراوانی: ۱,۲۰۲\u003cbr\u003eفراوانی کل مقالات: ۳۸,۱۳۹","\u003cb\u003eمقالات مروری\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۷\u003cbr\u003eفراوانی: ۱,۶۱۷\u003cbr\u003eفراوانی کل مقالات: ۴۲,۲۶۳","\u003cb\u003eمقالات مروری\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۸\u003cbr\u003eفراوانی: ۲,۰۳۲\u003cbr\u003eفراوانی کل مقالات: ۴۴,۳۵۱","\u003cb\u003eمقالات مروری\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۹\u003cbr\u003eفراوانی: ۳,۱۰۷\u003cbr\u003eفراوانی کل مقالات: ۵۱,۲۸۲","\u003cb\u003eمقالات مروری\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۰\u003cbr\u003eفراوانی: ۴,۲۰۷\u003cbr\u003eفراوانی کل مقالات: ۵۶,۰۵۲","\u003cb\u003eمقالات مروری\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۱\u003cbr\u003eفراوانی: ۵,۱۸۹\u003cbr\u003eفراوانی کل مقالات: ۵۷,۰۶۹","\u003cb\u003eمقالات مروری\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۲\u003cbr\u003eفراوانی: ۵,۰۳۴\u003cbr\u003eفراوانی کل مقالات: ۵۲,۴۲۹","\u003cb\u003eمقالات مروری\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۳\u003cbr\u003eفراوانی: ۴,۷۷۲\u003cbr\u003eفراوانی کل مقالات: ۴۷,۱۴۷","\u003cb\u003eمقالات مروری\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۴\u003cbr\u003eفراوانی: ۴,۶۵۲\u003cbr\u003eفراوانی کل مقالات: ۴۶,۲۴۸"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#EF553B"},"name":"مقالات مروری","opacity":1.0,"x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6Ac="},"y":{"dtype":"f8","bdata":"AAAAAABYiEAAAAAAAMiSQAAAAAAARJlAAAAAAADAn0AAAAAAAEaoQAAAAAAAb7BAAAAAAABFtEAAAAAAAKqzQAAAAAAApLJAAAAAAAAsskA="},"type":"bar"},{"customdata":["\u003cb\u003eمقالات مروری\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۵\u003cbr\u003eفراوانی: ۳,۹۶۵\u003cbr\u003eفراوانی کل مقالات: ۳۴,۳۴۴"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#EF553B"},"name":"مقالات مروری (ناقص)","opacity":0.6,"showlegend":false,"x":{"dtype":"i2","bdata":"6Qc="},"y":{"dtype":"f8","bdata":"AAAAAAD6rkA="},"type":"bar"},{"customdata":["\u003cb\u003eمقالات کنفرانسی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۵\u003cbr\u003eفراوانی: ۳,۶۵۰\u003cbr\u003eفراوانی کل مقالات: ۳۴,۶۲۱","\u003cb\u003eمقالات کنفرانسی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۶\u003cbr\u003eفراوانی: ۲,۹۱۹\u003cbr\u003eفراوانی کل مقالات: ۳۸,۱۳۹","\u003cb\u003eمقالات کنفرانسی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۷\u003cbr\u003eفراوانی: ۳,۱۰۳\u003cbr\u003eفراوانی کل مقالات: ۴۲,۲۶۳","\u003cb\u003eمقالات کنفرانسی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۸\u003cbr\u003eفراوانی: ۲,۵۰۴\u003cbr\u003eفراوانی کل مقالات: ۴۴,۳۵۱","\u003cb\u003eمقالات کنفرانسی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۹\u003cbr\u003eفراوانی: ۲,۴۸۲\u003cbr\u003eفراوانی کل مقالات: ۵۱,۲۸۲","\u003cb\u003eمقالات کنفرانسی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۰\u003cbr\u003eفراوانی: ۱,۶۶۱\u003cbr\u003eفراوانی کل مقالات: ۵۶,۰۵۲","\u003cb\u003eمقالات کنفرانسی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۱\u003cbr\u003eفراوانی: ۱,۳۵۳\u003cbr\u003eفراوانی کل مقالات: ۵۷,۰۶۹","\u003cb\u003eمقالات کنفرانسی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۲\u003cbr\u003eفراوانی: ۱,۰۴۰\u003cbr\u003eفراوانی کل مقالات: ۵۲,۴۲۹","\u003cb\u003eمقالات کنفرانسی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۳\u003cbr\u003eفراوانی: ۶۹۸\u003cbr\u003eفراوانی کل مقالات: ۴۷,۱۴۷","\u003cb\u003eمقالات کنفرانسی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۴\u003cbr\u003eفراوانی: ۹۸۲\u003cbr\u003eفراوانی کل مقالات: ۴۶,۲۴۸"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#00CC96"},"name":"مقالات کنفرانسی","opacity":1.0,"x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6Ac="},"y":{"dtype":"f8","bdata":"AAAAAACErEAAAAAAAM6mQAAAAAAAPqhAAAAAAACQo0AAAAAAAGSjQAAAAAAA9JlAAAAAAAAklUAAAAAAAECQQAAAAAAA0IVAAAAAAACwjkA="},"type":"bar"},{"customdata":["\u003cb\u003eمقالات کنفرانسی\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۵\u003cbr\u003eفراوانی: ۲۸۴\u003cbr\u003eفراوانی کل مقالات: ۳۴,۳۴۴"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#00CC96"},"name":"مقالات کنفرانسی (ناقص)","opacity":0.6,"showlegend":false,"x":{"dtype":"i2","bdata":"6Qc="},"y":{"dtype":"f8","bdata":"AAAAAADAcUA="},"type":"bar"},{"customdata":["\u003cb\u003eسایر بروندادها\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۵\u003cbr\u003eفراوانی: ۱,۰۰۲\u003cbr\u003eفراوانی کل مقالات: ۳۴,۶۲۱","\u003cb\u003eسایر بروندادها\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۶\u003cbr\u003eفراوانی: ۱,۱۷۸\u003cbr\u003eفراوانی کل مقالات: ۳۸,۱۳۹","\u003cb\u003eسایر بروندادها\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۷\u003cbr\u003eفراوانی: ۱,۳۵۹\u003cbr\u003eفراوانی کل مقالات: ۴۲,۲۶۳","\u003cb\u003eسایر بروندادها\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۸\u003cbr\u003eفراوانی: ۱,۳۴۱\u003cbr\u003eفراوانی کل مقالات: ۴۴,۳۵۱","\u003cb\u003eسایر بروندادها\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۱۹\u003cbr\u003eفراوانی: ۱,۳۱۰\u003cbr\u003eفراوانی کل مقالات: ۵۱,۲۸۲","\u003cb\u003eسایر بروندادها\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۰\u003cbr\u003eفراوانی: ۱,۹۱۰\u003cbr\u003eفراوانی کل مقالات: ۵۶,۰۵۲","\u003cb\u003eسایر بروندادها\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۱\u003cbr\u003eفراوانی: ۱,۶۶۲\u003cbr\u003eفراوانی کل مقالات: ۵۷,۰۶۹","\u003cb\u003eسایر بروندادها\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۲\u003cbr\u003eفراوانی: ۱,۴۷۱\u003cbr\u003eفراوانی کل مقالات: ۵۲,۴۲۹","\u003cb\u003eسایر بروندادها\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۳\u003cbr\u003eفراوانی: ۱,۱۶۲\u003cbr\u003eفراوانی کل مقالات: ۴۷,۱۴۷","\u003cb\u003eسایر بروندادها\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۴\u003cbr\u003eفراوانی: ۱,۳۱۵\u003cbr\u003eفراوانی کل مقالات: ۴۶,۲۴۸"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#AB63FA"},"name":"سایر بروندادها","opacity":1.0,"x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6Ac="},"y":{"dtype":"f8","bdata":"AAAAAABQj0AAAAAAAGiSQAAAAAAAPJVAAAAAAAD0lEAAAAAAAHiUQAAAAAAA2J1AAAAAAAD4mUAAAAAAAPyWQAAAAAAAKJJAAAAAAACMlEA="},"type":"bar"},{"customdata":["\u003cb\u003eسایر بروندادها\u003c\u002fb\u003e\u003cbr\u003eسال: ۲۰۲۵\u003cbr\u003eفراوانی: ۹۲۲\u003cbr\u003eفراوانی کل مقالات: ۳۴,۳۴۴"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":"#AB63FA"},"name":"سایر بروندادها (ناقص)","opacity":0.6,"showlegend":false,"x":{"dtype":"i2","bdata":"6Qc="},"y":{"dtype":"f8","bdata":"AAAAAADQjEA="},"type":"bar"},{"customdata":["سال: ۲۰۱۵\u003cbr\u003eسهم از برونداد جهانی: ۱٫۶۰٪","سال: ۲۰۱۶\u003cbr\u003eسهم از برونداد جهانی: ۱٫۶۸٪","سال: ۲۰۱۷\u003cbr\u003eسهم از برونداد جهانی: ۱٫۷۹٪","سال: ۲۰۱۸\u003cbr\u003eسهم از برونداد جهانی: ۱٫۸۲٪","سال: ۲۰۱۹\u003cbr\u003eسهم از برونداد جهانی: ۱٫۹۴٪","سال: ۲۰۲۰\u003cbr\u003eسهم از برونداد جهانی: ۲٫۰۵٪","سال: ۲۰۲۱\u003cbr\u003eسهم از برونداد جهانی: ۱٫۹۹٪","سال: ۲۰۲۲\u003cbr\u003eسهم از برونداد جهانی: ۱٫۸۹٪","سال: ۲۰۲۳\u003cbr\u003eسهم از برونداد جهانی: ۱٫۸۴٪","سال: ۲۰۲۴\u003cbr\u003eسهم از برونداد جهانی: ۱٫۶۷٪","سال: ۲۰۲۵\u003cbr\u003eسهم از برونداد جهانی: ۱٫۶۴٪"],"hovertemplate":"%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","line":{"color":"black","width":2},"marker":{"color":"black","size":6},"mode":"lines+markers+text","name":"سهم از جهان","text":["1.60٪","1.68٪","1.79٪","1.82٪","1.94٪","2.05٪","1.99٪","1.89٪","1.84٪","1.67٪","1.64٪"],"textfont":{"size":12},"textposition":"top center","x":{"dtype":"i2","bdata":"3wfgB+EH4gfjB+QH5QfmB+cH6AfpBw=="},"y":{"dtype":"f8","bdata":"fG1pIyej+T\u002fVdE+nQOP6Pwj7iFxVp\u002fw\u002fPp+\u002fQfci\u002fT+FLnfq2gL\u002fP2HHVLxqZABAG1myxRDg\u002fz9CkDy07jr+P8zbg4AIX\u002f0\u002fRk+h7rKv+j9oI8fW+zb6Pw=="},"yaxis":"y2","type":"scatter"}],                        {"template":{"data":{"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#1f77b4","#ff7f0e","#2ca02c","#bcbd22","#9467bd","#8c564b","#e377c2","#7f7f7f","#d62728","#17becf","#aec7e8","#ffbb78"],"font":{"color":"#2a3f5f","family":"Vazirmatn FD"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"#E5ECF6","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"right","font":{"family":"Vazirmatn FD"}},"hovermode":"closest","legend":{"font":{"family":"Vazirmatn FD"},"title":{"font":{"family":"Vazirmatn FD"}}},"mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"title":{"font":{"family":"Vazirmatn FD Black"},"x":0.5,"xanchor":"center"},"xaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","tickfont":{"family":"Vazirmatn FD","size":13},"ticks":"","title":{"font":{"family":"Vazirmatn FD"},"standoff":15},"zerolinecolor":"white","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","tickfont":{"family":"Vazirmatn FD","size":13},"ticks":"","title":{"font":{"family":"Vazirmatn FD"},"standoff":15},"zerolinecolor":"white","zerolinewidth":2}}},"title":{"text":"فراوانی و سهم کل بروندادهای ایران در ۱۰ سال اخیر","xanchor":"center","yanchor":"top"},"legend":{"title":{"text":"نوع مقاله"}},"xaxis":{"title":{"text":"سال"},"dtick":1,"showgrid":true},"yaxis":{"title":{"text":"فراوانی مقالات"},"zeroline":false,"constrain":"range","nticks":7},"yaxis2":{"title":{"text":"سهم از کل مقالات جهان (٪)"},"overlaying":"y","side":"right","showgrid":false,"range":[1.4,2.6],"showticklabels":false},"barmode":"stack"},                        {"displaylogo": false, "modeBarButtonsToRemove": ["select", "lasso2d", "toggleSpikelines", "hoverCompareCartesian", "hoverClosestCartesian"], "toImageButtonOptions": {"filename": "2_iran_abs_papers_and_share_GO", "scale": 4, "format": "png"}, "responsive": true}                    )                };            </script> </div>
